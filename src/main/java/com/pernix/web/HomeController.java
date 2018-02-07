@@ -1,4 +1,4 @@
-package com.pernix.controllers;
+package com.pernix.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
