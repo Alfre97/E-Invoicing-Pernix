@@ -46,6 +46,10 @@ Hacienda Schema [here](https://tribunet.hacienda.go.cr/docs/esquemas/2016/v4.2/M
 
 Hacienda manual de ayuda [here](http://www.hacienda.go.cr/docs/5a550c170342c_Manual%20de%20uso%20de%20la%20Herramienta%20Gratuita%20de%20Facturacion.pdf)
 
+Formatos de XML para enviar a hacienda [Here](https://tribunet.hacienda.go.cr/FormatosYEstructurasXML.jsp#)
+
+Informacion sobre XADES4J
+(http://luisgoncalves.github.io/xades4j/javadocs/1.3.1/reference/xades4j/package-summary.html)
 
 #### Cryptography examples
 
@@ -63,3 +67,7 @@ Hacienda manual de ayuda [here](http://www.hacienda.go.cr/docs/5a550c170342c_Man
 For more information about using Java on Heroku, see these Dev Center articles:
 
 - [Java on Heroku](https://devcenter.heroku.com/categories/java)
+
+####Sign XML example using xades4j java library
+
+[https://gist.github.com/JohnnyJosep/29cd545db3d0b7abd23279b56d4db194]
