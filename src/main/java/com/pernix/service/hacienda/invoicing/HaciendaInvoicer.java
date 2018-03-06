@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.pernix.entity.Invoice;
 import com.pernix.service.hacienda.oauth2.OAuth2Service;
+import com.pernix.service.hacienda.signing.InvoiceSigner;
 
 @Service
 public class HaciendaInvoicer implements InvoicerService {
@@ -60,8 +61,15 @@ public class HaciendaInvoicer implements InvoicerService {
         // TODO Auto-generated method stub
         return null;
     }
+    
+    private Invoice signXML(Invoice invoice) {
+    	InvoiceSigner signer = new InvoiceSigner();
+    	invoice.setXmlInvoice(signer.sign("certificate/011417047734.p12", "7410", invoice.getXmlInvoice()));
+    	return invoice;
+    }
 
     private JsonObject buildInvoicePayload(Invoice invoice){
+    	signXML(invoice);
         JsonObjectBuilder invoiceJson = Json.createObjectBuilder()
                 .add("clave", invoice.getKey())
                 .add("fecha", invoice.getDate())
