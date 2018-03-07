@@ -69,7 +69,7 @@ public class HaciendaInvoicer implements InvoicerService {
     }
 
     private JsonObject buildInvoicePayload(Invoice invoice){
-    	signXML(invoice);
+    		signXML(invoice);
         JsonObjectBuilder invoiceJson = Json.createObjectBuilder()
                 .add("clave", invoice.getKey())
                 .add("fecha", invoice.getDate())

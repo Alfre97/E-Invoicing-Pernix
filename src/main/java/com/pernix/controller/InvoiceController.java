@@ -10,7 +10,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.pernix.entity.Invoice;
 import com.pernix.service.hacienda.invoicing.InvoicerService;
 
@@ -22,8 +21,8 @@ public class InvoiceController {
     InvoicerService HaciendaInvoicer;
 
     @RequestMapping(value="uploadInvoice", method = RequestMethod.POST)
-    public Response uploadInvoice(Invoice invoice){
-        String locationValue = HaciendaInvoicer.save(invoice);
+    public Response uploadInvoice(Invoice invoice){  	
+    		String locationValue = HaciendaInvoicer.save(invoice);
         if(StringUtils.isEmpty(locationValue))
             return Response.status(400).build();
         JsonObject jsonResponse = Json.createObjectBuilder().add("message", "Invoice under validation").build();

@@ -9,11 +9,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
 import com.pernix.entity.Identification;
 import com.pernix.entity.Invoice;
 
@@ -130,7 +135,19 @@ public class InvoiceControllerWebIntegrationTest {
     			"</FacturaElectronica>");
     	
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Json> response = restTemplate.postForEntity("http://localhost:5000/api/v1/uploadInvoice", invoice, Json.class);
+        MultiValueMap<String,String> parameters = new LinkedMultiValueMap<String,String>();
+        parameters.add("key", invoice.getKey());
+        parameters.add("emitterId", invoice.getEmitter().getId());
+        parameters.add("emitterType", invoice.getEmitter().getType());
+        parameters.add("recipientId", invoice.getEmitter().getId());
+        parameters.add("recipientType", invoice.getEmitter().getType());
+        parameters.add("xmlInvoice", invoice.getXmlInvoice());
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
+       
+       /* Gson gson= new Gson();
+        String json=gson.toJson(invoice);*/
+        ResponseEntity<Json> response = restTemplate.postForEntity("http://localhost:5000/api/v1/uploadInvoice/"+"?"+"invoice=" +invoice, request, Json.class);
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
     }
 }

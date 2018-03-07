@@ -15,9 +15,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+
 
 import xades4j.production.DataObjectReference;
 import xades4j.production.SignedDataObjects;
@@ -121,7 +119,8 @@ public class InvoiceSigner {
 			    throws SAXException, ParserConfigurationException, IOException {  
 		  DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		  InputSource is = new InputSource();
-		  is.setCharacterStream(new StringReader(xmlSource));
+		  StringReader sr= new StringReader(xmlSource);
+		  is.setCharacterStream(sr);
 		  Document doc = db.parse(is);
 		  return doc;
 	  } 
