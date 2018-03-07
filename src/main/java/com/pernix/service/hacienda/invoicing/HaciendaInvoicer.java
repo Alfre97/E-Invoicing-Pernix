@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
 import com.pernix.entity.Invoice;
 import com.pernix.service.hacienda.oauth2.OAuth2Service;
 import com.pernix.service.hacienda.signing.InvoiceSigner;
@@ -26,7 +27,7 @@ public class HaciendaInvoicer implements InvoicerService {
 
     @Override
     public String save(Invoice invoice) {
-        JsonObject invoicePayload = buildInvoicePayload(invoice);
+        String invoicePayload = buildInvoicePayload(invoice);
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(URI + "recepcion");
         Invocation.Builder request = target.request();
@@ -36,7 +37,7 @@ public class HaciendaInvoicer implements InvoicerService {
 
         // Se envía un POST. con los datos del documento que deseamos registrar, observe que colocamos como  
         // atributo el objeto que configuramos en el apartado de 'Preparación'
-        Response response = request.post(Entity.json(invoicePayload.toString()));
+        Response response = request.post(Entity.json(invoicePayload));
 
         switch (response.getStatus()) {
           case 201:
@@ -68,24 +69,11 @@ public class HaciendaInvoicer implements InvoicerService {
     	return invoice;
     }
 
-    private JsonObject buildInvoicePayload(Invoice invoice){
+    private String buildInvoicePayload(Invoice invoice){
     		signXML(invoice);
-        JsonObjectBuilder invoiceJson = Json.createObjectBuilder()
-                .add("clave", invoice.getKey())
-                .add("fecha", invoice.getDate())
-                .add("emisor", 
-                     Json.createObjectBuilder().add("tipoIdentificacion", invoice.getEmitter().getType())
-                                               .add("numeroIdentificacion", invoice.getEmitter().getId())
-                                               .build()
-                    )
-                .add("comprobanteXml", invoice.getXmlInvoice());
-                if(invoice.getRecipient() != null){
-                    invoiceJson.add("receptor", 
-                        Json.createObjectBuilder().add("tipoIdentificacion", "")
-                        .add("numeroIdentificacion", "")
-                        .build()
-                    );
-                }
-        return invoiceJson.build();
+    		Gson gson = new Gson();
+    		String json = gson.toJson(invoice);
+    		
+        return json;
     }
 }

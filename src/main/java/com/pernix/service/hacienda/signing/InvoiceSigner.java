@@ -20,8 +20,11 @@ import org.w3c.dom.Element;
 import xades4j.production.DataObjectReference;
 import xades4j.production.SignedDataObjects;
 import xades4j.production.XadesEpesSigningProfile;
+import xades4j.production.XadesSignatureResult;
 import xades4j.production.XadesSigner;
+import xades4j.properties.AllDataObjsCommitmentTypeProperty;
 import xades4j.properties.DataObjectDesc;
+import xades4j.properties.DataObjectTransform;
 import xades4j.properties.IdentifierType;
 import xades4j.properties.ObjectIdentifier;
 import xades4j.properties.SignaturePolicyBase;
@@ -38,9 +41,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import xades4j.algorithms.EnvelopedSignatureTransform;
-import xades4j.utils.DOMHelper;
 
 public class InvoiceSigner {
 	public String sign(String certificatePath, String certificatePin, String xml)
@@ -104,16 +104,33 @@ public class InvoiceSigner {
 	    throws Exception
 	  {
 		  Document doc;
-		  doc = stringToDocument(xml);
-	      Element elem = doc.getDocumentElement();
-	      DOMHelper.useIdAsXmlId(elem);
-		  DataObjectDesc obj = new DataObjectReference("#" + elem.getAttribute("Id"))
-                .withTransform(new EnvelopedSignatureTransform());
-	      SignedDataObjects dataObjs = new SignedDataObjects().withSignedDataObject(obj);
-	      signer.sign(dataObjs, elem);
-	      xml = convertDocumentToString(doc);
-	    return xml;
+		  XadesSignatureResult result;
+		  try {
+			  doc = stringToDocument(xml);
+			  Element signatureParent = doc.getDocumentElement();
+			  Element elementToSign = doc.getDocumentElement();
+		      String refUri;
+		      if (elementToSign.hasAttribute("Id"))
+		      {
+		        refUri = '#' + elementToSign.getAttribute("Id");
+		      }
+		      else
+		      {
+		        if (elementToSign.getParentNode().getNodeType() != 9) {
+		          throw new IllegalArgumentException("Elemento sin el ID debe ser la raiz del documento");
+		        }
+		        refUri = "";
+		      }
+		      DataObjectDesc dataObjRef = new DataObjectReference(refUri).withTransform(new DataObjectTransform("http://www.w3.org/2000/09/xmldsig#enveloped-signature"));
+		      result = signer.sign(new SignedDataObjects(new DataObjectDesc[] { dataObjRef }).withCommitmentType(AllDataObjsCommitmentTypeProperty.proofOfOrigin()), signatureParent);
+		      xml = convertDocumentToString(doc);
+		  } catch (Exception e) {
+			  System.err.println("Error: " + e.getMessage());
+			  return null;
+		  }
+		  return xml;
 	  }
+	  
 	  
 	  public static Document stringToDocument(final String xmlSource)   
 			    throws SAXException, ParserConfigurationException, IOException {  

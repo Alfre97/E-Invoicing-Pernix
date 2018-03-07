@@ -18,7 +18,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import com.google.gson.Gson;
 import com.pernix.entity.Identification;
 import com.pernix.entity.Invoice;
 
@@ -145,8 +144,7 @@ public class InvoiceControllerWebIntegrationTest {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
        
-       /* Gson gson= new Gson();
-        String json=gson.toJson(invoice);*/
+
         ResponseEntity<Json> response = restTemplate.postForEntity("http://localhost:5000/api/v1/uploadInvoice/"+"?"+"invoice=" +invoice, request, Json.class);
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
     }
