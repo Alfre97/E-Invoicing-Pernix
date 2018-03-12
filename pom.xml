@@ -108,8 +108,7 @@
 	<dependency>
 	    <groupId>com.google.code.gson</groupId>
 	    <artifactId>gson</artifactId>
-	    <version>2.8.2</version>
-	</dependency>
+	    </dependency>
     <!-- https://mvnrepository.com/artifact/org.hisrc.jsonix/jsonix-schema-compiler-full -->
 	<dependency>
 	    <groupId>org.hisrc.jsonix</groupId>
@@ -142,4 +141,12 @@
     </plugins>
   </build>
 
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+  			<groupId>org.hibernate</groupId>
+  			<artifactId>hibernate-core</artifactId>
+  		</dependency>
+  	</dependencies>
+  </dependencyManagement>
 </project>
