@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pernix.entity.User;
-import com.pernix.service.services.UserService;
+import entities.UserEmitterReceiver;
+import services.UserService;
 
 @RestController
 public class UserController {
@@ -36,7 +36,7 @@ public class UserController {
     {
         ModelAndView modelAndView = new ModelAndView("user");
         
-        User user = new User();
+        UserEmitterReceiver user = new UserEmitterReceiver();
         user.setName(name);
         user.setComercialName(comercialName);
         user.setIdentificationType(identificationType);
@@ -53,12 +53,12 @@ public class UserController {
         user.setPhoneCountryCode(phoneCountryCode);
         user.setPhoneNumber(phoneNumber);
         user.setFaxCountryCode(faxCountryCode);
-        user.setfaxNumber(faxNumber);
+        user.setFaxNumber(faxNumber);
         user.setEmail(email);
         
         try
         {
-            userService.addUser(user);
+            //userService.addUser(user);
             modelAndView.addObject("message","User added!");
         }
         catch(Exception e)
