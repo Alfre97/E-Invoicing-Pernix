@@ -15,7 +15,7 @@ public class UserController {
 	private UserService userService = new UserService();
 	
 	@RequestMapping("/addUser")
-    public ModelAndView addEmitter(@RequestParam(value="userName") String name, 
+    public ModelAndView addUser(@RequestParam(value="userName") String name, 
     		@RequestParam String comercialName,
     		@RequestParam String identificationType, 
     		@RequestParam String identificationNumber, 

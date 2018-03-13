@@ -14,8 +14,8 @@ public class ServiceController {
 	@Autowired
 	private ServiceService serviceService = new ServiceService();
 	
-	@RequestMapping("/addUser")
-    public ModelAndView addEmitter( 
+	@RequestMapping("/addService")
+    public ModelAndView addService( 
     		@RequestParam String amount,
     		@RequestParam String code, 
     		@RequestParam String codeType, 
