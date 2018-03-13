@@ -32,7 +32,7 @@ public class UserController {
     		@RequestParam String phoneNumber,
     		@RequestParam String faxCountryCode,
     		@RequestParam String faxNumber,
-    		@RequestParam String email)
+    		@RequestParam String email) throws Exception
     {
         ModelAndView modelAndView = new ModelAndView("user");
         
@@ -58,13 +58,12 @@ public class UserController {
         
         try
         {
-            //userService.addUser(user);
+            userService.insert(user);
             modelAndView.addObject("message","User added!");
         }
         catch(Exception e)
         {
             modelAndView.addObject("message", "Failed to add user!");
-            throw e;
         }
         return modelAndView;
     }
