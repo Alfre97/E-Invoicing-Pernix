@@ -10,8 +10,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.pernix.entity.Invoice;
 import com.pernix.service.hacienda.invoicing.InvoicerService;
+
+import entities.Invoice;
 
 @RestController
 @RequestMapping("api/v1")

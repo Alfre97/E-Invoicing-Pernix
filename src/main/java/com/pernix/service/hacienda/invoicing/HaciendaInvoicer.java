@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
-import com.pernix.entity.Invoice;
+import entities.Invoice;
 import com.pernix.service.hacienda.oauth2.OAuth2Service;
 import com.pernix.service.hacienda.signing.InvoiceSigner;
 
