@@ -24,9 +24,9 @@ import entities.Invoice;
 @SpringBootTest(webEnvironment=WebEnvironment.DEFINED_PORT)
 public class InvoiceControllerWebIntegrationTest {
 
-    /*@Test
+    @Test
     public void testInvoiceControllerSaveInvoice(){
-    	Invoice invoice = new Invoice();
+    	/*Invoice invoice = new Invoice();
     	
     	invoice.setKey("50612101700020586086000100001010000000161100000642");
     	invoice.setDate("2017-12-07T11:47:42.539375-06:00");
@@ -141,6 +141,6 @@ public class InvoiceControllerWebIntegrationTest {
        
 
         ResponseEntity<Json> response = restTemplate.postForEntity("http://localhost:5000/api/v1/uploadInvoice/"+"?"+"invoice=" +invoice, request, Json.class);
-        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
-    }*/
+        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));*/
+    }
 }

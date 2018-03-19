@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+
+
 import entities.Invoice;
-import com.pernix.service.hacienda.oauth2.OAuth2Service;
+import com.pernix.service.hacienda.oauth2.*;
 import com.pernix.service.hacienda.signing.InvoiceSigner;
 
 @Service
@@ -57,15 +59,11 @@ public class HaciendaInvoicer implements InvoicerService {
         return null;
     }
 
-    @Override
-    public String get() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+   
     
     private Invoice signXML(Invoice invoice) {
     	InvoiceSigner signer = new InvoiceSigner();
-    	invoice.setXmlInvoice(signer.sign("certificate/011417047734.p12", "7410", invoice.getXmlInvoice()));
+   // 	invoice.setXmlInvoice(signer.sign("certificate/011417047734.p12", "7410", invoice.getXmlInvoice()));
     	return invoice;
     }
 
@@ -76,4 +74,12 @@ public class HaciendaInvoicer implements InvoicerService {
     		
         return json;
     }
+
+
+
+	@Override
+	public String get() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

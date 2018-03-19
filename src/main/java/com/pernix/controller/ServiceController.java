@@ -6,23 +6,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 import entities.Service;
 import services.ServiceService;
 
 @RestController
 public class ServiceController {
-	@Autowired
+	
 	private ServiceService serviceService = new ServiceService();
 	
 	@RequestMapping("/addService")
-    public ModelAndView addService( 
+    public void addService( 
     		@RequestParam String amount,
     		@RequestParam String code, 
     		@RequestParam String codeType, 
     		@RequestParam String comercialUnitOfMeasurement,
     		@RequestParam String detail,
     		@RequestParam String discount, 
-    		@RequestParam Integer id, 
     		@RequestParam String lineNumber, 
     		@RequestParam String priceByUnit, 
     		@RequestParam String subTotal, 
@@ -31,7 +32,7 @@ public class ServiceController {
     		@RequestParam String unitOfMeasurementName,
     		@RequestParam String unitOfMeasurementType) throws Exception
     {
-        ModelAndView modelAndView = new ModelAndView("service");
+        //ModelAndView modelAndView = new ModelAndView("service");
         
         Service service = new Service();
         service.setAmount(amount);
@@ -40,7 +41,6 @@ public class ServiceController {
         service.setComercialUnitOfMeasurement(comercialUnitOfMeasurement);
         service.setDetail(detail);
         service.setDiscount(discount);
-        service.setId(id);
         service.setLineNumber(lineNumber);
         service.setPriceByUnit(priceByUnit);
         service.setSubTotal(subTotal);
@@ -52,12 +52,26 @@ public class ServiceController {
         try
         {
             serviceService.insert(service);
-            modelAndView.addObject("message","User added!");
+            System.out.println(service.getAmount());
+            return;
+            //modelAndView.addObject("message","User added!");
         }
         catch(Exception e)
         {
-            modelAndView.addObject("message", "Failed to add user!");
+            throw e;//modelAndView.addObject("message", "Failed to add user!");
         }
-        return modelAndView;
     }
+	
+	@RequestMapping("/getServices")
+	public String getServices() throws Exception 
+	{
+		Service service = new Service();
+		Gson gson= new Gson();
+		try {
+			String jsonService= gson.toJson(serviceService.list(service));
+			return jsonService;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 }

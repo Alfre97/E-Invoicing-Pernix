@@ -11,43 +11,36 @@ import services.UserService;
 
 @RestController
 public class UserController {
-	@Autowired
+	
+	
 	private UserService userService = new UserService();
 	
 	@RequestMapping("/addUser")
-    public ModelAndView addUser(@RequestParam(value="userName") String name, 
+    public void addUser(@RequestParam(value="userName") String name, 
     		@RequestParam String comercialName,
     		@RequestParam String identificationType, 
     		@RequestParam String identificationNumber, 
-    		@RequestParam String locationProvinceType,
     		@RequestParam String locationProvinceName,
-    		@RequestParam String locationCantonType, 
     		@RequestParam String locationCantonName, 
-    		@RequestParam String locationDistrictType, 
     		@RequestParam String locationDistrictName, 
-    		@RequestParam String locationNeighborhoodType, 
     		@RequestParam String locationNeighborhoodName, 
     		@RequestParam String locationSignals,
     		@RequestParam String phoneCountryCode,
     		@RequestParam String phoneNumber,
     		@RequestParam String faxCountryCode,
     		@RequestParam String faxNumber,
-    		@RequestParam String email) throws Exception
+    		@RequestParam String email,
+    		@RequestParam String userType) throws Exception
     {
-        ModelAndView modelAndView = new ModelAndView("user");
         
         UserEmitterReceiver user = new UserEmitterReceiver();
         user.setName(name);
         user.setComercialName(comercialName);
         user.setIdentificationType(identificationType);
         user.setIdentificationNumber(identificationNumber);
-        user.setLocationProvinceType(locationProvinceType);
         user.setLocationProvinceName(locationProvinceName);
-        user.setLocationCantonType(locationCantonType);
         user.setLocationCantonName(locationCantonName);
-        user.setLocationDistrictType(locationDistrictType);
         user.setLocationDistrictName(locationDistrictName);
-        user.setLocationNeighborhoodType(locationNeighborhoodType);
         user.setLocationNeighborhoodName(locationNeighborhoodName);
         user.setOtherSignals(locationSignals);
         user.setPhoneCountryCode(phoneCountryCode);
@@ -55,16 +48,16 @@ public class UserController {
         user.setFaxCountryCode(faxCountryCode);
         user.setFaxNumber(faxNumber);
         user.setEmail(email);
+        user.setUserType(userType);
+        
         
         try
         {
             userService.insert(user);
-            modelAndView.addObject("message","User added!");
         }
         catch(Exception e)
         {
-            modelAndView.addObject("message", "Failed to add user!");
+            throw e;
         }
-        return modelAndView;
     }
 }

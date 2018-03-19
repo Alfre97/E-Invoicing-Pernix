@@ -18,18 +18,13 @@ package com.pernix;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.context.annotation.ComponentScan;
 
-import com.pernix.controller.InvoiceController;
 
 @SpringBootApplication
 public class EInvoiceApp{
 
     public static void main(String[] args) throws Exception {
-        
+    	 SpringApplication.run(EInvoiceApp.class, args);
     }
 }
