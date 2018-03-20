@@ -16,9 +16,13 @@
 
 package com.pernix;
 
+import java.sql.Connection;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+
+import services.UserService;
 
 
 @SpringBootApplication
@@ -26,5 +30,9 @@ public class EInvoiceApp{
 
     public static void main(String[] args) throws Exception {
     	 SpringApplication.run(EInvoiceApp.class, args);
+   	 Connection conn= UserService.getConnection();
+   	 System.out.println("Conexion: "+conn);
+     System.out.println(conn.getMetaData().getURL());
+     System.out.println(conn.getMetaData().getUserName());
     }
 }
