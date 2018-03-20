@@ -30,9 +30,5 @@ public class EInvoiceApp{
 
     public static void main(String[] args) throws Exception {
     	 SpringApplication.run(EInvoiceApp.class, args);
-   	 Connection conn= UserService.getConnection();
-   	 System.out.println("Conexion: "+conn);
-     System.out.println(conn.getMetaData().getURL());
-     System.out.println(conn.getMetaData().getUserName());
     }
 }
