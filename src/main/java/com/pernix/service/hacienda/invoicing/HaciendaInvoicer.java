@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 
-
-import entities.Invoice;
 import com.pernix.service.hacienda.oauth2.*;
 import com.pernix.service.hacienda.signing.InvoiceSigner;
+
+import entities.Invoice;
 
 @Service
 public class HaciendaInvoicer implements InvoicerService {
@@ -63,7 +63,7 @@ public class HaciendaInvoicer implements InvoicerService {
     
     private Invoice signXML(Invoice invoice) {
     	InvoiceSigner signer = new InvoiceSigner();
-   // 	invoice.setXmlInvoice(signer.sign("certificate/011417047734.p12", "7410", invoice.getXmlInvoice()));
+    invoice.setXmlInvoice(signer.sign("certificate/011417047734.p12", "7410", invoice.getXmlInvoice()));
     	return invoice;
     }
 

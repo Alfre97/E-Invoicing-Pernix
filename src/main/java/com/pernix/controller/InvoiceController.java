@@ -23,7 +23,7 @@ public class InvoiceController {
     @Autowired
     InvoicerService HaciendaInvoicer;
 
-    @RequestMapping(value="uploadInvoice", method = RequestMethod.POST)
+    @RequestMapping(value="/uploadInvoice", method = RequestMethod.POST)
     public Response uploadInvoice(Invoice invoice){  	
     		String locationValue = HaciendaInvoicer.save(invoice);
         if(StringUtils.isEmpty(locationValue))
