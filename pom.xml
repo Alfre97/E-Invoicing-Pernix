@@ -128,11 +128,19 @@
 	    <version>3.5.6-Final</version>
 	</dependency>
 	<dependency>
-    		<groupId>com.e-invoicing.api</groupId>
+	    <groupId>com.e-invoicing.api</groupId>
 	    <artifactId>E-Invoicing-API</artifactId>
-	    <version>0.0.25-SNAPSHOT</version>
-  	</dependency>
+	    <version>0.0.27-SNAPSHOT</version>
+	</dependency>
   </dependencies>
+  
+  <repositories>
+    <!--other repositories if any-->
+    <repository>
+        <id>E-Invoicing-API</id>
+        <url>file://${project.basedir}/repo</url>
+    </repository>
+  </repositories>
 
   <build>
     <plugins>
