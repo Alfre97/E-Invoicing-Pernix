@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 import entities.UserEmitterReceiver;
 import services.UserService;
 
@@ -60,4 +62,34 @@ public class UserController {
             throw e;
         }
     }
+	
+	@RequestMapping("/getEmitters")
+	public String getEmitters() {
+		UserEmitterReceiver emitter= new UserEmitterReceiver();
+		Gson gson= new Gson();
+		try 
+		{
+			String json= gson.toJson(userService.getEmitters(emitter));
+			return json;
+		}
+		catch(Exception e) 
+		{
+			throw e;
+		}
+	}
+	
+	@RequestMapping("/getReceivers")
+	public String getReceivers() {
+		UserEmitterReceiver receiver= new UserEmitterReceiver();
+		Gson gson= new Gson();
+		try 
+		{
+			String json= gson.toJson(userService.getReceivers(receiver));
+			return json;
+		}
+		catch(Exception e) 
+		{
+			throw e;
+		}
+	}
 }
