@@ -130,7 +130,7 @@
 	<dependency>
 	    <groupId>com.e-invoicing.api</groupId>
 	    <artifactId>E-Invoicing-API</artifactId>
-	    <version>0.0.35-SNAPSHOT</version>
+	    <version>0.0.36-SNAPSHOT</version>
   	</dependency>
   </dependencies>
 
