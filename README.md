@@ -71,3 +71,12 @@ For more information about using Java on Heroku, see these Dev Center articles:
 ####Sign XML example using xades4j java library
 
 [https://gist.github.com/JohnnyJosep/29cd545db3d0b7abd23279b56d4db194]
+
+#### Archivos utiles e importantes para la faturacion electronica
+https://github.com/CRLibre/fe-hacienda-cr-misc
+
+####Diagrama de flujo para factura electronica 
+https://github.com/CRLibre/fe-hacienda-cr-docs/wiki/Diagrama-de-flujo-Factura-Electr%C3%B3nica-Costa-Rica
+
+####Compilado JAR para firmar las facturas
+https://github.com/JonhCR/FirmaXadesEpes
