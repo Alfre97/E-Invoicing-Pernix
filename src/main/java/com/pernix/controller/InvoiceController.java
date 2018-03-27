@@ -40,46 +40,39 @@ public class InvoiceController {
 	InvoicerService HaciendaInvoicer;
 
 	@RequestMapping(value = "/uploadInvoice", method = RequestMethod.POST)
-	public Response uploadInvoice(String dateCreated, String sellTerm,
-			String paymentLapse, String paymentMethod, String selectedCurrency, String exchangeRate,
-			String recordedServices, String exemptServices, String recordedCommodity, String exemptCommodity,
-			String recordedTotal, String exemptTotal, String totalSell, String totalDiscount, String netSell,
-			String totalTax, String totalVoucher, String resolutionNumber, String resolutionDate, String otherText,
-			int idEmitter, int idReceiver, int idService)
-			throws IllegalArgumentException, InvocationTargetException, Exception {
-		
+	public Response uploadInvoice(String dateCreated, String sellTerm, String paymentLapse, String paymentMethod,
+			String selectedCurrency, String exchangeRate, String recordedServices, String exemptServices,
+			String recordedCommodity, String exemptCommodity, String recordedTotal, String exemptTotal,
+			String totalSell, String totalDiscount, String netSell, String totalTax, String totalVoucher,
+			String resolutionNumber, String resolutionDate, String otherText, int idEmitter, int idReceiver,
+			int idService) throws IllegalArgumentException, InvocationTargetException, Exception {
+
 		String consecutiveNumber = "";
 		consecutiveNumber = generateConsecutive();
-		System.out.println(consecutiveNumber);
 		String key = generateInvoiceKey(dateCreated, idEmitter, consecutiveNumber);
-		System.out.println(key);
-		
-		/*FacturaElectronica facturaElectronica = new FacturaElectronica();
-		facturaElectronica.setClave(key);
-		facturaElectronica.setNumeroConsecutivo(consecutiveNumber);
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		Date date = format.parse(dateCreated);
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.setTime(date);
-		XMLGregorianCalendar xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
-
-		facturaElectronica.setFechaEmision(xmlGregCal);
-		UserService userService = new UserService();
-		UserEmitterReceiver emitter = new UserEmitterReceiver();
-		emitter.setId(idEmitter);
-		emitter = userService.read(emitter);
-		EmisorType emitterType = new EmisorType();
-		emitterType.setCorreoElectronico(emitter.getEmail());
-		TelefonoType fax = new TelefonoType();
-		BigInteger countryFax = new BigInteger(emitter.getFaxCountryCode());
-		BigInteger numberFax = new BigInteger(emitter.getFaxNumber());
-		fax.setCodigoPais(countryFax);
-		fax.setNumTelefono(numberFax);
-		JAXBElement<TelefonoType> JAXBFax = new JAXBElement<TelefonoType>(null, null, null, fax);
-		emitterType.setFax(JAXBFax);
 
 		/*
-		 * String locationValue = HaciendaInvoicer.save(invoice);
+		 * FacturaElectronica facturaElectronica = new FacturaElectronica();
+		 * facturaElectronica.setClave(key);
+		 * facturaElectronica.setNumeroConsecutivo(consecutiveNumber); DateFormat format
+		 * = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); Date date =
+		 * format.parse(dateCreated); GregorianCalendar cal = new GregorianCalendar();
+		 * cal.setTime(date); XMLGregorianCalendar xmlGregCal =
+		 * DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+		 * 
+		 * facturaElectronica.setFechaEmision(xmlGregCal); UserService userService = new
+		 * UserService(); UserEmitterReceiver emitter = new UserEmitterReceiver();
+		 * emitter.setId(idEmitter); emitter = userService.read(emitter); EmisorType
+		 * emitterType = new EmisorType();
+		 * emitterType.setCorreoElectronico(emitter.getEmail()); TelefonoType fax = new
+		 * TelefonoType(); BigInteger countryFax = new
+		 * BigInteger(emitter.getFaxCountryCode()); BigInteger numberFax = new
+		 * BigInteger(emitter.getFaxNumber()); fax.setCodigoPais(countryFax);
+		 * fax.setNumTelefono(numberFax); JAXBElement<TelefonoType> JAXBFax = new
+		 * JAXBElement<TelefonoType>(null, null, null, fax);
+		 * emitterType.setFax(JAXBFax);
+		 * 
+		 * /* String locationValue = HaciendaInvoicer.save(invoice);
 		 * //if(StringUtils.isEmpty(locationValue)) //return
 		 * Response.status(400).build();
 		 */
@@ -88,12 +81,13 @@ public class InvoiceController {
 	}
 
 	private String generateInvoiceKey(String date, int idEmitter, String consecutiveNumber) {
+		try {
 		// Country
 		String key = "";
 		key += "506";
 		// Date
 		String[] dateAndHour = date.split(" ");
-		String[] dates = dateAndHour[0].split("-");
+		String[] dates = dateAndHour[0].split("/");
 		String year = dates[0];
 		String month = dates[1];
 		String day = dates[2];
@@ -102,22 +96,30 @@ public class InvoiceController {
 		key += day;
 		key += month;
 		key += year;
-		
+
 		UserEmitterReceiver user = getUser(idEmitter);
 		key += user.getIdentificationNumber();
-		
+
 		key += generateConsecutive();
-		
-		//This is the state of the invoice
+
+		// This is the state of the invoice
 		key += "1";
-		
-		//This have to be a security code generated by us 
+
+		// This have to be a security code generated by us
 		key += "00001111";
 		return key;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	private String splitYear(String year) {
-		year = year.substring(0, year.length() - 2);
+		try {
+			year = year.substring(0, year.length() - 1);
+			year = year.substring(2, year.length());
+		} catch (Exception e) {
+			return null;
+		}
 		return year;
 	}
 
