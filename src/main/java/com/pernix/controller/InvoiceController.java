@@ -41,7 +41,7 @@ public class InvoiceController {
 	InvoicerService HaciendaInvoicer;*/
 
 	@RequestMapping("/uploadInvoice")
-	public ModelAndView uploadInvoice(
+	public String uploadInvoice(
 			@RequestParam String dateCreated, 
 			@RequestParam String sellTerm, 
 			@RequestParam String paymentLapse, 
@@ -99,9 +99,8 @@ public class InvoiceController {
 		JsonObject jsonResponse = Json.createObjectBuilder().add("message", "Invoice under validation").build();
 		return Response.ok(jsonResponse, MediaType.APPLICATION_JSON).build();
 		*/
-		ModelAndView model = new ModelAndView();
-		model.addObject("Mensaje: ", "Consecutive: " + consecutiveNumber + "Key: " + key);
-		return model;
+		String response = "Mensaje: " + "Consecutive: " + consecutiveNumber + "Key: " + key;
+		return response;
 	}
 
 	private String generateInvoiceKey(String date, int idEmitter, String consecutiveNumber) {
