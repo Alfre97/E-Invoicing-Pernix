@@ -61,9 +61,10 @@ public class InvoiceController {
 			@RequestParam String resolutionNumber, 
 			@RequestParam String resolutionDate, 
 			@RequestParam String otherText, 
-			@RequestParam int idEmitter, 
-			@RequestParam int idReceiver,
-			@RequestParam int idService) throws IllegalArgumentException, InvocationTargetException, Exception {
+			@RequestParam String idEmitter, 
+			@RequestParam String idReceiver,
+			@RequestParam String idService
+			) throws IllegalArgumentException, InvocationTargetException, Exception {
 
 		String consecutiveNumber = "";
 		consecutiveNumber = generateConsecutive();
@@ -100,7 +101,7 @@ public class InvoiceController {
 		return "Consecutive: " + consecutiveNumber + "Key: " + key;
 	}
 
-	private String generateInvoiceKey(String date, int idEmitter, String consecutiveNumber) {
+	private String generateInvoiceKey(String date, String idEmitter, String consecutiveNumber) {
 		try {
 		// Country
 		String key = "";
@@ -117,7 +118,7 @@ public class InvoiceController {
 		key += month;
 		key += year;
 
-		UserEmitterReceiver user = getUser(idEmitter);
+		UserEmitterReceiver user = getUser(Integer.parseInt(idEmitter));
 		key += user.getIdentificationNumber();
 
 		key += generateConsecutive();
