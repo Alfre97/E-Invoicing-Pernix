@@ -40,18 +40,18 @@ public class InvoiceController {
 	InvoicerService HaciendaInvoicer;
 
 	@RequestMapping(value = "/uploadInvoice", method = RequestMethod.POST)
-	public Response uploadInvoice(String key, String consecutiveNumber, String dateCreated, String sellTerm,
+	public Response uploadInvoice(String dateCreated, String sellTerm,
 			String paymentLapse, String paymentMethod, String selectedCurrency, String exchangeRate,
 			String recordedServices, String exemptServices, String recordedCommodity, String exemptCommodity,
 			String recordedTotal, String exemptTotal, String totalSell, String totalDiscount, String netSell,
 			String totalTax, String totalVoucher, String resolutionNumber, String resolutionDate, String otherText,
 			int idEmitter, int idReceiver, int idService)
 			throws IllegalArgumentException, InvocationTargetException, Exception {
-
-		key = generateInvoiceKey(dateCreated, idEmitter, consecutiveNumber);
-		System.out.println(key);
 		
-		consecutiveNumber = generateConsecutive(consecutiveNumber);
+		String consecutiveNumber = "";
+		consecutiveNumber = generateConsecutive();
+		System.out.println(consecutiveNumber);
+		String key = generateInvoiceKey(dateCreated, idEmitter, consecutiveNumber);
 		System.out.println(key);
 		
 		/*FacturaElectronica facturaElectronica = new FacturaElectronica();
@@ -106,7 +106,7 @@ public class InvoiceController {
 		UserEmitterReceiver user = getUser(idEmitter);
 		key += user.getIdentificationNumber();
 		
-		key += generateConsecutive(consecutiveNumber);
+		key += generateConsecutive();
 		
 		//This is the state of the invoice
 		key += "1";
@@ -133,7 +133,8 @@ public class InvoiceController {
 		}
 	}
 
-	public String generateConsecutive(String consecutive) {
+	public String generateConsecutive() {
+		String consecutive = "";
 		// Place where invoice is generated
 		consecutive += "001";
 		// Terminal or sell point where invoice is emitted
