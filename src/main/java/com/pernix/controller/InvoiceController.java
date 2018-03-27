@@ -76,7 +76,7 @@ public class InvoiceController {
 		 * //if(StringUtils.isEmpty(locationValue)) //return
 		 * Response.status(400).build();
 		 */
-		JsonObject jsonResponse = Json.createObjectBuilder().add("message", "Invoice under validation").build();
+		JsonObject jsonResponse = Json.createObjectBuilder().add("message", "Invoice under validation / Consecutive: " + consecutiveNumber + " Key: " + key).build();
 		return Response.ok(jsonResponse, MediaType.APPLICATION_JSON).build();
 	}
 
