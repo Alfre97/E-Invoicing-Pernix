@@ -40,7 +40,7 @@ public class InvoiceController {
 	InvoicerService HaciendaInvoicer;
 
 	@RequestMapping(value = "/uploadInvoice", method = RequestMethod.POST)
-	public Response uploadInvoice(String dateCreated, String sellTerm, String paymentLapse, String paymentMethod,
+	public String uploadInvoice(String dateCreated, String sellTerm, String paymentLapse, String paymentMethod,
 			String selectedCurrency, String exchangeRate, String recordedServices, String exemptServices,
 			String recordedCommodity, String exemptCommodity, String recordedTotal, String exemptTotal,
 			String totalSell, String totalDiscount, String netSell, String totalTax, String totalVoucher,
@@ -75,9 +75,11 @@ public class InvoiceController {
 		 * /* String locationValue = HaciendaInvoicer.save(invoice);
 		 * //if(StringUtils.isEmpty(locationValue)) //return
 		 * Response.status(400).build();
-		 */
-		JsonObject jsonResponse = Json.createObjectBuilder().add("message", "Invoice under validation / Consecutive: " + consecutiveNumber + " Key: " + key).build();
+		 
+		JsonObject jsonResponse = Json.createObjectBuilder().add("message", "Invoice under validation").build();
 		return Response.ok(jsonResponse, MediaType.APPLICATION_JSON).build();
+		*/
+		return "Consecutive: " + consecutiveNumber + "Key: " + key;
 	}
 
 	private String generateInvoiceKey(String date, int idEmitter, String consecutiveNumber) {
