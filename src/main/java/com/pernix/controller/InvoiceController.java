@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pernix.hacienda.jaxb.EmisorType;
@@ -33,19 +34,36 @@ import entities.UserEmitterReceiver;
 import services.UserService;
 
 @RestController
-@RequestMapping("api/v1")
 public class InvoiceController {
 
-	@Autowired
-	InvoicerService HaciendaInvoicer;
+	/*@Autowired
+	InvoicerService HaciendaInvoicer;*/
 
-	@RequestMapping(value = "/uploadInvoice", method = RequestMethod.POST)
-	public String uploadInvoice(String dateCreated, String sellTerm, String paymentLapse, String paymentMethod,
-			String selectedCurrency, String exchangeRate, String recordedServices, String exemptServices,
-			String recordedCommodity, String exemptCommodity, String recordedTotal, String exemptTotal,
-			String totalSell, String totalDiscount, String netSell, String totalTax, String totalVoucher,
-			String resolutionNumber, String resolutionDate, String otherText, int idEmitter, int idReceiver,
-			int idService) throws IllegalArgumentException, InvocationTargetException, Exception {
+	@RequestMapping("/uploadInvoice")
+	public String uploadInvoice(
+			@RequestParam String dateCreated, 
+			@RequestParam String sellTerm, 
+			@RequestParam String paymentLapse, 
+			@RequestParam String paymentMethod,
+			@RequestParam String selectedCurrency, 
+			@RequestParam String exchangeRate, 
+			@RequestParam String recordedServices, 
+			@RequestParam String exemptServices,
+			@RequestParam String recordedCommodity, 
+			@RequestParam String exemptCommodity, 
+			@RequestParam String recordedTotal, 
+			@RequestParam String exemptTotal,
+			@RequestParam String totalSell, 
+			@RequestParam String totalDiscount, 
+			@RequestParam String netSell, 
+			@RequestParam String totalTax, 
+			@RequestParam String totalVoucher,
+			@RequestParam String resolutionNumber, 
+			@RequestParam String resolutionDate, 
+			@RequestParam String otherText, 
+			@RequestParam int idEmitter, 
+			@RequestParam int idReceiver,
+			@RequestParam int idService) throws IllegalArgumentException, InvocationTargetException, Exception {
 
 		String consecutiveNumber = "";
 		consecutiveNumber = generateConsecutive();
