@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.pernix.hacienda.jaxb.EmisorType;
 import com.pernix.hacienda.jaxb.FacturaElectronica;
@@ -40,7 +41,7 @@ public class InvoiceController {
 	InvoicerService HaciendaInvoicer;*/
 
 	@RequestMapping("/uploadInvoice")
-	public String uploadInvoice(
+	public ModelAndView uploadInvoice(
 			@RequestParam String dateCreated, 
 			@RequestParam String sellTerm, 
 			@RequestParam String paymentLapse, 
@@ -61,9 +62,9 @@ public class InvoiceController {
 			@RequestParam String resolutionNumber, 
 			@RequestParam String resolutionDate, 
 			@RequestParam String otherText, 
-			@RequestParam String idEmitter, 
-			@RequestParam String idReceiver,
-			@RequestParam String idService
+			@RequestParam int idEmitter, 
+			@RequestParam int idReceiver,
+			@RequestParam int idService
 			) throws IllegalArgumentException, InvocationTargetException, Exception {
 
 		String consecutiveNumber = "";
@@ -98,10 +99,12 @@ public class InvoiceController {
 		JsonObject jsonResponse = Json.createObjectBuilder().add("message", "Invoice under validation").build();
 		return Response.ok(jsonResponse, MediaType.APPLICATION_JSON).build();
 		*/
-		return "Consecutive: " + consecutiveNumber + "Key: " + key;
+		ModelAndView model = new ModelAndView();
+		model.addObject("Mensaje: ", "Consecutive: " + consecutiveNumber + "Key: " + key);
+		return model;
 	}
 
-	private String generateInvoiceKey(String date, String idEmitter, String consecutiveNumber) {
+	private String generateInvoiceKey(String date, int idEmitter, String consecutiveNumber) {
 		try {
 		// Country
 		String key = "";
@@ -118,7 +121,7 @@ public class InvoiceController {
 		key += month;
 		key += year;
 
-		UserEmitterReceiver user = getUser(Integer.parseInt(idEmitter));
+		UserEmitterReceiver user = getUser(idEmitter);
 		key += user.getIdentificationNumber();
 
 		key += generateConsecutive();
