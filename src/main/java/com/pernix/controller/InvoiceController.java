@@ -22,7 +22,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.yaml.snakeyaml.emitter.EmitterException;
 
 import com.pernix.hacienda.jaxb.EmisorType;
 import com.pernix.hacienda.jaxb.FacturaElectronica;
