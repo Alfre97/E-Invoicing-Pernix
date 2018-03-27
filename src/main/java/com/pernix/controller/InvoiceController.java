@@ -99,7 +99,7 @@ public class InvoiceController {
 		JsonObject jsonResponse = Json.createObjectBuilder().add("message", "Invoice under validation").build();
 		return Response.ok(jsonResponse, MediaType.APPLICATION_JSON).build();
 		*/
-		String response = "Mensaje: " + "Consecutive: " + consecutiveNumber + "Key: " + key;
+		String response = "Mensaje: " + "Consecutive: " + consecutiveNumber + " Key: " + key;
 		return response;
 	}
 
@@ -111,10 +111,10 @@ public class InvoiceController {
 		// Date
 		String[] dateAndHour = date.split(" ");
 		String[] dates = dateAndHour[0].split("/");
-		String year = dates[0];
+		String day = dates[0];
 		String month = dates[1];
-		String day = dates[2];
-		year = splitYear(year);
+		String year = dates[2];
+		year = divideYear(year);
 
 		key += day;
 		key += month;
@@ -136,7 +136,7 @@ public class InvoiceController {
 		}
 	}
 
-	private String splitYear(String year) {
+	private String divideYear(String year) {
 		try {
 			year = year.substring(0, year.length() - 1);
 			year = year.substring(2, year.length());
