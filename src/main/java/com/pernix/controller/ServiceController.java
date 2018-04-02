@@ -53,12 +53,10 @@ public class ServiceController {
         {
             serviceService.insert(service);
             System.out.println(service.getAmount());
-            return;
-            //modelAndView.addObject("message","User added!");
         }
         catch(Exception e)
         {
-            throw e;//modelAndView.addObject("message", "Failed to add user!");
+            throw e;
         }
     }
 	

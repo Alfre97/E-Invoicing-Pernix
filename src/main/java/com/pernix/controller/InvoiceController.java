@@ -92,8 +92,8 @@ public class InvoiceController {
 		 * JAXBElement<TelefonoType>(null, null, null, fax);
 		 * emitterType.setFax(JAXBFax);
 		 * 
-		 * /* String locationValue = HaciendaInvoicer.save(invoice);
-		 * //if(StringUtils.isEmpty(locationValue)) //return
+		 * String locationValue = HaciendaInvoicer.save(invoice);
+		 * if(StringUtils.isEmpty(locationValue)) //return
 		 * Response.status(400).build();
 		 
 		JsonObject jsonResponse = Json.createObjectBuilder().add("message", "Invoice under validation").build();
