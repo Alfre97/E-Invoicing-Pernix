@@ -16,13 +16,13 @@ public class TaxController {
 
 	@RequestMapping("/addTax")
 	public void addTax(
-			@RequestParam(name="code") String code, 
-			@RequestParam(name="rate") String rate, 
-			@RequestParam(name="purchasePercentage") String purchasePercentage, 
-			@RequestParam(name="date") String date,
-			@RequestParam(name="institutionName") String institutionName, 
-			@RequestParam(name="documentNumber") String documentNumber,
-			@RequestParam(name="documentType") String documentType) throws Exception {
+			@RequestParam String code, 
+			@RequestParam String rate, 
+			@RequestParam String purchasePercentage, 
+			@RequestParam String date,
+			@RequestParam String institutionName, 
+			@RequestParam String documentNumber,
+			@RequestParam String documentType) throws Exception {
 		
 		Tax tax = new Tax();
 		tax.setCode(code);
@@ -32,6 +32,10 @@ public class TaxController {
 		tax.setInstitutionName(institutionName);
 		tax.setDocumentNumber(documentNumber);
 		tax.setDocumentType(documentType);
+		
+		tax.setTax(null);
+		tax.setTaxTotal(null);
+		tax.setService(null);
 
 		try {
 			taxService.insert(tax);
