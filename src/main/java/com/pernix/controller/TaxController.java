@@ -27,7 +27,6 @@ public class TaxController {
 
 		Tax tax = new Tax();
 		tax.setCode(code);
-		tax.setRate(rate);
 		tax.setPurchasePercentage(purchasePercentage);
 		tax.setDate(date);
 		tax.setInstitutionName(institutionName);
