@@ -16,17 +16,17 @@ public class TaxController {
 
 	@RequestMapping("/addTax")
 	public void addTax(
-			@RequestParam(value="code") String code, 
-			@RequestParam(value="purchasePercentage") String purchasePercentage, 
-			@RequestParam(value="date") String date,
-			@RequestParam(value="institutionName") String institutionName, 
-			@RequestParam(value="documentNumber") String documentNumber,
-			@RequestParam(value="documentType") String documentType) throws Exception {
+			@RequestParam(name="code") String code, 
+			@RequestParam(name="rate") String rate, 
+			@RequestParam(name="purchasePercentage") String purchasePercentage, 
+			@RequestParam(name="date") String date,
+			@RequestParam(name="institutionName") String institutionName, 
+			@RequestParam(name="documentNumber") String documentNumber,
+			@RequestParam(name="documentType") String documentType) throws Exception {
 		
-		System.out.println(code + purchasePercentage + date + institutionName + documentNumber + documentType);
-
 		Tax tax = new Tax();
 		tax.setCode(code);
+		tax.setRate(rate);
 		tax.setPurchasePercentage(purchasePercentage);
 		tax.setDate(date);
 		tax.setInstitutionName(institutionName);
