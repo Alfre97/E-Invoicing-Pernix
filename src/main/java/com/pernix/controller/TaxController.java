@@ -23,6 +23,8 @@ public class TaxController {
 			@RequestParam String institutionName, 
 			@RequestParam String documentNumber,
 			@RequestParam String documentType) throws Exception {
+		
+		System.out.println(code + rate + purchasePercentage + date + institutionName + documentNumber + documentType);
 
 		Tax tax = new Tax();
 		tax.setCode(code);
