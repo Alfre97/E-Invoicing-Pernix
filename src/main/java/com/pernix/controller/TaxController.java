@@ -15,14 +15,14 @@ public class TaxController {
 	private TaxService taxService = new TaxService();
 
 	@RequestMapping("/addTax")
-	public void addService(
-			@RequestParam String code, 
-			@RequestParam String rate, 
-			@RequestParam String purchasePercentage, 
-			@RequestParam String date,
-			@RequestParam String institutionName, 
-			@RequestParam String documentNumber,
-			@RequestParam String documentType) throws Exception {
+	public void addTax(
+			@RequestParam(value="code") String code, 
+			@RequestParam(value="rate") String rate, 
+			@RequestParam(value="purchasePercentage") String purchasePercentage, 
+			@RequestParam(value="date") String date,
+			@RequestParam(value="institutionName") String institutionName, 
+			@RequestParam(value="documentNumber") String documentNumber,
+			@RequestParam(value="documentType") String documentType) throws Exception {
 		
 		System.out.println(code + rate + purchasePercentage + date + institutionName + documentNumber + documentType);
 

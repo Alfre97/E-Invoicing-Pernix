@@ -80,6 +80,7 @@ public class InvoiceController {
 		otroTexto.setValue(others);
 		facturaElectronica.getOtros().getOtroTexto().add(otroTexto);
 		
+		
 		JsonObject jsonResponse = Json.createObjectBuilder().add("message", "Invoice under validation").build();
 		return Response.ok(jsonResponse, MediaType.APPLICATION_JSON).build();
 	}
