@@ -11,7 +11,7 @@ import services.TaxService;
 
 @RestController
 public class TaxController {
-
+ 
 	private TaxService taxService = new TaxService();
 
 	@RequestMapping("/addTax")
@@ -32,10 +32,6 @@ public class TaxController {
 		tax.setInstitutionName(institutionName);
 		tax.setDocumentNumber(documentNumber);
 		tax.setDocumentType(documentType);
-		
-		tax.setTaxExonarated("");
-		tax.setTaxTotal("");
-		tax.setService(null);
 
 		try {
 			taxService.insert(tax);
