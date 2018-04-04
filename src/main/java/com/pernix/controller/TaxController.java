@@ -17,22 +17,18 @@ public class TaxController {
 	@RequestMapping("/addTax")
 	public void addService(
 			@RequestParam String code, 
-			@RequestParam String taxTotal,
 			@RequestParam String rate, 
 			@RequestParam String purchasePercentage, 
 			@RequestParam String date,
-			@RequestParam String taxExo, 
 			@RequestParam String institutionName, 
 			@RequestParam String documentNumber,
 			@RequestParam String documentType) throws Exception {
 
 		Tax tax = new Tax();
 		tax.setCode(code);
-		tax.setTaxTotal(taxTotal);
 		tax.setRate(rate);
 		tax.setPurchasePercentage(purchasePercentage);
 		tax.setDate(date);
-		tax.setTax(taxExo);
 		tax.setInstitutionName(institutionName);
 		tax.setDocumentNumber(documentNumber);
 		tax.setDocumentType(documentType);
