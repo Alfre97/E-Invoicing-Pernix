@@ -17,14 +17,13 @@ public class TaxController {
 	@RequestMapping("/addTax")
 	public void addTax(
 			@RequestParam(value="code") String code, 
-			@RequestParam(value="rate") String rate, 
 			@RequestParam(value="purchasePercentage") String purchasePercentage, 
 			@RequestParam(value="date") String date,
 			@RequestParam(value="institutionName") String institutionName, 
 			@RequestParam(value="documentNumber") String documentNumber,
 			@RequestParam(value="documentType") String documentType) throws Exception {
 		
-		System.out.println(code + rate + purchasePercentage + date + institutionName + documentNumber + documentType);
+		System.out.println(code + purchasePercentage + date + institutionName + documentNumber + documentType);
 
 		Tax tax = new Tax();
 		tax.setCode(code);
