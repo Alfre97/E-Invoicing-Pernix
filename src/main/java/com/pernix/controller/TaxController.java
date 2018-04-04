@@ -33,7 +33,7 @@ public class TaxController {
 		tax.setDocumentNumber(documentNumber);
 		tax.setDocumentType(documentType);
 		
-		tax.setTax(null);
+		tax.setTaxExonarated(null);
 		tax.setTaxTotal(null);
 		tax.setService(null);
 

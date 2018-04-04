@@ -190,7 +190,7 @@ public class InvoiceController {
 	private ExoneracionType constructExoneration(Tax tax) throws Exception {
 		ExoneracionType exonerationType = new ExoneracionType();
 		exonerationType.setFechaEmision(constructDate(tax.getDate()));
-		exonerationType.setMontoImpuesto(new BigDecimal(tax.getTax()));
+		exonerationType.setMontoImpuesto(new BigDecimal(tax.getTaxExonarated()));
 		exonerationType.setNombreInstitucion(tax.getInstitutionName());
 		exonerationType.setNumeroDocumento(tax.getDocumentNumber());
 		exonerationType.setPorcentajeCompra(new BigInteger(tax.getPurchasePercentage()));
