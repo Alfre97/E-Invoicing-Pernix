@@ -113,7 +113,7 @@
 	<dependency>
 	    <groupId>org.hisrc.jsonix</groupId>
 	    <artifactId>jsonix-schema-compiler-full</artifactId>
-	    <version>2.3.9</version>
+	    <version>2.3.9</version> 
 	</dependency>
 	<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 	<dependency>
@@ -130,7 +130,7 @@
 	<dependency>
 	    <groupId>com.e-invoicing.api</groupId>
 	    <artifactId>E-Invoicing-API</artifactId>
-	    <version>0.0.36-SNAPSHOT</version>
+	    <version>0.0.41-SNAPSHOT</version>
   	</dependency>
   </dependencies>
 
