@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import entities.Code;
 import entities.Service;
 import entities.Tax;
+import services.CodeService;
 import services.ServiceService;
 import services.TaxService;
 
@@ -29,25 +30,24 @@ public class ServiceController {
 			@RequestParam String unitOfMeasurementName, @RequestParam String unitOfMeasurementType,
 			@RequestParam String taxes) throws Exception {
 
-		Service service = new Service();
-		service.setAmount(amount);
-		service.setCodeList(constructCodeList(codes));
-		service.setComercialUnitOfMeasurement(comercialUnitOfMeasurement);
-		service.setDetail(detail);
-		service.setDiscount(discount);
-		service.setDiscountNature(discountNature);
-		service.setLineNumber(lineNumber);
-		service.setPriceByUnit(priceByUnit);
-		service.setSubTotal(subTotal);
-		service.setTotal(total);
-		service.setTotalAmount(totalAmount);
-		service.setUnitOfMeasurementName(unitOfMeasurementName);
-		service.setUnitOfMeasurementType(unitOfMeasurementType);
-		service.setTaxList(constructTaxList(taxes));
-
 		try {
+			Service service = new Service();
+			service.setAmount(amount);
+			service.setCodeList(constructCodeList(codes));
+			service.setComercialUnitOfMeasurement(comercialUnitOfMeasurement);
+			service.setDetail(detail);
+			service.setDiscount(discount);
+			service.setDiscountNature(discountNature);
+			service.setLineNumber(lineNumber);
+			service.setPriceByUnit(priceByUnit);
+			service.setSubTotal(subTotal);
+			service.setTotal(total);
+			service.setTotalAmount(totalAmount);
+			service.setUnitOfMeasurementName(unitOfMeasurementName);
+			service.setUnitOfMeasurementType(unitOfMeasurementType);
+			service.setTaxList(constructTaxList(taxes));
+
 			serviceService.insert(service);
-			System.out.println(service.getAmount());
 		} catch (Exception e) {
 			throw e;
 		}
@@ -60,7 +60,7 @@ public class ServiceController {
 		Tax tax = new Tax();
 		TaxService taxService = new TaxService();
 
-		if (taxDataList.length > 0) {            
+		if (taxDataList.length > 0) {
 			for (int i = 0; i < taxDataList.length; i++) {
 				tax.setId(Integer.parseInt(taxDataList[i]));
 				tax = taxService.read(tax);
@@ -71,16 +71,19 @@ public class ServiceController {
 		return taxesList;
 	}
 
-	private List<Code> constructCodeList(String codes) {
+	private List<Code> constructCodeList(String codes) throws IllegalArgumentException, InvocationTargetException, Exception {
 		ArrayList<Code> codesList = new ArrayList<Code>();
-		String[] codeDataList = codes.split(", ");
+		String[] codeIdsList = codes.split(", ");
 		Code code = new Code();
+		CodeService codeService = new CodeService();
 
-		for (int i = 0; i < codeDataList.length; i = i + 2) {
-			code.setCodeType(codeDataList[i]);
-			code.setCode(codeDataList[i + 1]);
-			codesList.add(code); 
-			code = new Code();
+		if (codeIdsList.length > 0) {
+			for (int i = 0; i < codeIdsList.length; i++) {
+				code.setId(Integer.parseInt(codeIdsList[i]));
+				code = codeService.read(code);
+				codesList.add(code);
+				code = new Code();
+			}
 		}
 
 		return codesList;
