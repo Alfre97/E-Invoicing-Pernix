@@ -79,7 +79,8 @@ public class ServiceController {
 		for (int i = 0; i < codeDataList.length; i = i + 2) {
 			code.setCodeType(codeDataList[i]);
 			code.setCode(codeDataList[i + 1]);
-			codesList.add(code);
+			codesList.add(code); 
+			code = new Code();
 		}
 
 		return codesList;
