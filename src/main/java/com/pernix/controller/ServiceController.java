@@ -45,7 +45,7 @@ public class ServiceController {
 			service.setTotalAmount(totalAmount);
 			service.setUnitOfMeasurementName(unitOfMeasurementName);
 			service.setUnitOfMeasurementType(unitOfMeasurementType);
-			service.setTaxList(constructTaxList(taxes));
+			service.setTaxList(constructTaxList(taxes, totalAmount));
 
 			serviceService.insert(service);
 		} catch (Exception e) {
@@ -53,7 +53,7 @@ public class ServiceController {
 		}
 	}
 
-	private List<Tax> constructTaxList(String taxes)
+	private List<Tax> constructTaxList(String taxes, String totalAmount)
 			throws IllegalArgumentException, InvocationTargetException, Exception {
 		ArrayList<Tax> taxesList = new ArrayList<Tax>();
 		String[] taxDataList = taxes.split(", ");
@@ -64,6 +64,8 @@ public class ServiceController {
 			for (int i = 0; i < taxDataList.length; i++) {
 				tax.setId(Integer.parseInt(taxDataList[i]));
 				tax = taxService.read(tax);
+				double taxTotal = Double.parseDouble(tax.getRate()) * Integer.parseInt(totalAmount);
+				tax.setTaxTotal(Double.toString(taxTotal));
 				taxesList.add(tax);
 				tax = new Tax();
 			}
