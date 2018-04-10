@@ -126,11 +126,11 @@
 	    <groupId>org.hibernate</groupId>
 	    <artifactId>hibernate-annotations</artifactId>
 	    <version>3.5.6-Final</version>
-	</dependency>
+	</dependency> 
 	<dependency>
 	    <groupId>com.e-invoicing.api</groupId>
 	    <artifactId>E-Invoicing-API</artifactId>
-	    <version>0.0.45-SNAPSHOT</version>
+	    <version>0.0.46-SNAPSHOT</version>
   	</dependency>
   </dependencies>
 
