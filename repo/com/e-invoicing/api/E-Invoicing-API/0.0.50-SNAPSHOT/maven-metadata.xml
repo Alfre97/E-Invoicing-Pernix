@@ -2,23 +2,23 @@
 <metadata modelVersion="1.1.0">
   <groupId>com.e-invoicing.api</groupId>
   <artifactId>E-Invoicing-API</artifactId>
-  <version>0.0.49-SNAPSHOT</version>
+  <version>0.0.50-SNAPSHOT</version>
   <versioning>
     <snapshot>
-      <timestamp>20180410.212430</timestamp>
+      <timestamp>20180410.215745</timestamp>
       <buildNumber>1</buildNumber>
     </snapshot>
-    <lastUpdated>20180410212430</lastUpdated>
+    <lastUpdated>20180410215745</lastUpdated>
     <snapshotVersions>
       <snapshotVersion>
         <extension>jar</extension>
-        <value>0.0.49-20180410.212430-1</value>
-        <updated>20180410212430</updated>
+        <value>0.0.50-20180410.215745-1</value>
+        <updated>20180410215745</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>pom</extension>
-        <value>0.0.49-20180410.212430-1</value>
-        <updated>20180410212430</updated>
+        <value>0.0.50-20180410.215745-1</value>
+        <updated>20180410215745</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>

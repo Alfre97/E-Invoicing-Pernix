@@ -41,7 +41,7 @@ public class TaxController {
 	}
 
 	@RequestMapping("/getTaxes")
-	public String getServices() throws Exception {
+	public String getTaxes() throws Exception {
 		Tax tax = new Tax();
 		Gson gson = new Gson();
 		try {
