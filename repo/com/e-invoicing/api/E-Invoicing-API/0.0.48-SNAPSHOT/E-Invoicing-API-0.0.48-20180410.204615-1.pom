@@ -4,5 +4,5 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.e-invoicing.api</groupId>
   <artifactId>E-Invoicing-API</artifactId>
-  <version>0.0.47-SNAPSHOT</version>
+  <version>0.0.48-SNAPSHOT</version>
 </project>
