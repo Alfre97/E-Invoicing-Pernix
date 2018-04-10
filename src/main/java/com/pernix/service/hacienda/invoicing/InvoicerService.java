@@ -1,6 +1,6 @@
 package com.pernix.service.hacienda.invoicing;
 
-import entities.Invoice;
+import main.entities.Invoice;
 
 public interface InvoicerService {
 

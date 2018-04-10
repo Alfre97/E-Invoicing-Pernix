@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
-import entities.Code;
-import entities.Service;
-import entities.Tax;
-import services.CodeService;
-import services.ServiceService;
-import services.TaxService;
+import main.entities.Code;
+import main.entities.Service;
+import main.entities.Tax;
+import main.services.CodeService;
+import main.services.ServiceService;
+import main.services.TaxService;
 
 @RestController
 public class ServiceController {

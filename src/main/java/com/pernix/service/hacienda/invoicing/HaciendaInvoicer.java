@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 import com.pernix.service.hacienda.oauth2.*;
 import com.pernix.service.hacienda.signing.InvoiceSigner;
 
-import entities.Invoice;
+import main.entities.Invoice;
 
 @Service
 public class HaciendaInvoicer implements InvoicerService {

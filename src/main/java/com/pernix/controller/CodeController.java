@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
-import entities.Code;
-import services.CodeService;
+import main.entities.Code;
+import main.services.CodeService;
 
 @RestController
 public class CodeController {
@@ -31,7 +31,7 @@ public class CodeController {
 	}
 	
 	@RequestMapping("/getCodes")
-	public String getServices() throws Exception {
+	public String getCodes() throws Exception {
 		Code code = new Code();
 		Gson gson = new Gson();
 		try {

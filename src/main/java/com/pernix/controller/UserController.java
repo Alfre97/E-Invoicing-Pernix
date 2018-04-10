@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
-import entities.UserEmitterReceiver;
-import services.UserService;
+import main.entities.UserEmitterReceiver;
+import main.services.UserService;
 
 @RestController
 public class UserController {
