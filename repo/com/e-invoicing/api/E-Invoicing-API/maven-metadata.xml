@@ -4,20 +4,8 @@
   <artifactId>E-Invoicing-API</artifactId>
   <versioning>
     <versions>
-      <version>0.0.27-SNAPSHOT</version>
-      <version>0.0.31-SNAPSHOT</version>
-      <version>0.0.32-SNAPSHOT</version>
-      <version>0.0.33-SNAPSHOT</version>
-      <version>0.0.34-SNAPSHOT</version>
-      <version>0.0.35-SNAPSHOT</version>
-      <version>0.0.36-SNAPSHOT</version>
-      <version>0.0.37-SNAPSHOT</version>
-      <version>0.0.38-SNAPSHOT</version>
-      <version>0.0.39-SNAPSHOT</version>
-      <version>0.0.40-SNAPSHOT</version>
-      <version>0.0.41-SNAPSHOT</version>
       <version>0.0.42-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20180410142506</lastUpdated>
+    <lastUpdated>20180410143443</lastUpdated>
   </versioning>
 </metadata>
