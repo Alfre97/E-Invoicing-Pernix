@@ -62,12 +62,12 @@ public class UserController {
     }
 	
 	@RequestMapping("/getEmitters")
-	public String getEmitters() {
+	public String getEmitters() throws Exception {
 		UserEmitterReceiver emitter= new UserEmitterReceiver();
 		Gson gson= new Gson();
 		try 
 		{
-			String json= gson.toJson(userService.getEmitters(emitter));
+			String json= gson.toJson(userService.list(emitter));
 			return json;
 		}
 		catch(Exception e) 
@@ -77,12 +77,12 @@ public class UserController {
 	}
 	
 	@RequestMapping("/getReceivers")
-	public String getReceivers() {
+	public String getReceivers() throws Exception {
 		UserEmitterReceiver receiver= new UserEmitterReceiver();
 		Gson gson= new Gson();
 		try 
 		{
-			String json= gson.toJson(userService.getReceivers(receiver));
+			String json= gson.toJson(userService.list(receiver));
 			return json;
 		}
 		catch(Exception e) 
