@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 import com.pernix.service.hacienda.oauth2.*;
 import com.pernix.service.hacienda.signing.InvoiceSigner;
 
-import main.entities.Invoice;
+import entities.Invoice;
 
 @Service
 public class HaciendaInvoicer implements InvoicerService {
@@ -58,8 +58,6 @@ public class HaciendaInvoicer implements InvoicerService {
           }
         return null;
     }
-
-   
     
     private Invoice signXML(Invoice invoice) {
     	InvoiceSigner signer = new InvoiceSigner();
@@ -74,8 +72,6 @@ public class HaciendaInvoicer implements InvoicerService {
     		
         return json;
     }
-
-
 
 	@Override
 	public String get() {

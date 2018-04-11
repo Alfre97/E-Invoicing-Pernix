@@ -31,12 +31,12 @@ import com.pernix.hacienda.jaxb.ReceptorType;
 import com.pernix.hacienda.jaxb.TelefonoType;
 import com.pernix.hacienda.jaxb.UbicacionType;
 
-import main.entities.Code;
-import main.entities.Service;
-import main.entities.Tax;
-import main.entities.UserEmitterReceiver;
-import main.services.ServiceService;
-import main.services.UserService;
+import entities.Code;
+import entities.Service;
+import entities.Tax;
+import entities.UserEmitterReceiver;
+import services.ServiceService;
+import services.UserService;
 
 @RestController
 public class InvoiceController {

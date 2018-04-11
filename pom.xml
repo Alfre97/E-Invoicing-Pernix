@@ -116,7 +116,7 @@
 		<dependency>
 			<groupId>com.e-invoicing.api</groupId>
 			<artifactId>E-Invoicing-API</artifactId>
-			<version>0.0.51-SNAPSHOT</version>
+			<version>0.0.54-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

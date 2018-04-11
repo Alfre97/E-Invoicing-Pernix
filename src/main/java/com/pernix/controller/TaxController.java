@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
-import main.entities.Tax;
-import main.services.TaxService;
+import entities.Tax;
+import services.TaxService;
 
 @RestController
 public class TaxController {
