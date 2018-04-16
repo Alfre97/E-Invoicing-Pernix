@@ -1,4 +1,4 @@
-package com.pernix.tests;
+package com.pernix;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class CodeControllerTest {
 				.andExpect(content().contentType("application/json;charset=ISO-8859-1")).andDo(print());
 	}
 
-	@Test
+	/*@Test
 	public void addCode() throws Exception {
 		Code code = new Code();
 		code.setCodeType("01");
@@ -55,14 +55,14 @@ public class CodeControllerTest {
 		mockMvc.perform(post("/addCode").contentType(MediaType.APPLICATION_FORM_URLENCODED.getType())
 				.content("?" + "codeType=" + code.getCodeType() + "&" + "code=" + code.getCode()))
 				.andExpect(status().isOk()).andDo(print());
-	}
+	}*/
 
 	@Configuration
 	@EnableWebMvc
 	public static class TestConfiguration {
 
 		@Bean
-		public CodeController contactController() {
+		public CodeController codeController() {
 			return new CodeController();
 		}
 
