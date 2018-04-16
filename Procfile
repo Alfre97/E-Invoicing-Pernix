@@ -1,1 +1,1 @@
-web: java -jar target/e-invoicing-1.0.jar
+web: java -cp target/e-invoicing-1.0.jar
