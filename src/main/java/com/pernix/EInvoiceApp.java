@@ -24,5 +24,6 @@ public class EInvoiceApp{
 
     public static void main(String[] args) throws Exception {
     	 SpringApplication.run(EInvoiceApp.class, args);
+    	 System.out.println("App started");
     }
 }
