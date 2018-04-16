@@ -101,4 +101,6 @@ FirmaXadesEpes
 
 #### Spring MVC JUnit tests 
 Unit tests
-[Here] (https://docs.spring.io/spring/docs/3.2.x/spring-framework-reference/htmlsingle/#spring-mvc-test-framework)
+[Here] (https://spring.io/guides/tutorials/bookmarks/)
+####Rest controller test example
+[Here](https://blog.zenika.com/2013/01/15/rest-web-services-testing-with-spring-mvc/)

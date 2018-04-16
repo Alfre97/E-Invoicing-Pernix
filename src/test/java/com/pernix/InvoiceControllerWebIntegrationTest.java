@@ -26,7 +26,7 @@ public class InvoiceControllerWebIntegrationTest {
 
     @Test
     public void testInvoiceControllerSaveInvoice(){
-    	/*Invoice invoice = new Invoice();
+    	Invoice invoice = new Invoice();
     	
     	invoice.setKey("50612101700020586086000100001010000000161100000642");
     	invoice.setDate("2017-12-07T11:47:42.539375-06:00");
@@ -131,16 +131,16 @@ public class InvoiceControllerWebIntegrationTest {
         RestTemplate restTemplate = new RestTemplate();
         MultiValueMap<String,String> parameters = new LinkedMultiValueMap<String,String>();
         parameters.add("key", invoice.getKey());
-        parameters.add("emitterId", invoice.);
-        parameters.add("emitterType", invoice.getEmitter().getType());
-        parameters.add("recipientId", invoice.getEmitter().getId());
-        parameters.add("recipientType", invoice.getEmitter().getType());
+        parameters.add("emitterId", invoice.getEmitter().getId().toString());
+        parameters.add("emitterType", invoice.getEmitter().getUserType());
+        parameters.add("recipientId", invoice.getEmitter().getId().toString());
+        parameters.add("recipientType", invoice.getEmitter().getUserType());
         parameters.add("xmlInvoice", invoice.getXmlInvoice());
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
        
 
         ResponseEntity<Json> response = restTemplate.postForEntity("http://localhost:5000/api/v1/uploadInvoice/"+"?"+"invoice=" +invoice, request, Json.class);
-        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));*/
+        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
     }
 }
