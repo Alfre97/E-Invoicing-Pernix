@@ -41,7 +41,6 @@ public class ServiceController {
 		try {
 			Service service = new Service();
 			service.setAmount(amount);
-			service.setCodeList(constructCodeList(codes));
 			service.setComercialUnitOfMeasurement(comercialUnitOfMeasurement);
 			service.setDetail(detail);
 			service.setDiscount(discount);
@@ -53,27 +52,36 @@ public class ServiceController {
 			service.setTotalAmount(totalAmount);
 			service.setUnitOfMeasurementName(unitOfMeasurementName);
 			service.setUnitOfMeasurementType(unitOfMeasurementType);
-			service.setTaxList(constructTaxList(taxes, totalAmount));
+			
+			service = serviceService.insert(service);
+			System.out.println(service.getId());
+			
+			service.setCodeList(constructCodeList(codes, service));
+			service.setTaxList(constructTaxList(taxes, service));
 
-			serviceService.insert(service);
+			service = serviceService.insert(service);
+			
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	private List<Tax> constructTaxList(String taxes, String totalAmount)
+	private List<Tax> constructTaxList(String taxes, Service service)
 			throws IllegalArgumentException, InvocationTargetException, Exception {
 		ArrayList<Tax> taxesList = new ArrayList<Tax>();
 		String[] taxDataList = taxes.split(", ");
 		Tax tax = new Tax();
 		TaxService taxService = new TaxService();
+		double taxAmount = 0.0;
 
 		if (taxDataList.length > 0) {
 			for (int i = 0; i < taxDataList.length; i++) {
-				tax.setId(Integer.parseInt(taxDataList[i]));
+				tax.setId(Integer.parseInt(taxDataList[i]));	
 				tax = taxService.read(tax);
-				double taxTotal = Double.parseDouble(tax.getRate()) * Integer.parseInt(totalAmount);
-				tax.setTaxTotal(Double.toString(taxTotal));
+				taxAmount = Double.parseDouble(tax.getRate()) * Double.parseDouble(service.getSubTotal());
+				tax.setTaxTotal(Double.toString(taxAmount));
+				tax.setServiceId(service.getId());
+				tax = taxService.modify(tax);
 				taxesList.add(tax);
 				tax = new Tax();
 			}
@@ -81,7 +89,7 @@ public class ServiceController {
 		return taxesList;
 	}
 
-	private List<Code> constructCodeList(String codes) throws IllegalArgumentException, InvocationTargetException, Exception {
+	private List<Code> constructCodeList(String codes, Service service) throws IllegalArgumentException, InvocationTargetException, Exception {
 		ArrayList<Code> codesList = new ArrayList<Code>();
 		String[] codeIdsList = codes.split(", ");
 		Code code = new Code();
@@ -91,6 +99,8 @@ public class ServiceController {
 			for (int i = 0; i < codeIdsList.length; i++) {
 				code.setId(Integer.parseInt(codeIdsList[i]));
 				code = codeService.read(code);
+				code.setServiceId(service.getId());
+				code = codeService.insert(code);
 				codesList.add(code);
 				code = new Code();
 			}

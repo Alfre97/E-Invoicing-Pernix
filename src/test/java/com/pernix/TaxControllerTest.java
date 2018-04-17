@@ -61,18 +61,18 @@ public class TaxControllerTest {
 		mockMvc.perform(post("/addTax").contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 				.content("code="
 						+ tax.getCode()
+						+ "&rate=" 
+						+ tax.getRate()
+						+ "&purchasePercentage="
+						+ tax.getPurchasePercentage()
 						+ "&date="
 						+ tax.getDate()
+						+ "&institutionName=" 
+						+ tax.getInstitutionName()
 						+ "&documentNumber="
 						+ tax.getDocumentNumber()
 						+ "&documentType=" 
-						+ tax.getDocumentType()
-						+ "&institutioName=" 
-						+ tax.getInstitutionName()
-						+ "&purchasePercentage="
-						+ tax.getPurchasePercentage()
-						+ "&rate=" 
-						+ tax.getRate())).andExpect(status().isOk())
+						+ tax.getDocumentType())).andExpect(status().isOk())
 				.andDo(print());
 	}
 

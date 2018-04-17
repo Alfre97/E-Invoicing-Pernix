@@ -60,7 +60,7 @@ public class ServiceControllerTest {
 		service.setPriceByUnit("1000");
 		service.setSubTotal("6000");
 		service.setTotalAmount("6000");
-		service.setTotal("");
+		service.setTotal("20000");
 		service.setUnitOfMeasurementName("Metro");
 		service.setUnitOfMeasurementType("m");
 		
