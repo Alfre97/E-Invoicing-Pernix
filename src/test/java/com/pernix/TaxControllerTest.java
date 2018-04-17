@@ -15,9 +15,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import com.pernix.controller.CodeController;
+import com.pernix.controller.TaxController;
 
-import entities.Code;
+import entities.Tax;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -27,36 +27,53 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration
-public class CodeControllerTest {
+public class TaxControllerTest {
 
 	@Autowired
 	private WebApplicationContext ctx;
 
 	MockMvc mockMvc;
 
-	Code code = new Code();
+	Tax tax = new Tax();
 
 	@Before
 	public void setUp() throws Exception {
 		mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
 
-	
-	 @Test public void getCode() throws Exception {
-	 mockMvc.perform(get("/getCodes").accept(MediaType.APPLICATION_JSON))
-	 .andExpect(status().isOk())
-	 .andExpect(content().contentType("application/json;charset=ISO-8859-1"))
-	 .andDo(print()); }
-	 
+	@Test
+	public void getTax() throws Exception {
+		mockMvc.perform(get("/getTaxes").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+				.andExpect(content().contentType("application/json;charset=ISO-8859-1")).andDo(print());
+	}
 
 	@Test
 	public void addCode() throws Exception {
-		Code code = new Code();
-		code.setCodeType("01");
-		code.setCode("12345678");
-		mockMvc.perform(post("/addCode").contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE).content("codeType=" + code.getCodeType() 
-																										+ "&code=" + code.getCode()))
-				.andExpect(status().isOk()).andDo(print());
+		
+		tax.setCode("01");
+		tax.setDate("4/17/2018, 8:33 AM");
+		tax.setDocumentNumber("1010102");
+		tax.setDocumentType("01");
+		tax.setInstitutionName("ARESEP");
+		tax.setPurchasePercentage("13");
+		tax.setRate("0.13");
+		
+		mockMvc.perform(post("/addTax").contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+				.content("code="
+						+ tax.getCode()
+						+ "&date="
+						+ tax.getDate()
+						+ "&documentNumber="
+						+ tax.getDocumentNumber()
+						+ "&documentType=" 
+						+ tax.getDocumentType()
+						+ "&institutioName=" 
+						+ tax.getInstitutionName()
+						+ "&purchasePercentage="
+						+ tax.getPurchasePercentage()
+						+ "&rate=" 
+						+ tax.getRate())).andExpect(status().isOk())
+				.andDo(print());
 	}
 
 	@Configuration
@@ -64,8 +81,8 @@ public class CodeControllerTest {
 	public static class TestConfiguration {
 
 		@Bean
-		public CodeController codeController() {
-			return new CodeController();
+		public TaxController taxController() {
+			return new TaxController();
 		}
 
 	}

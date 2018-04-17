@@ -46,16 +46,32 @@ public class InvoiceController {
 	 */
 
 	@RequestMapping("/uploadInvoice")
-	public Response uploadInvoice(@RequestParam String dateCreated, @RequestParam String sellTerm,
-			@RequestParam String paymentLapse, @RequestParam String paymentMethod,
-			@RequestParam String selectedCurrency, @RequestParam String exchangeRate,
-			@RequestParam String recordedServices, @RequestParam String exemptServices,
-			@RequestParam String recordedCommodity, @RequestParam String exemptCommodity,
-			@RequestParam String recordedTotal, @RequestParam String exemptTotal, @RequestParam String totalSell,
-			@RequestParam String totalDiscount, @RequestParam String netSell, @RequestParam String totalTax,
-			@RequestParam String totalVoucher, @RequestParam String resolutionNumber,
-			@RequestParam String resolutionDate, @RequestParam String otherText, @RequestParam int idEmitter,
-			@RequestParam int idReceiver, @RequestParam String servicesIds, @RequestParam String referenceInfo, @RequestParam String others)
+	public Response uploadInvoice(
+			@RequestParam String dateCreated, 
+			@RequestParam String sellTerm,
+			@RequestParam String paymentLapse, 
+			@RequestParam String paymentMethod,
+			@RequestParam String selectedCurrency,
+			@RequestParam String exchangeRate,
+			@RequestParam String recordedServices,
+			@RequestParam String exemptServices,
+			@RequestParam String recordedCommodity, 
+			@RequestParam String exemptCommodity,
+			@RequestParam String recordedTotal, 
+			@RequestParam String exemptTotal, 
+			@RequestParam String totalSell,
+			@RequestParam String totalDiscount, 
+			@RequestParam String netSell, 
+			@RequestParam String totalTax,
+			@RequestParam String totalVoucher, 
+			@RequestParam String resolutionNumber,
+			@RequestParam String resolutionDate,
+			@RequestParam String otherText, 
+			@RequestParam int idEmitter,
+			@RequestParam int idReceiver, 
+			@RequestParam String servicesIds, 
+			@RequestParam String referenceInfo, 
+			@RequestParam String others)
 			throws IllegalArgumentException, InvocationTargetException, Exception {
 
 		String consecutiveNumber = "";

@@ -23,11 +23,19 @@ public class ServiceController {
 	private ServiceService serviceService = new ServiceService();
 
 	@RequestMapping("/addService")
-	public void addService(@RequestParam String amount, @RequestParam String codes,
-			@RequestParam String comercialUnitOfMeasurement, @RequestParam String detail, @RequestParam String discount,
-			@RequestParam String discountNature, @RequestParam String lineNumber, @RequestParam String priceByUnit,
-			@RequestParam String subTotal, @RequestParam String total, @RequestParam String totalAmount,
-			@RequestParam String unitOfMeasurementName, @RequestParam String unitOfMeasurementType,
+	public void addService(@RequestParam String amount, 
+			@RequestParam String codes,
+			@RequestParam String comercialUnitOfMeasurement, 
+			@RequestParam String detail, 
+			@RequestParam String discount,
+			@RequestParam String discountNature, 
+			@RequestParam String lineNumber, 
+			@RequestParam String priceByUnit,
+			@RequestParam String subTotal, 
+			@RequestParam String total, 
+			@RequestParam String totalAmount,
+			@RequestParam String unitOfMeasurementName, 
+			@RequestParam String unitOfMeasurementType,
 			@RequestParam String taxes) throws Exception {
 
 		try {
