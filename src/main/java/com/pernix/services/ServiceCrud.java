@@ -12,8 +12,8 @@ import javax.persistence.Persistence;
 
 public abstract class ServiceCrud<E> {
 
-	private static EntityManagerFactory entityManagerFactory = null;
-	private static EntityManager em = null;
+	private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("e-invoicing");
+	private static EntityManager em;
 	Method method;
 
 	public E insert(E obj) throws Exception, IllegalArgumentException, InvocationTargetException {
@@ -158,28 +158,18 @@ public abstract class ServiceCrud<E> {
 	}
 
 	public static void startEntityManagerFactory() {
-		if (entityManagerFactory == null & em == null) {
-			try {
-				entityManagerFactory = Persistence.createEntityManagerFactory("e-invoicing");
-				em = entityManagerFactory.createEntityManager();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		try {
+			em = entityManagerFactory.createEntityManager();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	public static void stopEntityManagerFactory() {
-		if (entityManagerFactory != null & em != null) {
-			if (entityManagerFactory.isOpen() & em.isOpen()) {
-				try {
-					em.close();
-					entityManagerFactory.close();
-					em = null;
-					entityManagerFactory = null;
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+		try {
+			em.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

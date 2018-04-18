@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Tax {
@@ -12,39 +13,47 @@ public class Tax {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
 	@Column(nullable=false, name="code")
 	private String code;
+	
 	@Column(nullable=true, name="taxTotal")
 	private String taxTotal;
-	@Column(nullable=true, name="serviceId")
-	private Integer serviceId;
+	
+	private Service serviceTax;
+	
 	@Column(nullable=false, name="rate")
 	private String rate;
 	
 	//Exoneration data
 	@Column(nullable=false, name="date")
 	private String date;
+	
 	@Column(nullable=true, name="taxExonarated")
 	private String taxExonarated;
+	
 	@Column(nullable=false, name="institutionName")
 	private String institutionName;
+	
 	@Column(nullable=false, name="documentNumber")
 	private String documentNumber;
+	
 	@Column(nullable=false, name="purchasePercentage")
 	private String purchasePercentage;
+	
 	@Column(nullable=false, name="documentType")
 	private String documentType;
 	
 	public Tax() {}
 
-	public Tax(Integer id, String code, String taxTotal, Integer serviceId, String rate, String date,
+	public Tax(Integer id, String code, String taxTotal, Service serviceTax, String rate, String date,
 			String taxExonarated, String institutionName, String documentNumber, String purchasePercentage,
 			String documentType) {
 		super();
 		this.id = id;
 		this.code = code;
 		this.taxTotal = taxTotal;
-		this.serviceId = serviceId;
+		this.serviceTax = serviceTax;
 		this.rate = rate;
 		this.date = date;
 		this.taxExonarated = taxExonarated;
@@ -78,12 +87,13 @@ public class Tax {
 		this.taxTotal = taxTotal;
 	}
 
-	public Integer getServiceId() {
-		return serviceId;
+	@ManyToOne
+	public Service getServiceTax() {
+		return serviceTax;
 	}
 
-	public void setServiceId(Integer serviceId) {
-		this.serviceId = serviceId;
+	public void setServiceTax(Service serviceTax) {
+		this.serviceTax = serviceTax;
 	}
 
 	public String getRate() {

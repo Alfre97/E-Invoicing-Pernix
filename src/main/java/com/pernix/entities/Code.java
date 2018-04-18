@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Code {
@@ -12,23 +13,25 @@ public class Code {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
 	@Column(nullable=false, name="codeType")
 	private String codeType;
+	
 	@Column(nullable=false, name="code")
 	private String code;
-	@Column(nullable=true, name="serviceId")
-	private Integer serviceId;
+	
+	private Service serviceCode;
 	
 	public Code() {
 		
 	}
 
-	public Code(Integer id, String codeType, String code, int serviceId) {
+	public Code(Integer id, String codeType, String code, Service serviceCode) {
 		super();
 		this.id = id;
 		this.codeType = codeType;
 		this.code = code;
-		this.serviceId = serviceId;
+		this.serviceCode = serviceCode;
 	}
 
 	public Integer getId() {
@@ -55,11 +58,12 @@ public class Code {
 		this.code = code;
 	}
 
-	public int getServiceId() {
-		return serviceId;
+	@ManyToOne
+	public Service getServiceCode() {
+		return serviceCode;
 	}
 
-	public void setServiceId(int serviceId) {
-		this.serviceId = serviceId;
-	}	
+	public void setServiceCode(Service serviceCode) {
+		this.serviceCode = serviceCode;
+	}
 }

@@ -1,5 +1,6 @@
 package com.pernix.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -7,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -15,34 +15,46 @@ public class Service {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
 	@Column(nullable=false, name="lineNumber")
 	private String lineNumber;	
-	@OneToMany
-	@JoinColumn(name="serviceId", referencedColumnName="id")
-	List<Code> codeList;
+	
+	@OneToMany(mappedBy="serviceCode")
+	List<Code> codeList = new ArrayList<Code>();
+	
 	@Column(nullable=false, name="amount")
 	private String amount;
+	
 	@Column(nullable=false, name="unitOfMeasurementType")
 	private String unitOfMeasurementType;
+	
 	@Column(nullable=false, name="unitOfMeasurementName")
 	private String unitOfMeasurementName;
+	
 	@Column(nullable=false, name="comercialUnitOfMeasurement")
 	private String comercialUnitOfMeasurement;
+	
 	@Column(nullable=false, name="detail")
 	private String detail;
+	
 	@Column(nullable=false, name="priceByUnit")
 	private String priceByUnit;
+	
 	@Column(nullable=false, name="totalAmount")
 	private String totalAmount;
+	
 	@Column(nullable=false, name="discount")
 	private String discount;
+	
 	@Column(nullable=false, name="discountNature")
 	private String discountNature;
+	
 	@Column(nullable=false, name="subTotal")
 	private String subTotal;
-	@OneToMany
-	@JoinColumn(name="serviceId", referencedColumnName="id")
-	List<Tax> taxList;
+	
+	@OneToMany(mappedBy="serviceTax")
+	List<Tax> taxList = new ArrayList<Tax>();
+	
 	@Column(nullable=false, name="total")
 	private String total;
 	

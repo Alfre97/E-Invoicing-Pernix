@@ -80,7 +80,7 @@ public class ServiceController {
 				tax = taxService.read(tax);
 				taxAmount = Double.parseDouble(tax.getRate()) * Double.parseDouble(service.getSubTotal());
 				tax.setTaxTotal(Double.toString(taxAmount));
-				tax.setServiceId(service.getId());
+				tax.setServiceTax(service);
 				tax = taxService.modify(tax);
 				taxesList.add(tax);
 				tax = new Tax();
@@ -99,7 +99,7 @@ public class ServiceController {
 			for (int i = 0; i < codeIdsList.length; i++) {
 				code.setId(Integer.parseInt(codeIdsList[i]));
 				code = codeService.read(code);
-				code.setServiceId(service.getId());
+				code.setServiceCode(service);
 				code = codeService.insert(code);
 				codesList.add(code);
 				code = new Code();

@@ -14,7 +14,7 @@
 			<property
 				name="spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults"
 				value="false" />
-				
+
 			<property name="javax.persistence.jdbc.driver"
 				value="org.postgresql.Driver" /> <!-- DB Driver -->
 
@@ -35,6 +35,12 @@
 			<property name="hibernate.show_sql" value="true" /> <!-- Show SQL in console -->
 
 			<property name="hibernate.format_sql" value="true" /> <!-- Show SQL formatted -->
+
+			<property name="eclipselink.ddl-generation"
+				value="create-tables" />
+				
+			<property name="eclipselink.ddl-generation.output-mode"
+				value="database" />
 		</properties>
 	</persistence-unit>
 </persistence>
