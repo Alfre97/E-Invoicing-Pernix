@@ -26,7 +26,7 @@ public abstract class ServiceCrud<E> {
 			stopEntityManagerFactory();
 			return obj;
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println(e.getCause().getMessage());
 			return null;
 		}
 	}
@@ -55,7 +55,7 @@ public abstract class ServiceCrud<E> {
 				return null;
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println(e.getCause().getMessage());
 			return null;
 		}
 	}
@@ -73,7 +73,7 @@ public abstract class ServiceCrud<E> {
 			} else
 				return null;
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println(e.getCause().getMessage());
 			return null;
 		}
 	}
@@ -92,7 +92,7 @@ public abstract class ServiceCrud<E> {
 				stopEntityManagerFactory();
 			return false;
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println(e.getCause().getMessage());
 			return false;
 		}
 	}
@@ -112,7 +112,7 @@ public abstract class ServiceCrud<E> {
 				stopEntityManagerFactory();
 			return null;
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println(e.getCause().getMessage());
 			return null;
 		}
 	}
@@ -132,7 +132,7 @@ public abstract class ServiceCrud<E> {
 				stopEntityManagerFactory();
 			return null;
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println(e.getCause().getMessage());
 			return null;
 		}
 	}
@@ -153,7 +153,7 @@ public abstract class ServiceCrud<E> {
 			return null;
 		} catch (Exception e) {
 			stopEntityManagerFactory();
-			System.out.println(e);
+			System.out.println(e.getCause().getMessage());
 			return null;
 		}
 	}
@@ -165,7 +165,7 @@ public abstract class ServiceCrud<E> {
 			}
 			em = entityManagerFactory.createEntityManager();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getCause().getMessage());
 		}
 	}
 
@@ -174,7 +174,7 @@ public abstract class ServiceCrud<E> {
 			entityManagerFactory = null;
 			em.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getCause().getMessage());
 		}
 	}
 }
