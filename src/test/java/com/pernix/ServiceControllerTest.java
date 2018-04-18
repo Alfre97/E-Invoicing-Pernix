@@ -1,4 +1,4 @@
-package com.pernix;
+package java.com.pernix;
 
 import org.junit.Before;
 import org.junit.Test;
