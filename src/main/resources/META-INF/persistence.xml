@@ -11,6 +11,10 @@
 		<class>com.pernix.entities.Service</class>
 
 		<properties>
+			<property
+				name="spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults"
+				value="false" />
+				
 			<property name="javax.persistence.jdbc.driver"
 				value="org.postgresql.Driver" /> <!-- DB Driver -->
 
