@@ -12,7 +12,7 @@ import javax.persistence.Persistence;
 
 public abstract class ServiceCrud<E> {
 
-	private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("e-invoicing");
+	private static EntityManagerFactory entityManagerFactory = null;
 	private static EntityManager em;
 	Method method;
 
@@ -152,6 +152,7 @@ public abstract class ServiceCrud<E> {
 				stopEntityManagerFactory();
 			return null;
 		} catch (Exception e) {
+			stopEntityManagerFactory();
 			System.out.println(e);
 			return null;
 		}
@@ -159,6 +160,9 @@ public abstract class ServiceCrud<E> {
 
 	public static void startEntityManagerFactory() {
 		try {
+			if (entityManagerFactory == null) {
+				entityManagerFactory = Persistence.createEntityManagerFactory("e-invoicing");
+			}
 			em = entityManagerFactory.createEntityManager();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -167,6 +171,7 @@ public abstract class ServiceCrud<E> {
 
 	public static void stopEntityManagerFactory() {
 		try {
+			entityManagerFactory = null;
 			em.close();
 		} catch (Exception e) {
 			e.printStackTrace();
