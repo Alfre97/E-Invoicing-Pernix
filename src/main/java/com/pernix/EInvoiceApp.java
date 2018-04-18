@@ -21,7 +21,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class EInvoiceApp{
-
+	
     public static void main(String[] args) throws Exception {
     	 SpringApplication.run(EInvoiceApp.class, args);
     }
