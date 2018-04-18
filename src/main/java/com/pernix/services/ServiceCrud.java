@@ -17,135 +17,158 @@ public abstract class ServiceCrud<E> {
 	Method method;
 
 	public E insert(E obj) throws Exception, IllegalArgumentException, InvocationTargetException {
-		startEntityManagerFactory();
-		em.getTransaction().begin();
-		em.persist(obj);
-		em.flush();
-		em.getTransaction().commit();
-		stopEntityManagerFactory();
-		return obj;
+		try {
+			startEntityManagerFactory();
+			em.getTransaction().begin();
+			em.persist(obj);
+			em.flush();
+			em.getTransaction().commit();
+			stopEntityManagerFactory();
+			return obj;
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private final Class<E> getEntityClass() {
 
 		Class c = this.getClass();
-		ParameterizedType parameterizedType = (ParameterizedType) c
-				.getGenericSuperclass();
+		ParameterizedType parameterizedType = (ParameterizedType) c.getGenericSuperclass();
 		Type res = parameterizedType.getActualTypeArguments()[0];
 		return (Class<E>) res;
 	}
 
 	public E read(E obj) throws Exception, IllegalArgumentException, InvocationTargetException {
-		startEntityManagerFactory();
-		Class cls = obj.getClass();
-		method = cls.getMethod("getId");
-		Object idObj = method.invoke(obj);
-		Integer idObtenido = (Integer) idObj;
-		E objRead = (E) em.find(obj.getClass(), idObtenido);
-		stopEntityManagerFactory();
-		if (objRead != null) {
-			return objRead;
-		} else {
+		try {
+			startEntityManagerFactory();
+			Class cls = obj.getClass();
+			method = cls.getMethod("getId");
+			Object idObj = method.invoke(obj);
+			Integer idObtenido = (Integer) idObj;
+			E objRead = (E) em.find(obj.getClass(), idObtenido);
+			stopEntityManagerFactory();
+			if (objRead != null) {
+				return objRead;
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
 			return null;
 		}
 	}
 
 	public E modify(E obj) throws Exception, IllegalArgumentException, InvocationTargetException {
-		if (read(obj) != null) {
-			startEntityManagerFactory();
-			em.getTransaction().begin();
-			em.merge(obj);
-			em.flush();
-			em.getTransaction().commit();
-			stopEntityManagerFactory();
-			return obj;
-		} else
+		try {
+			if (read(obj) != null) {
+				startEntityManagerFactory();
+				em.getTransaction().begin();
+				em.merge(obj);
+				em.flush();
+				em.getTransaction().commit();
+				stopEntityManagerFactory();
+				return obj;
+			} else
+				return null;
+		} catch (Exception e) {
+			System.out.println(e);
 			return null;
+		}
 	}
 
 	public boolean delete(E obj) throws Exception, IllegalArgumentException, InvocationTargetException {
-		if (read(obj) != null) {
-			E objRead = read(obj);
-			startEntityManagerFactory();
-			em.getTransaction().begin();
-			em.remove(em.contains(objRead) ? objRead : em.merge(objRead));
-			em.getTransaction().commit();
-			stopEntityManagerFactory();
-			return true;
-		} else
-			stopEntityManagerFactory();
+		try {
+			if (read(obj) != null) {
+				E objRead = read(obj);
+				startEntityManagerFactory();
+				em.getTransaction().begin();
+				em.remove(em.contains(objRead) ? objRead : em.merge(objRead));
+				em.getTransaction().commit();
+				stopEntityManagerFactory();
+				return true;
+			} else
+				stopEntityManagerFactory();
 			return false;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
 	}
 
 	public List<E> list(E obj) throws Exception, IllegalArgumentException, InvocationTargetException {
-		startEntityManagerFactory();
-		if (obj != null) {
-			String jpql = "SELECT t FROM " + obj.getClass().getSimpleName() + " t";
-			List<E> lista = (List<E>) em.createQuery(jpql, obj.getClass()).getResultList();
-			stopEntityManagerFactory();
-			if (lista != null) {
-				return lista;
+		try {
+			startEntityManagerFactory();
+			if (obj != null) {
+				String jpql = "SELECT t FROM " + obj.getClass().getSimpleName() + " t";
+				List<E> lista = (List<E>) em.createQuery(jpql, obj.getClass()).getResultList();
+				stopEntityManagerFactory();
+				if (lista != null) {
+					return lista;
+				} else
+					return null;
 			} else
-				return null;
-		} else
-			stopEntityManagerFactory();
+				stopEntityManagerFactory();
 			return null;
-
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
 	}
 
 	public List<E> getEmitters(E obj) {
-		startEntityManagerFactory();
-		if (obj != null) {
-			String jpql = "SELECT e FROM " + obj.getClass().getSimpleName() + " e where usertype='Emitter'";
-			List<E> emitters = (List<E>) em.createQuery(jpql, obj.getClass()).getResultList();
-			stopEntityManagerFactory();
-			if (emitters != null) {
-				return emitters;
+		try {
+			startEntityManagerFactory();
+			if (obj != null) {
+				String jpql = "SELECT e FROM " + obj.getClass().getSimpleName() + " e where usertype='Emitter'";
+				List<E> emitters = (List<E>) em.createQuery(jpql, obj.getClass()).getResultList();
+				stopEntityManagerFactory();
+				if (emitters != null) {
+					return emitters;
+				} else
+					return null;
 			} else
-				return null;
-		} else
-			stopEntityManagerFactory();
+				stopEntityManagerFactory();
 			return null;
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
 	}
 
 	public List<E> getReceivers(E obj) {
-		startEntityManagerFactory();
-		if (obj != null) {
-			String jpql = "SELECT e FROM " + obj.getClass().getSimpleName() + " e where usertype='Receiver'";
-			List<E> emitters = (List<E>) em.createQuery(jpql, obj.getClass()).getResultList();
-			stopEntityManagerFactory();
-			if (emitters != null) {
-				return emitters;
+		try {
+			startEntityManagerFactory();
+			if (obj != null) {
+				String jpql = "SELECT e FROM " + obj.getClass().getSimpleName() + " e where usertype='Receiver'";
+				List<E> emitters = (List<E>) em.createQuery(jpql, obj.getClass()).getResultList();
+				stopEntityManagerFactory();
+				if (emitters != null) {
+					return emitters;
+				} else
+					return null;
 			} else
-				return null;
-		} else
-			stopEntityManagerFactory();
+				stopEntityManagerFactory();
 			return null;
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
 	}
 
 	public static void startEntityManagerFactory() {
-
 		if (entityManagerFactory == null & em == null) {
-
 			try {
-
 				entityManagerFactory = Persistence.createEntityManagerFactory("e-invoicing");
-
 				em = entityManagerFactory.createEntityManager();
-
 			} catch (Exception e) {
-
 				e.printStackTrace();
-
 			}
-
 		}
-
 	}
 
 	public static void stopEntityManagerFactory() {
-
 		if (entityManagerFactory != null & em != null) {
 			if (entityManagerFactory.isOpen() & em.isOpen()) {
 				try {
