@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
-import entities.Code;
-import entities.Service;
-import entities.Tax;
-import services.CodeService;
-import services.ServiceService;
-import services.TaxService;
+import com.pernix.entities.Code;
+import com.pernix.entities.Service;
+import com.pernix.entities.Tax;
+import com.pernix.services.CodeService;
+import com.pernix.services.ServiceService;
+import com.pernix.services.TaxService;
 
 @RestController
 public class ServiceController {

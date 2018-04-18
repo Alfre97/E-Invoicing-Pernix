@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
-import entities.Code;
-import services.CodeService;
+import com.pernix.entities.Code;
+import com.pernix.services.CodeService;
 
 @RestController
 public class CodeController {

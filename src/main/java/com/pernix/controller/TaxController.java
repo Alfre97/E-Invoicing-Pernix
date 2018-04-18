@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
-import entities.Tax;
-import services.TaxService;
+import com.pernix.entities.Tax;
+import com.pernix.services.TaxService;
 
 @RestController
 public class TaxController {
