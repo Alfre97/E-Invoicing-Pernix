@@ -1,4 +1,4 @@
-package java.com.pernix;
+package com.pernix;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
