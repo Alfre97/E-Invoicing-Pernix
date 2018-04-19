@@ -4,7 +4,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,7 +20,7 @@ import javax.persistence.Persistence;
 public abstract class ServiceCrud<E> {
 
 	private static EntityManagerFactory entityManagerFactory = null;
-	private static EntityManager em;
+	private static EntityManager em = null;
 	Method method;
 
 	public E insert(E obj) throws Exception, IllegalArgumentException, InvocationTargetException {
@@ -161,7 +168,7 @@ public abstract class ServiceCrud<E> {
 	public static void startEntityManagerFactory() {
 		try {
 			if (entityManagerFactory == null) {
-				entityManagerFactory = Persistence.createEntityManagerFactory("e-invoicing");
+				entityManagerFactory = Persistence.createEntityManagerFactory("E-Invoicing-API");
 			}
 			em = entityManagerFactory.createEntityManager();
 		} catch (Exception e) {
@@ -171,10 +178,40 @@ public abstract class ServiceCrud<E> {
 
 	public static void stopEntityManagerFactory() {
 		try {
+			if(entityManagerFactory != null) {
+				if(entityManagerFactory.isOpen())
+					entityManagerFactory.close();
 			entityManagerFactory = null;
 			em.close();
+			}
 		} catch (Exception e) {
 			System.out.println(e.getCause().getMessage());
 		}
+	}
+	
+	public void getCredentialsPersistence() 
+	{
+		EntityManagerFactory managerFactory = null;
+		Map<String, String> persistenceMap = new HashMap<String, String>();
+
+		persistenceMap.put("javax.persistence.jdbc.url", System.getenv("JDBC_DATABASE_URL"));
+		persistenceMap.put("javax.persistence.jdbc.user",System.getenv("JDBC_DATABASE_USERNAME"));
+		persistenceMap.put("javax.persistence.jdbc.password", System.getenv("JDBC_DATABASE_PASSWORD"));
+
+		managerFactory = Persistence.createEntityManagerFactory("E-Invoicing-API", persistenceMap);
+		EntityManager manager = managerFactory.createEntityManager();
+	}
+	
+	public static Connection getConnection() throws URISyntaxException, SQLException {
+		System.out.println("entra");
+	    URI dbUri = new URI(System.getenv("DATABASE_URL"));
+	    System.out.println(dbUri);
+	    String username = dbUri.getUserInfo().split(":")[0];
+	    System.out.println(username);
+	    String password = dbUri.getUserInfo().split(":")[1];
+	    System.out.println(password);
+	    String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+
+	    return DriverManager.getConnection(dbUrl, username, password);
 	}
 }

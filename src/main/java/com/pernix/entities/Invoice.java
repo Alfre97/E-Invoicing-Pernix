@@ -1,7 +1,14 @@
 package com.pernix.entities;
 
-public class Invoice {
+import java.io.Serializable;
 
+public class Invoice implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
     private String key;
     //Fecha de la factura en formato [yyyy-MM-dd'T'HH:mm:ssZ] como se define en [http://tools.ietf.org/html/rfc3339#section-5.6
     private String date;
