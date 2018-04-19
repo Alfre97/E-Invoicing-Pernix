@@ -14,7 +14,7 @@ public class HomeController {
     @Autowired
     OAuth2Service HaciendaOAuth2Service;
 
-    @RequestMapping("/")
+    @RequestMapping("/getAccess")
     public String index() {
       if(StringUtils.isEmpty(HaciendaOAuth2Service.getAccessToken()))
           return "error";
