@@ -109,3 +109,6 @@ Unit tests
 #### Other important stuff
 JPA best mapping oneToMany 
 [Here] (https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/)
+
+Issue with Spring solved 
+[Here] (https://github.com/spring-projects/spring-boot/issues/6792#issuecomment-243564648)
