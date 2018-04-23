@@ -8,6 +8,6 @@
         <property name="hibernate.connection.password">32e177c1e33e7b7ff78270bee9f668469090e646f445e57eb4dd9b5a106edd98</property>
         <property name="hibernate.connection.url">jdbc:postgresql://ec2-54-83-23-91.compute-1.amazonaws.com:5432/d27uk74u0bqcbs?sslmode=require&amp;user=ukzhldcprudyjz&amp;password=32e177c1e33e7b7ff78270bee9f668469090e646f445e57eb4dd9b5a106edd98</property>
         <property name="hibernate.connection.username">ukzhldcprudyjz</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL95Dialect</property>
     </session-factory>
 </hibernate-configuration>
