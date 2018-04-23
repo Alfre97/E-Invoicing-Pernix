@@ -31,6 +31,10 @@ public class Tax implements Serializable {
 
 	@Column(nullable = false, name = "rate")
 	private String rate;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "serviceId")
+    private Service service;
 
 	// Exoneration data
 	@Column(nullable = false, name = "date")
@@ -54,13 +58,15 @@ public class Tax implements Serializable {
 	public Tax() {
 	}
 
-	public Tax(Integer id, String code, String taxTotal, String rate, String date, String taxExonarated,
-			String institutionName, String documentNumber, String purchasePercentage, String documentType) {
+	public Tax(Integer id, String code, String taxTotal, String rate, Service service, String date,
+			String taxExonarated, String institutionName, String documentNumber, String purchasePercentage,
+			String documentType) {
 		super();
 		this.id = id;
 		this.code = code;
 		this.taxTotal = taxTotal;
 		this.rate = rate;
+		this.service = service;
 		this.date = date;
 		this.taxExonarated = taxExonarated;
 		this.institutionName = institutionName;
@@ -99,6 +105,14 @@ public class Tax implements Serializable {
 
 	public void setRate(String rate) {
 		this.rate = rate;
+	}
+
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
 	}
 
 	public String getDate() {

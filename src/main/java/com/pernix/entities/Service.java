@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -28,8 +27,11 @@ public class Service implements Serializable {
 	@Column(nullable=false, name="lineNumber")
 	private String lineNumber;	
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "serviceId")
+	@OneToMany(
+	        mappedBy = "service", 
+	        cascade = CascadeType.ALL, 
+	        orphanRemoval = true
+	    )
 	List<Code> codeList = new ArrayList<Code>();
 	
 	@Column(nullable=false, name="amount")
@@ -62,8 +64,11 @@ public class Service implements Serializable {
 	@Column(nullable=false, name="subTotal")
 	private String subTotal;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "serviceId")
+	@OneToMany(
+	        mappedBy = "service", 
+	        cascade = CascadeType.ALL, 
+	        orphanRemoval = true
+	    )
 	List<Tax> taxList = new ArrayList<Tax>();
 	
 	@Column(nullable=false, name="total")
@@ -212,4 +217,10 @@ public class Service implements Serializable {
 	public void setTotal(String total) {
 		this.total = total;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
 }
