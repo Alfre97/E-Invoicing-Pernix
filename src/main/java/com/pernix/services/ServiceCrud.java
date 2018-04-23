@@ -23,19 +23,12 @@ public abstract class ServiceCrud<E> {
 	private static EntityManager em = null;
 	Method method;
 
-	public E insert(E obj) throws Exception, IllegalArgumentException, InvocationTargetException {
-		try {
+	public void insert(E obj) throws Exception, IllegalArgumentException, InvocationTargetException {
 			startEntityManagerFactory();
 			em.getTransaction().begin();
 			em.persist(obj);
-			em.flush();
 			em.getTransaction().commit();
-			stopEntityManagerFactory();
-			return obj;
-		} catch (Exception e) {
-			System.out.println(e.getCause().getMessage());
-			return null;
-		}
+			//stopEntityManagerFactory();
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -55,7 +48,7 @@ public abstract class ServiceCrud<E> {
 			Object idObj = method.invoke(obj);
 			Integer idObtenido = (Integer) idObj;
 			E objRead = (E) em.find(obj.getClass(), idObtenido);
-			stopEntityManagerFactory();
+			//stopEntityManagerFactory();
 			if (objRead != null) {
 				return objRead;
 			} else {
@@ -73,9 +66,8 @@ public abstract class ServiceCrud<E> {
 				startEntityManagerFactory();
 				em.getTransaction().begin();
 				em.merge(obj);
-				em.flush();
 				em.getTransaction().commit();
-				stopEntityManagerFactory();
+				//stopEntityManagerFactory();
 				return obj;
 			} else
 				return null;
@@ -110,7 +102,7 @@ public abstract class ServiceCrud<E> {
 			if (obj != null) {
 				String jpql = "SELECT t FROM " + obj.getClass().getSimpleName() + " t";
 				List<E> lista = (List<E>) em.createQuery(jpql, obj.getClass()).getResultList();
-				stopEntityManagerFactory();
+				//stopEntityManagerFactory();
 				if (lista != null) {
 					return lista;
 				} else
@@ -119,7 +111,7 @@ public abstract class ServiceCrud<E> {
 				stopEntityManagerFactory();
 			return null;
 		} catch (Exception e) {
-			System.out.println(e.getCause().getMessage());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -166,26 +158,47 @@ public abstract class ServiceCrud<E> {
 	}
 
 	public static void startEntityManagerFactory() {
-		try {
-			if (entityManagerFactory == null) {
+
+		if (entityManagerFactory == null) {
+
+			try {
+
 				entityManagerFactory = Persistence.createEntityManagerFactory("E-Invoicing-API");
+
+				em = entityManagerFactory.createEntityManager();
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+
 			}
-			em = entityManagerFactory.createEntityManager();
-		} catch (Exception e) {
-			System.out.println(e.getCause().getMessage());
+
 		}
+
 	}
 
 	public static void stopEntityManagerFactory() {
-		try {
-			if(entityManagerFactory != null) {
-				if(entityManagerFactory.isOpen())
+
+		if (entityManagerFactory != null) {
+
+			if (entityManagerFactory.isOpen()) {
+
+				try {
+
 					entityManagerFactory.close();
-			entityManagerFactory = null;
-			em.close();
+
+				} catch (Exception e) {
+
+					e.printStackTrace();
+
+				}
+
 			}
-		} catch (Exception e) {
-			System.out.println(e.getCause().getMessage());
+
+			em.close();
+
+			entityManagerFactory = null;
+
 		}
 	}
 	

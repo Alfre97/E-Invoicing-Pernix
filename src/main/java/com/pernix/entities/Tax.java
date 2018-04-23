@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -16,51 +18,48 @@ public class Tax implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
-	
-	@Column(nullable=false, name="code")
-	private String code;
-	
-	@Column(nullable=true, name="taxTotal")
-	private String taxTotal;
-	
-	private Service serviceTax;
-	
-	@Column(nullable=false, name="rate")
-	private String rate;
-	
-	//Exoneration data
-	@Column(nullable=false, name="date")
-	private String date;
-	
-	@Column(nullable=true, name="taxExonarated")
-	private String taxExonarated;
-	
-	@Column(nullable=false, name="institutionName")
-	private String institutionName;
-	
-	@Column(nullable=false, name="documentNumber")
-	private String documentNumber;
-	
-	@Column(nullable=false, name="purchasePercentage")
-	private String purchasePercentage;
-	
-	@Column(nullable=false, name="documentType")
-	private String documentType;
-	
-	public Tax() {}
 
-	public Tax(Integer id, String code, String taxTotal, Service serviceTax, String rate, String date,
-			String taxExonarated, String institutionName, String documentNumber, String purchasePercentage,
-			String documentType) {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column(nullable = false, name = "code")
+	private String code;
+
+	@Column(nullable = true, name = "taxTotal")
+	private String taxTotal;
+
+	@Column(nullable = false, name = "rate")
+	private String rate;
+
+	// Exoneration data
+	@Column(nullable = false, name = "date")
+	private String date;
+
+	@Column(nullable = true, name = "taxExonarated")
+	private String taxExonarated;
+
+	@Column(nullable = false, name = "institutionName")
+	private String institutionName;
+
+	@Column(nullable = false, name = "documentNumber")
+	private String documentNumber;
+
+	@Column(nullable = false, name = "purchasePercentage")
+	private String purchasePercentage;
+
+	@Column(nullable = false, name = "documentType")
+	private String documentType;
+
+	public Tax() {
+	}
+
+	public Tax(Integer id, String code, String taxTotal, String rate, String date, String taxExonarated,
+			String institutionName, String documentNumber, String purchasePercentage, String documentType) {
 		super();
 		this.id = id;
 		this.code = code;
 		this.taxTotal = taxTotal;
-		this.serviceTax = serviceTax;
 		this.rate = rate;
 		this.date = date;
 		this.taxExonarated = taxExonarated;
@@ -92,15 +91,6 @@ public class Tax implements Serializable {
 
 	public void setTaxTotal(String taxTotal) {
 		this.taxTotal = taxTotal;
-	}
-
-	@ManyToOne
-	public Service getServiceTax() {
-		return serviceTax;
-	}
-
-	public void setServiceTax(Service serviceTax) {
-		this.serviceTax = serviceTax;
 	}
 
 	public String getRate() {
@@ -158,4 +148,10 @@ public class Tax implements Serializable {
 	public void setDocumentType(String documentType) {
 		this.documentType = documentType;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 }

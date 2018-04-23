@@ -48,7 +48,7 @@ public class TaxControllerTest {
 	}
 
 	@Test
-	public void addCode() throws Exception {
+	public void addTax() throws Exception {
 		
 		tax.setCode("01");
 		tax.setDate("4/17/2018, 8:33 AM");

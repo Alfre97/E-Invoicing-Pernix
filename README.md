@@ -91,16 +91,21 @@ JohnnyJosep Example
 CR Libre Hacienda Important Files
 [Here](https://github.com/CRLibre/fe-hacienda-cr-misc)
 
-####Diagrama de flujo para factura electronica 
+#### Diagrama de flujo para factura electronica 
 Diagrama
 [Here] (https://github.com/CRLibre/fe-hacienda-cr-docs/wiki/Diagrama-de-flujo-Factura-Electr%C3%B3nica-Costa-Rica
 
-####Compilado JAR para firmar las facturas
+#### Compilado JAR para firmar las facturas
 FirmaXadesEpes
 [Here] (https://github.com/JonhCR/FirmaXadesEpes
 
 #### Spring MVC JUnit tests 
 Unit tests
 [Here] (https://spring.io/guides/tutorials/bookmarks/)
-####Rest controller test example
+
+#### Rest controller test example
 [Here](https://blog.zenika.com/2013/01/15/rest-web-services-testing-with-spring-mvc/)
+
+#### Other important stuff
+JPA best mapping oneToMany 
+[Here] (https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/)

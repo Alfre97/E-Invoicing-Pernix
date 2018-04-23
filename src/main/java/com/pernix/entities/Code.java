@@ -27,18 +27,15 @@ public class Code implements Serializable {
 	@Column(nullable=false, name="code")
 	private String code;
 	
-	private Service serviceCode;
-	
 	public Code() {
 		
 	}
 
-	public Code(Integer id, String codeType, String code, Service serviceCode) {
+	public Code(Integer id, String codeType, String code) {
 		super();
 		this.id = id;
 		this.codeType = codeType;
 		this.code = code;
-		this.serviceCode = serviceCode;
 	}
 
 	public Integer getId() {
@@ -65,12 +62,9 @@ public class Code implements Serializable {
 		this.code = code;
 	}
 
-	@ManyToOne
-	public Service getServiceCode() {
-		return serviceCode;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-	public void setServiceCode(Service serviceCode) {
-		this.serviceCode = serviceCode;
-	}
+	
 }

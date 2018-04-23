@@ -53,14 +53,10 @@ public class ServiceController {
 			service.setUnitOfMeasurementName(unitOfMeasurementName);
 			service.setUnitOfMeasurementType(unitOfMeasurementType);
 			
-			service = serviceService.insert(service);
-			System.out.println(service.getId());
-			
 			service.setCodeList(constructCodeList(codes, service));
 			service.setTaxList(constructTaxList(taxes, service));
-
-			service = serviceService.insert(service);
 			
+			service = serviceService.insertService(service);	
 		} catch (Exception e) {
 			throw e;
 		}
@@ -80,8 +76,6 @@ public class ServiceController {
 				tax = taxService.read(tax);
 				taxAmount = Double.parseDouble(tax.getRate()) * Double.parseDouble(service.getSubTotal());
 				tax.setTaxTotal(Double.toString(taxAmount));
-				tax.setServiceTax(service);
-				tax = taxService.modify(tax);
 				taxesList.add(tax);
 				tax = new Tax();
 			}
@@ -99,8 +93,6 @@ public class ServiceController {
 			for (int i = 0; i < codeIdsList.length; i++) {
 				code.setId(Integer.parseInt(codeIdsList[i]));
 				code = codeService.read(code);
-				code.setServiceCode(service);
-				code = codeService.insert(code);
 				codesList.add(code);
 				code = new Code();
 			}

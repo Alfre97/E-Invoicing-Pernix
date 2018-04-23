@@ -16,8 +16,9 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.pernix.controller.ServiceController;
-
+import com.pernix.entities.Code;
 import com.pernix.entities.Service;
+import com.pernix.entities.Tax;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -42,13 +43,13 @@ public class ServiceControllerTest {
 	}
 
 	@Test
-	public void getTax() throws Exception {
+	public void getServices() throws Exception {
 		mockMvc.perform(get("/getServices").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().contentType("application/json;charset=ISO-8859-1")).andDo(print());
 	}
 
 	@Test
-	public void addCode() throws Exception {
+	public void addService() throws Exception {
 		String codes = "01, ";
 		String taxes = "01, ";
 		service.setAmount("6");
@@ -81,6 +82,8 @@ public class ServiceControllerTest {
 						+ service.getLineNumber() 
 						+ "&priceByUnit=" 
 						+ service.getPriceByUnit()
+						+ "&total=" 
+						+ service.getTotal()		
 						+ "&subTotal=" 
 						+ service.getSubTotal()
 						+ "&totalAmount=" 

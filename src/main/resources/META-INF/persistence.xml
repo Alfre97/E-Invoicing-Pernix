@@ -6,7 +6,6 @@
 
 	<persistence-unit name="E-Invoicing-API"
 		transaction-type="RESOURCE_LOCAL">
-		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>com.pernix.entities.Code</class>
 		<class>com.pernix.entities.Service</class>
 		<class>com.pernix.entities.Tax</class>
