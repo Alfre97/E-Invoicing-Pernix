@@ -1,4 +1,4 @@
-package java.com.pernix;
+package com.pernix.test;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @ContextConfiguration
 public class CodeControllerTest {
 
-	@Autowired
+	/*@Autowired
 	private WebApplicationContext ctx;
 
 	MockMvc mockMvc;
@@ -68,5 +68,5 @@ public class CodeControllerTest {
 			return new CodeController();
 		}
 
-	}
+	}*/
 }

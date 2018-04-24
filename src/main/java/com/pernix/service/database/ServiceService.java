@@ -1,4 +1,4 @@
-package com.pernix.services;
+package com.pernix.service.database;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import com.pernix.entities.UserEmitterReceiver;
-import com.pernix.services.UserService;
+import com.pernix.service.database.UserService;
 
 @RestController
 public class UserController {

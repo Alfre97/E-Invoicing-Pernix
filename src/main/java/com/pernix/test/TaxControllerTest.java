@@ -1,4 +1,4 @@
-package java.com.pernix;
+package com.pernix.test;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @ContextConfiguration
 public class TaxControllerTest {
 
-	@Autowired
+	/*@Autowired
 	private WebApplicationContext ctx;
 
 	MockMvc mockMvc;
@@ -85,5 +85,5 @@ public class TaxControllerTest {
 			return new TaxController();
 		}
 
-	}
+	}*/
 }

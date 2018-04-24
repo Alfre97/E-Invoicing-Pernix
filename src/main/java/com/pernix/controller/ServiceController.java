@@ -13,9 +13,9 @@ import com.google.gson.Gson;
 import com.pernix.entities.Code;
 import com.pernix.entities.Service;
 import com.pernix.entities.Tax;
-import com.pernix.services.CodeService;
-import com.pernix.services.ServiceService;
-import com.pernix.services.TaxService;
+import com.pernix.service.database.CodeService;
+import com.pernix.service.database.ServiceService;
+import com.pernix.service.database.TaxService;
 
 @RestController
 public class ServiceController {
