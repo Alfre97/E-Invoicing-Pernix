@@ -234,6 +234,11 @@
 							<goal>repackage</goal>
 						</goals>
 						<configuration>
+							<archive>
+								<manifest>
+									<mainClass>com.pernix.EInvoiceApp</mainClass>
+								</manifest>
+							</archive>
 							<classifier>exec</classifier>
 						</configuration>
 					</execution>
