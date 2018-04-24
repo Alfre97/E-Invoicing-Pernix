@@ -223,15 +223,6 @@
 		</dependency>
 	</dependencies>
 
-	<profiles>
-		<profile>
-			<id>Pernix</id>
-			<properties>
-				<spring.boot.mainclass>com.pernix.EInvoiceApp</spring.boot.mainclass>
-			</properties>
-		</profile>
-	</profiles>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -243,7 +234,7 @@
 							<goal>repackage</goal>
 						</goals>
 						<configuration>
-							<mainClass>com.pernix.EInvoiceApp</mainClass>
+							<mainClass>${spring.boot.mainclass}</mainClass>
 						</configuration>
 					</execution>
 				</executions>
