@@ -112,3 +112,6 @@ JPA best mapping oneToMany
 
 Issue with Spring solved 
 [Here] (https://github.com/spring-projects/spring-boot/issues/6792#issuecomment-243564648)
+
+Deploying in Heroku
+[Here] (https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started-first-application.html)

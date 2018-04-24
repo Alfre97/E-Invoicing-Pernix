@@ -223,11 +223,30 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>Pernix</id>
+			<properties>
+				<spring.boot.mainclass>com.pernix.EInvoiceApp</spring.boot.mainclass>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<mainClass>com.pernix.EInvoiceApp</mainClass>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
