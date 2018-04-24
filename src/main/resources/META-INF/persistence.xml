@@ -31,6 +31,10 @@
 			<property name="hibernate.show_sql" value="true" /> <!-- Show SQL in console -->
 
 			<property name="hibernate.format_sql" value="true" /> <!-- Show SQL formatted -->
+
+			<property name="exclude-unlisted-classes" value="true" />
+			
+			<property name="hibernate.archive.autodetection" value="hbm" />
 		</properties>
 	</persistence-unit>
 </persistence>
