@@ -235,11 +235,6 @@
 						</goals>
 						<configuration>
 							<classifier>exec</classifier>
-							<archive>
-								<manifest>
-									<mainClass>com.pernix.EInvoiceApp</mainClass>
-								</manifest>
-							</archive>
 						</configuration>
 					</execution>
 				</executions>

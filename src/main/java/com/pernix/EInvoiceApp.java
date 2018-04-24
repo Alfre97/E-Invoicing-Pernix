@@ -17,26 +17,10 @@
 package com.pernix;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@Configuration
-@ComponentScan
-@EnableAutoConfiguration
 @SpringBootApplication
 public class EInvoiceApp{
-	
-	@RequestMapping("/")
-	@ResponseBody
-	public String start() {
-		return "E-Invoice-Server started"; 	
-	}
 	
     public static void main(String[] args) throws Exception {
     	 SpringApplication.run(EInvoiceApp.class, args);
