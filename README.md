@@ -82,7 +82,7 @@ For more information about using Java on Heroku, see these Dev Center articles:
 Java on Heroku
 [Here](https://devcenter.heroku.com/categories/java)
 
-####Sign XML example using xades4j java library
+#### Sign XML example using xades4j java library
 
 JohnnyJosep Example 
 [Here](https://gist.github.com/JohnnyJosep/29cd545db3d0b7abd23279b56d4db194)
@@ -93,25 +93,25 @@ CR Libre Hacienda Important Files
 
 #### Diagrama de flujo para factura electronica 
 Diagrama
-[Here] (https://github.com/CRLibre/fe-hacienda-cr-docs/wiki/Diagrama-de-flujo-Factura-Electr%C3%B3nica-Costa-Rica
+[Here](https://github.com/CRLibre/fe-hacienda-cr-docs/wiki/Diagrama-de-flujo-Factura-Electr%C3%B3nica-Costa-Rica
 
 #### Compilado JAR para firmar las facturas
 FirmaXadesEpes
-[Here] (https://github.com/JonhCR/FirmaXadesEpes
+[Here](https://github.com/JonhCR/FirmaXadesEpes
 
 #### Spring MVC JUnit tests 
 Unit tests
-[Here] (https://spring.io/guides/tutorials/bookmarks/)
+[Here](https://spring.io/guides/tutorials/bookmarks/)
 
 #### Rest controller test example
 [Here](https://blog.zenika.com/2013/01/15/rest-web-services-testing-with-spring-mvc/)
 
 #### Other important stuff
 JPA best mapping oneToMany 
-[Here] (https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/)
+[Here](https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/)
 
 Issue with Spring solved 
-[Here] (https://github.com/spring-projects/spring-boot/issues/6792#issuecomment-243564648)
+[Here](https://github.com/spring-projects/spring-boot/issues/6792#issuecomment-243564648)
 
 Deploying in Heroku
-[Here] (https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started-first-application.html)
+[Here](https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started-first-application.html)
