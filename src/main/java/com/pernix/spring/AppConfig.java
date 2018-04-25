@@ -37,7 +37,7 @@ public class AppConfig {
 		LocalContainerEntityManagerFactoryBean lfb = new LocalContainerEntityManagerFactoryBean();
 		lfb.setDataSource(dataSource());
 		lfb.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-		lfb.setPackagesToScan("com.journaldev.spring.model");
+		lfb.setPackagesToScan("com.pernix.spring.model");
 		lfb.setJpaProperties(hibernateProps());
 		return lfb;
 	}
