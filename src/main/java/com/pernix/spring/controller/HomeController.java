@@ -14,10 +14,10 @@ public class HomeController {
     @Autowired
     OAuth2Service HaciendaOAuth2Service;
 
-    @RequestMapping("/getAccess")
+    @RequestMapping("/")
     public String index() {
       if(StringUtils.isEmpty(HaciendaOAuth2Service.getAccessToken()))
           return "error";
-      return "Successfully token access.";
+      return "SUCCESSFULLY TOKEN ACCESS." + " PERNIX E-INVOICE JAVA SERVER STARTED SUCCESSFULLY.";
     }
 }
