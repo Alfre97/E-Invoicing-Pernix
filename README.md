@@ -62,7 +62,7 @@ Informacion sobre XADES4J
 #### Cryptography examples
 
 XADES4J 
-[Here](https://github.com/luisgoncalves/xades4j](https://github.com/luisgoncalves/xades4j)
+[Here](https://github.com/luisgoncalves/xades4j)
 
 Examples 
 [Here](https://www.programcreek.com/java-api-examples/index.php?api=javax.xml.crypto.dsig.XMLSignatureFactory)
@@ -71,10 +71,10 @@ Test Invoice
 [Here](https://github.com/carloswky/pp/blob/master/afirma-crypto-xades/src/test/java/es/gob/afirma/signers/xades/TestFacturaE.java)
 
 Apache signature 
-[Here](http://camel.apache.org/xml-security-component.html](http://camel.apache.org/xml-security-component.html)
+[Here](http://camel.apache.org/xml-security-component.html)
 
 Spring Apache Camel Tutorial
-[Here](http://www.baeldung.com/spring-apache-camel-tutorial](http://www.baeldung.com/spring-apache-camel-tutorial)
+[Here](http://www.baeldung.com/spring-apache-camel-tutorial)
 
 
 For more information about using Java on Heroku, see these Dev Center articles:
@@ -93,11 +93,11 @@ CR Libre Hacienda Important Files
 
 #### Diagrama de flujo para factura electronica 
 Diagrama
-[Here](https://github.com/CRLibre/fe-hacienda-cr-docs/wiki/Diagrama-de-flujo-Factura-Electr%C3%B3nica-Costa-Rica
+[Here](https://github.com/CRLibre/fe-hacienda-cr-docs/wiki/Diagrama-de-flujo-Factura-Electr%C3%B3nica-Costa-Rica)
 
 #### Compilado JAR para firmar las facturas
 FirmaXadesEpes
-[Here](https://github.com/JonhCR/FirmaXadesEpes
+[Here](https://github.com/JonhCR/FirmaXadesEpes)
 
 #### Spring MVC JUnit tests 
 Unit tests
