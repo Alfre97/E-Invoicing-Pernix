@@ -16,12 +16,22 @@
 
 package com.pernix;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan
 public class EInvoiceApp{
+	
+	@Autowired
+    private static DataSource dataSource; 
+	
     public static void main(String[] args) throws Exception {
     	 SpringApplication.run(EInvoiceApp.class, args);
+    	 System.out.println("Connection Polling datasource : " + dataSource); 
     }
 }

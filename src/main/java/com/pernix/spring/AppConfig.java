@@ -5,10 +5,12 @@ import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -20,12 +22,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = { "com.pernix.spring.repository" })
 public class AppConfig {
+	@Autowired
+	Environment enviroment;
 	
-	@Bean(destroyMethod = "close")
-    @ConfigurationProperties(prefix = "source.properties")
-    public DataSource dataSource(){
-        return DataSourceBuilder.create().build();
-    }
+	@Primary
+	@Bean
+	@ConfigurationProperties(prefix = "application.properties")
+	public DataSource pricingDatasource() {
+	      return DataSourceBuilder.create().build();
+	}
 
 	@Bean
 	LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, Environment env) {

@@ -115,3 +115,6 @@ Issue with Spring solved
 
 Deploying in Heroku
 [Here](https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started-first-application.html)
+
+Connect to HerokuDB using Hikari
+[Here](https://tomshacham.com/2018/01/01/using-hikaricp-to-connect-to-heroku-postgresql-in-kotlin/)
