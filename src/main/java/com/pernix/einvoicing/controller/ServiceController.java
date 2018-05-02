@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,14 +13,15 @@ import com.google.gson.Gson;
 import com.pernix.einvoicing.model.Code;
 import com.pernix.einvoicing.model.Services;
 import com.pernix.einvoicing.model.Tax;
-import com.pernix.einvoicing.service.dbservices.CodeService;
-import com.pernix.einvoicing.service.dbservices.ServiceServices;
-import com.pernix.einvoicing.service.dbservices.TaxService;
+import com.pernix.einvoicing.service.CodeService;
+import com.pernix.einvoicing.service.ServiceServices;
+import com.pernix.einvoicing.service.TaxService;
 
 @RestController
 public class ServiceController {
 
-	private ServiceServices serviceService = new ServiceServices();
+	@Autowired
+	private ServiceServices serviceService;
 
 	@RequestMapping("/addService")
 	public void addService(@RequestParam String amount, 

@@ -1,4 +1,4 @@
-package com.pernix.einvoicing.service.dbservices;
+package com.pernix.einvoicing.service;
 
 import java.util.List;
 

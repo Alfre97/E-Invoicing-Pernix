@@ -1,17 +1,19 @@
 package com.pernix.einvoicing.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.pernix.einvoicing.model.Code;
-import com.pernix.einvoicing.service.dbservices.CodeService;
+import com.pernix.einvoicing.service.CodeService;
 
 @RestController
 public class CodeController {
 	
-	CodeService codeService = new CodeService();
+	@Autowired
+	CodeService codeService;
 
 	@RequestMapping("/addCode")
 	public void addCode(

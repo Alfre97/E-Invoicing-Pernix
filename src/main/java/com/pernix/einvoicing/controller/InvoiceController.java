@@ -34,8 +34,8 @@ import com.pernix.einvoicing.model.Code;
 import com.pernix.einvoicing.model.Services;
 import com.pernix.einvoicing.model.Tax;
 import com.pernix.einvoicing.model.UserEmitterReceiver;
-import com.pernix.einvoicing.service.dbservices.ServiceServices;
-import com.pernix.einvoicing.service.dbservices.UserEmitterReceiverService;
+import com.pernix.einvoicing.service.ServiceServices;
+import com.pernix.einvoicing.service.UserEmitterReceiverService;
 
 @RestController
 public class InvoiceController {
