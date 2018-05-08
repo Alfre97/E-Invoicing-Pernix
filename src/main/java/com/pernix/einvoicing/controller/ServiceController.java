@@ -39,7 +39,6 @@ public class ServiceController {
 			@RequestParam String unitOfMeasurementType,
 			@RequestParam String taxes) throws Exception {
 
-		try {
 			Services service = new Services();
 			service.setAmount(amount);
 			service.setComercialUnitOfMeasurement(comercialUnitOfMeasurement);
@@ -58,9 +57,6 @@ public class ServiceController {
 			service.setTaxList(constructTaxList(taxes, service));
 			
 			serviceService.addService(service);	
-		} catch (Exception e) {
-			throw e;
-		}
 	}
 
 	private List<Tax> constructTaxList(String taxes, Services service)

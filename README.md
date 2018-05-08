@@ -53,9 +53,6 @@ Hacienda Schema
 Hacienda manual help 
 [here](http://www.hacienda.go.cr/docs/5a550c170342c_Manual%20de%20uso%20de%20la%20Herramienta%20Gratuita%20de%20Facturacion.pdf)
 
-XML formats to Hacienda 
-[Here](https://tribunet.hacienda.go.cr/FormatosYEstructurasXML.jsp#)
-
 Informacion sobre XADES4J
 [Here](http://luisgoncalves.github.io/xades4j/javadocs/1.3.1/reference/xades4j/package-summary.html)
 

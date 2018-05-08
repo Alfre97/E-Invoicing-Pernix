@@ -24,7 +24,7 @@ public class TaxController {
 			@RequestParam String institutionName, 
 			@RequestParam String documentNumber,
 			@RequestParam String documentType) throws Exception {
-		
+
 		Tax tax = new Tax();
 		tax.setCode(code);
 		tax.setRate(rate);
@@ -46,6 +46,17 @@ public class TaxController {
 		Gson gson = new Gson();
 		try {
 			String jsonService = gson.toJson(taxService.getAllTaxes());
+			return jsonService;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@RequestMapping("/getNotLinkedTaxes")
+	public String getNotLinkedTaxes() throws Exception {
+		Gson gson = new Gson();
+		try {
+			String jsonService = gson.toJson(taxService.getNotLinkedTaxes());
 			return jsonService;
 		} catch (Exception e) {
 			throw e;

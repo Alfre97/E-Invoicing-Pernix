@@ -7,12 +7,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pernix.einvoicing.model.Code;
+import com.pernix.einvoicing.repository.CodeJPARepository;
 import com.pernix.einvoicing.repository.CodeRepository;
 
 @Service
 public class CodeService {
 	@Autowired
 	CodeRepository<Code> codeRepository;
+	
+	@Autowired
+	CodeJPARepository<Code> codeJPARepository;
 
 	@Transactional
 	public List<Code> getAllCodes() 	{
@@ -37,5 +41,10 @@ public class CodeService {
 	@Transactional
 	public Code findOneCode(Code code) {
 		return codeRepository.findById(code.getId()).get();
+	}
+	
+	@Transactional
+	public List<Code> getNotLinkedCodes() {
+		return (List<Code>) codeJPARepository.findNoService();
 	}
 }
