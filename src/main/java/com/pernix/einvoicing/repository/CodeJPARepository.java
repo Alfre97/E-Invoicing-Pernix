@@ -8,6 +8,6 @@ import com.pernix.einvoicing.model.Code;
 
 public interface CodeJPARepository<P> extends BaseJPARepository<Code, Long> {
 
-	 @Query("SELECT * from code c where c.service_id = null")
+	 @Query("SELECT c FROM Code c WHERE c.service = null")
 		List<Code> findNoService();
 }
