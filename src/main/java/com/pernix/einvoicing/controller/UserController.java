@@ -1,6 +1,8 @@
 package com.pernix.einvoicing.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +18,7 @@ public class UserController {
 	private UserEmitterReceiverService userService;
 	
 	@RequestMapping("/addUser")
-    public void addUser(@RequestParam(value="userName") String name, 
+    public ResponseEntity<Boolean> addUser(@RequestParam(value="userName") String name, 
     		@RequestParam String comercialName,
     		@RequestParam String identificationType, 
     		@RequestParam String identificationNumber, 
@@ -54,38 +56,33 @@ public class UserController {
         try
         {
             userService.addUser(user);
-        }
-        catch(Exception e)
-        {
-            throw e;
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
         }
     }
 	
 	@RequestMapping("/getEmitters")
-	public String getEmitters() throws Exception {
+	public ResponseEntity<String> getEmitters() throws Exception {
 		Gson gson= new Gson();
 		try 
 		{
-			String json= gson.toJson(userService.getAllUsers());
-			return json;
-		}
-		catch(Exception e) 
-		{
-			throw e;
+			String jsonService = gson.toJson(userService.getAllUsers());
+			return new ResponseEntity<String>(jsonService, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>(HttpStatus.CONFLICT);
 		}
 	}
 	
 	@RequestMapping("/getReceivers")
-	public String getReceivers() throws Exception {
+	public ResponseEntity<String> getReceivers() throws Exception {
 		Gson gson= new Gson();
 		try 
 		{
-			String json= gson.toJson(userService.getAllUsers());
-			return json;
-		}
-		catch(Exception e) 
-		{
-			throw e;
+			String jsonService = gson.toJson(userService.getAllUsers());
+			return new ResponseEntity<String>(jsonService, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>(HttpStatus.CONFLICT);
 		}
 	}
 }

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +26,7 @@ public class ServiceController {
 	private ServiceServices serviceService;
 
 	@RequestMapping("/addService")
-	public void addService(@RequestParam String amount, 
+	public ResponseEntity<Boolean> addService(@RequestParam String amount, 
 			@RequestParam String codes,
 			@RequestParam String comercialUnitOfMeasurement, 
 			@RequestParam String detail, 
@@ -39,6 +41,7 @@ public class ServiceController {
 			@RequestParam String unitOfMeasurementType,
 			@RequestParam String taxes) throws Exception {
 
+		try {
 			Services service = new Services();
 			service.setAmount(amount);
 			service.setComercialUnitOfMeasurement(comercialUnitOfMeasurement);
@@ -57,6 +60,10 @@ public class ServiceController {
 			service.setTaxList(constructTaxList(taxes, service));
 			
 			serviceService.addService(service);	
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
+		}
 	}
 
 	private List<Tax> constructTaxList(String taxes, Services service)
@@ -99,13 +106,13 @@ public class ServiceController {
 	}
 
 	@RequestMapping("/getServices")
-	public String getServices() throws Exception {
+	public ResponseEntity<String> getServices() throws Exception {
 		Gson gson = new Gson();
 		try {
 			String jsonService = gson.toJson(serviceService.getAllServices());
-			return jsonService;
+			return new ResponseEntity<String>(jsonService, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			return new ResponseEntity<String>(HttpStatus.CONFLICT);
 		}
 	}
 }

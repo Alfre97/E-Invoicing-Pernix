@@ -1,6 +1,8 @@
 package com.pernix.einvoicing.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +18,7 @@ public class CodeController {
 	CodeService codeService;
 
 	@RequestMapping("/addCode")
-	public void addCode(
+	public ResponseEntity<Boolean> addCode(
 			@RequestParam String codeType, 
 			@RequestParam String code) throws Exception {
 		
@@ -26,30 +28,43 @@ public class CodeController {
 
 		try {
 			codeService.addCode(cod);
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
 		}
 	}
 	
 	@RequestMapping("/getCodes")
-	public String getCodes() throws Exception {
+	public ResponseEntity<String> getCodes() throws Exception {
 		Gson gson = new Gson();
 		try {
 			String jsonService = gson.toJson(codeService.getAllCodes());
-			return jsonService;
+			return new ResponseEntity<String>(jsonService, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			return new ResponseEntity<String>(HttpStatus.CONFLICT);
 		}
 	}
 	
 	@RequestMapping("/getNotLinkedCodes")
-	public String getNotLinkedCodes() throws Exception {
+	public ResponseEntity<String> getNotLinkedCodes() throws Exception {
 		Gson gson = new Gson();
 		try {
 			String jsonService = gson.toJson(codeService.getNotLinkedCodes());
-			return jsonService;
+			return new ResponseEntity<String>(jsonService, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			return new ResponseEntity<String>(HttpStatus.CONFLICT);
+		}
+	}
+	
+	@RequestMapping("/deleteCode")
+	public ResponseEntity<Boolean> deleteCode(@RequestParam Long codeId) throws Exception {
+		Code code = new Code();
+		try {
+			code.setId(codeId);
+			codeService.deleteCode(code);
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Boolean>(false, HttpStatus.CONFLICT);
 		}
 	}
 }
