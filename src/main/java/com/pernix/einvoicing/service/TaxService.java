@@ -7,12 +7,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pernix.einvoicing.model.Tax;
+import com.pernix.einvoicing.repository.TaxJPARepository;
 import com.pernix.einvoicing.repository.TaxRepository;
 
 @Service
 public class TaxService {
 	@Autowired
 	TaxRepository<Tax> taxRepository;
+	
+	@Autowired
+	TaxJPARepository<Tax> taxJPARepository;
 
 	@Transactional
 	public List<Tax> getAllTaxes() 	{
@@ -37,5 +41,10 @@ public class TaxService {
 	@Transactional
 	public Tax findOneTax(Tax tax) {
 		return taxRepository.findById(tax.getId()).get();
+	}
+	
+	@Transactional
+	public List<Tax> getNotLinkedTaxes() {
+		return (List<Tax>) taxJPARepository.findNoService();
 	}
 }

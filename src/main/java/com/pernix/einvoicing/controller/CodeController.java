@@ -41,4 +41,15 @@ public class CodeController {
 			throw e;
 		}
 	}
+	
+	@RequestMapping("/getNotLinkedCodes")
+	public String getNotLinkedCodes() throws Exception {
+		Gson gson = new Gson();
+		try {
+			String jsonService = gson.toJson(codeService.getNotLinkedCodes());
+			return jsonService;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 }
