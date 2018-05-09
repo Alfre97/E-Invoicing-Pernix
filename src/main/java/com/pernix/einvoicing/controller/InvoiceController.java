@@ -5,9 +5,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.DatatypeFactory;
@@ -39,7 +39,6 @@ import com.pernix.einvoicing.model.Tax;
 import com.pernix.einvoicing.model.Receiver;
 import com.pernix.einvoicing.service.EmitterService;
 import com.pernix.einvoicing.service.InvoiceService;
-import com.pernix.einvoicing.service.ServiceServices;
 import com.pernix.einvoicing.service.ReceiverService;
 
 @RestController
@@ -48,102 +47,69 @@ public class InvoiceController {
 	/*
 	 * @Autowired InvoicerService HaciendaInvoicer;
 	 */
-	
+
 	@Autowired
 	private InvoiceService invoiceService;
 
 	@RequestMapping("/addInvoice")
-	public ResponseEntity<Boolean> uploadInvoice(
-			@RequestParam String dateCreated, 
-			@RequestParam String sellTerm,
-			@RequestParam String paymentLapse, 
-			@RequestParam String paymentMethod,
-			@RequestParam String selectedCurrency,
-			@RequestParam String exchangeRate,
-			@RequestParam String recordedServices,
-			@RequestParam String exemptServices,
-			@RequestParam String recordedCommodity, 
-			@RequestParam String exemptCommodity,
-			@RequestParam String recordedTotal, 
-			@RequestParam String exemptTotal, 
-			@RequestParam String totalSell,
-			@RequestParam String totalDiscount, 
-			@RequestParam String netSell, 
-			@RequestParam String totalTax,
-			@RequestParam String totalVoucher, 
-			@RequestParam String resolutionNumber,
-			@RequestParam String resolutionDate,
-			@RequestParam String otherText, 
-			@RequestParam Long idEmitter,
-			@RequestParam Long idReceiver, 
-			@RequestParam String servicesIds, 
-			@RequestParam String referenceInfo, 
-			@RequestParam String others)
+	public ResponseEntity<Boolean> addInvoice(@RequestBody Invoice invoice)
 			throws IllegalArgumentException, InvocationTargetException, Exception {
 
 		try {
-		String consecutiveNumber = "";
-		consecutiveNumber = generateConsecutive();
-		String key = generateInvoiceKey(dateCreated, idEmitter, consecutiveNumber);
+			String consecutiveNumber = "";
+			consecutiveNumber = generateConsecutive();
+			String key = generateInvoiceKey(invoice.getDate(), invoice.getEmitter().getId(), consecutiveNumber);
 
-		FacturaElectronica facturaElectronica = new FacturaElectronica();
-		facturaElectronica.setClave(key);
-		facturaElectronica.setNumeroConsecutivo(consecutiveNumber);
-		facturaElectronica.setFechaEmision(constructDate(dateCreated));
-		facturaElectronica.setEmisor(constructEmitter(idEmitter));
-		facturaElectronica.setReceptor(constructReceiver(idReceiver));
-		facturaElectronica.setCondicionVenta(sellTerm);
-		facturaElectronica.setPlazoCredito(paymentLapse);
-		facturaElectronica.getMedioPago().add(paymentMethod);
-		facturaElectronica.setDetalleServicio(constructServiceDetail(servicesIds));
-		facturaElectronica.setResumenFactura(constructInvoiceResume(selectedCurrency, exchangeRate, recordedServices, exemptServices, recordedCommodity, exemptCommodity, recordedTotal, exemptTotal, totalSell, totalDiscount, netSell, totalTax, totalVoucher));
-		facturaElectronica = constructReferenceInfo(referenceInfo, facturaElectronica);
-		facturaElectronica.getNormativa().setFechaResolucion(resolutionDate);
-		facturaElectronica.getNormativa().setNumeroResolucion(resolutionNumber);
-		FacturaElectronica.Otros.OtroTexto otroTexto = new FacturaElectronica.Otros.OtroTexto();
-		otroTexto.setValue(others);
-		facturaElectronica.getOtros().getOtroTexto().add(otroTexto);
-		
-		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+			invoice.setConsecutive(consecutiveNumber);
+			invoice.setKey(key);
+
+			invoiceService.addInvoice(invoice);
+
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
 		}
 	}
-	
-	private FacturaElectronica constructReferenceInfo(String referenceInfo, FacturaElectronica factura) throws Exception {
-		String[] referenceList = referenceInfo.split(", ");
-		FacturaElectronica.InformacionReferencia reference = new FacturaElectronica.InformacionReferencia();
-		for (int i = 0; i < referenceList.length; i++) {
-			String[] referenceInfoSplited = referenceList[i].split("-");
-			if(referenceInfoSplited.length == 5) {
-				reference.setTipoDoc(referenceInfoSplited[0]);
-				reference.setNumero(referenceInfoSplited[1]);
-				reference.setFechaEmision(constructDate(referenceInfoSplited[2]));
-				reference.setCodigo(referenceInfoSplited[3]);
-				reference.setRazon(referenceInfoSplited[4]);
-			} else {
-				reference = null;
-			}
-			factura.getInformacionReferencia().add(reference);			
+
+	@RequestMapping("/sendInvoice")
+	public ResponseEntity<Boolean> sendInvoice(@RequestBody Invoice invoice)
+			throws IllegalArgumentException, InvocationTargetException, Exception {
+
+		try {
+			FacturaElectronica facturaElectronica = new FacturaElectronica();
+			facturaElectronica.setClave(invoice.getKey());
+			facturaElectronica.setNumeroConsecutivo(invoice.getConsecutive());
+			facturaElectronica.setFechaEmision(constructDate(invoice.getDate()));
+			facturaElectronica.setEmisor(constructEmitter(invoice.getEmitter().getId()));
+			facturaElectronica.setReceptor(constructReceiver(invoice.getReceiver().getId()));
+			facturaElectronica.setCondicionVenta(invoice.getSellCondition());
+			facturaElectronica.setPlazoCredito(invoice.getPaymentLapse());
+			facturaElectronica.getMedioPago().add(invoice.getPaymentLapse());
+			facturaElectronica.setDetalleServicio(constructServiceDetail(invoice.getServiceList()));
+			facturaElectronica.setResumenFactura(constructInvoiceResume(invoice.getCurrency(),
+					invoice.getExchangeRate(), invoice.getRecordedServices(), invoice.getExemptServices(),
+					invoice.getRecordedCommodity(), invoice.getExemptCommodity(), invoice.getRecordedTotal(),
+					invoice.getExemptTotal(), invoice.getTotalSell(), invoice.getTotalDiscount(), invoice.getNetSell(),
+					invoice.getTotalTax(), invoice.getTotalVoucher()));
+			facturaElectronica.getNormativa().setFechaResolucion(invoice.getResolutionDate());
+			facturaElectronica.getNormativa().setNumeroResolucion(invoice.getResolutionNumber());
+			FacturaElectronica.Otros.OtroTexto otroTexto = new FacturaElectronica.Otros.OtroTexto();
+			otroTexto.setValue(invoice.getOtherText());
+			facturaElectronica.getOtros().getOtroTexto().add(otroTexto);
+			
+			System.out.println(facturaElectronica);
+
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
 		}
-		return factura;
 	}
-	
-	private FacturaElectronica.ResumenFactura constructInvoiceResume(
-			String selectedCurrency,
-			String exchangeRate,
-			String recordedServices,
-			String exemptServices,
-			String recordedCommodity,
-			String exemptCommodity,
-			String recordedTotal,
-			String exemptTotal,
-			String totalSell,
-			String totalDiscount,
-			String netSell,
-			String totalTax,
-			String totalVoucher) {
-		
+
+	private FacturaElectronica.ResumenFactura constructInvoiceResume(String selectedCurrency, double exchangeRate,
+			double recordedServices, double exemptServices, double recordedCommodity, double exemptCommodity,
+			double recordedTotal, double exemptTotal, double totalSell, double totalDiscount, double netSell,
+			double totalTax, double totalVoucher) {
+
 		FacturaElectronica.ResumenFactura invoiceResume = new FacturaElectronica.ResumenFactura();
 		invoiceResume.setCodigoMoneda(selectedCurrency);
 		invoiceResume.setTipoCambio(new BigDecimal(exchangeRate));
@@ -161,48 +127,46 @@ public class InvoiceController {
 		return invoiceResume;
 	}
 
-	private FacturaElectronica.DetalleServicio constructServiceDetail(String servicesIds)
+	private FacturaElectronica.DetalleServicio constructServiceDetail(List<Services> servicesList)
 			throws IllegalArgumentException, InvocationTargetException, Exception {
 		FacturaElectronica.DetalleServicio detalleServicio = new FacturaElectronica.DetalleServicio();
 
-		String[] servicesIdsList = servicesIds.split(", ");
-		ArrayList<Services> servicesList = constructServicesList(servicesIdsList);
 		for (Services serviceTemp : servicesList) {
 			detalleServicio.getLineaDetalle().add(constructDetailLine(serviceTemp));
 		}
 		return detalleServicio;
 	}
 
-	private FacturaElectronica.DetalleServicio.LineaDetalle constructDetailLine(Services serviceTemp) throws Exception { 
-		CodigoType code = new CodigoType();
+	private FacturaElectronica.DetalleServicio.LineaDetalle constructDetailLine(Services serviceTemp) throws Exception {
+		CodigoType codeType = new CodigoType();
 		FacturaElectronica.DetalleServicio.LineaDetalle lineaDetalle = new FacturaElectronica.DetalleServicio.LineaDetalle();
 		lineaDetalle.setNumeroLinea(new BigInteger(serviceTemp.getLineNumber()));
-		
+
 		for (Code codeTemp : serviceTemp.getCodeList()) {
-			code.setTipo(codeTemp.getCodeType());
-			code.setCodigo(codeTemp.getCode());
-			lineaDetalle.getCodigo().add(code);
-			code = new CodigoType();
-		}	
-		
+			codeType.setTipo(codeTemp.getCodeType());
+			codeType.setCodigo(codeTemp.getCode());
+			lineaDetalle.getCodigo().add(codeType);
+			codeType = new CodigoType();
+		}
+
 		lineaDetalle.setCantidad(new BigDecimal(serviceTemp.getAmount()));
 		lineaDetalle.setUnidadMedida(serviceTemp.getUnitOfMeasurementType());
 		lineaDetalle.setUnidadMedidaComercial(serviceTemp.getComercialUnitOfMeasurement());
 		lineaDetalle.setDetalle(serviceTemp.getDetail());
 		lineaDetalle.setPrecioUnitario(new BigDecimal(serviceTemp.getPriceByUnit()));
-		lineaDetalle.setMontoTotal(new BigDecimal(serviceTemp.getTotalAmount())); 
+		lineaDetalle.setMontoTotal(new BigDecimal(serviceTemp.getTotalAmount()));
 		lineaDetalle.setMontoDescuento(new BigDecimal(serviceTemp.getDiscount()));
 		lineaDetalle.setNaturalezaDescuento(serviceTemp.getDiscountNature());
 		lineaDetalle.setMontoTotal(new BigDecimal(serviceTemp.getSubTotal()));
-		
+
 		for (Tax tax : serviceTemp.getTaxList()) {
 			lineaDetalle.getImpuesto().add(constructTax(tax));
 		}
-		
+
 		lineaDetalle.setMontoTotal(new BigDecimal(serviceTemp.getTotal()));
 		return lineaDetalle;
 	}
-	
+
 	private ImpuestoType constructTax(Tax tax) throws Exception {
 		ImpuestoType taxType = new ImpuestoType();
 		taxType.setCodigo(tax.getCode());
@@ -211,7 +175,7 @@ public class InvoiceController {
 		taxType.setTarifa(new BigDecimal(tax.getRate()));
 		return taxType;
 	}
-	
+
 	private ExoneracionType constructExoneration(Tax tax) throws Exception {
 		ExoneracionType exonerationType = new ExoneracionType();
 		exonerationType.setFechaEmision(constructDate(tax.getDate()));
@@ -221,21 +185,6 @@ public class InvoiceController {
 		exonerationType.setPorcentajeCompra(new BigInteger(tax.getPurchasePercentage()));
 		exonerationType.setTipoDocumento(tax.getDocumentType());
 		return exonerationType;
-	}
-
-	private ArrayList<Services> constructServicesList(String[] servicesIdsList)
-			throws IllegalArgumentException, InvocationTargetException, Exception {
-		ArrayList<Services> servicesList = new ArrayList<Services>();
-		ServiceServices serviceService = new ServiceServices();
-		Services service = new Services();
-
-		for (int i = 0; i < servicesIdsList.length; i++) {
-			service.setId(Long.parseLong(servicesIdsList[i]));
-			service = serviceService.findOneService(service);
-			servicesList.add(service);
-			service = new Services();
-		}
-		return servicesList;
 	}
 
 	private XMLGregorianCalendar constructDate(String dateCreated) throws Exception {
@@ -406,7 +355,7 @@ public class InvoiceController {
 		// This data have to be storage in our DB
 		return consecutive;
 	}
-	
+
 	@RequestMapping("/getInvoices")
 	public ResponseEntity<String> getInvoices() throws Exception {
 		Gson gson = new Gson();
@@ -417,7 +366,7 @@ public class InvoiceController {
 			return new ResponseEntity<String>(HttpStatus.CONFLICT);
 		}
 	}
-	
+
 	@RequestMapping("/deleteInvoice")
 	public ResponseEntity<Boolean> deleteInvoice(@RequestParam Long invoiceId) throws Exception {
 		Invoice invoice = new Invoice();
@@ -429,7 +378,7 @@ public class InvoiceController {
 			return new ResponseEntity<Boolean>(false, HttpStatus.CONFLICT);
 		}
 	}
-	
+
 	@RequestMapping("/modifyInvoice")
 	public ResponseEntity<Boolean> modifyInvoice(@RequestBody Invoice invoice) throws Exception {
 		Boolean result = false;

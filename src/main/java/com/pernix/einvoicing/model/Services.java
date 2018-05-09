@@ -10,9 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -68,10 +65,6 @@ public class Services implements Serializable {
 
 	@Column(nullable = false, name = "total")
 	private String total;
-
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "SERV_INV", joinColumns = @JoinColumn(name = "SERV_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "INV_ID", referencedColumnName = "ID"))
-	private List<Invoice> invoiceList;
 
 	public Services() {
 	}

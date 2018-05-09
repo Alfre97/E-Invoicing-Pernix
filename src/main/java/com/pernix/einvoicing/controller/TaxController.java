@@ -19,24 +19,7 @@ public class TaxController {
 	private TaxService taxService;
 
 	@RequestMapping("/addTax")
-	public ResponseEntity<Boolean> addTax(
-			@RequestParam String code, 
-			@RequestParam String rate, 
-			@RequestParam String purchasePercentage, 
-			@RequestParam String date,
-			@RequestParam String institutionName, 
-			@RequestParam String documentNumber,
-			@RequestParam String documentType) throws Exception {
-
-		Tax tax = new Tax();
-		tax.setCode(code);
-		tax.setRate(rate);
-		tax.setPurchasePercentage(purchasePercentage);
-		tax.setDate(date);
-		tax.setInstitutionName(institutionName);
-		tax.setDocumentNumber(documentNumber);
-		tax.setDocumentType(documentType);
-
+	public ResponseEntity<Boolean> addTax(@RequestBody Tax tax) throws Exception {
 		try {
 			taxService.addTax(tax);
 			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
@@ -68,7 +51,7 @@ public class TaxController {
 	}
 	
 	@RequestMapping("/deleteTax")
-	public ResponseEntity<Boolean> deleteCode(@RequestParam Long taxId) throws Exception {
+	public ResponseEntity<Boolean> deleteTax(@RequestParam Long taxId) throws Exception {
 		Tax tax = new Tax();
 		try {
 			tax.setId(taxId);
@@ -80,7 +63,7 @@ public class TaxController {
 	}
 	
 	@RequestMapping("/modifyTax")
-	public ResponseEntity<Boolean> modifyCode(@RequestBody Tax tax) throws Exception {
+	public ResponseEntity<Boolean> modifyTax(@RequestBody Tax tax) throws Exception {
 		Boolean result = false;
 		try {
 			result = taxService.updateTax(tax);

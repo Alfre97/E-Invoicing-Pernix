@@ -1,7 +1,9 @@
 package com.pernix.einvoicing.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -22,6 +26,9 @@ public class Invoice implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable=false, name="consecutive")
+    private String consecutive;
 	
 	@Column(nullable=false, name="key")
     private String key;
@@ -86,26 +93,32 @@ public class Invoice implements Serializable {
     private double totalVoucher;
 	
 	@Column(nullable=false, name="resolutionNumber")
-    private double resolutionNumber;
+    private String resolutionNumber;
 	
 	@Column(nullable=false, name="resolutionDate")
-    private double resolutionDate;
+    private String resolutionDate;
 
 	@Column(nullable=false, name="otherText")
-    private double otherText;
+    private String otherText;
+	
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "SERV_INV", joinColumns = @JoinColumn(name = "SERV_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "INV_ID", referencedColumnName = "ID"))
+	private List<Services> serviceList;
     
 	@Column(nullable=false, name="xmlInvoice")
     private String xmlInvoice;
 	
 	public Invoice() {}
 
-	public Invoice(Long id, String key, String date, Emitter emitter, Receiver receiver, String sellCondition,
-			String paymentLapse, String paymentMethod, String currency, double exchangeRate, double recordedServices,
-			double exemptServices, double recordedCommodity, double exemptCommodity, double recordedTotal,
-			double exemptTotal, double totalSell, double totalDiscount, double netSell, double totalTax,
-			double totalVoucher, double resolutionNumber, double resolutionDate, double otherText, String xmlInvoice) {
+	public Invoice(Long id, String consecutive, String key, String date, Emitter emitter, Receiver receiver,
+			String sellCondition, String paymentLapse, String paymentMethod, String currency, double exchangeRate,
+			double recordedServices, double exemptServices, double recordedCommodity, double exemptCommodity,
+			double recordedTotal, double exemptTotal, double totalSell, double totalDiscount, double netSell,
+			double totalTax, double totalVoucher, String resolutionNumber, String resolutionDate, String otherText,
+			List<Services> serviceList, String xmlInvoice) {
 		super();
 		this.id = id;
+		this.consecutive = consecutive;
 		this.key = key;
 		this.date = date;
 		this.emitter = emitter;
@@ -129,6 +142,7 @@ public class Invoice implements Serializable {
 		this.resolutionNumber = resolutionNumber;
 		this.resolutionDate = resolutionDate;
 		this.otherText = otherText;
+		this.serviceList = serviceList;
 		this.xmlInvoice = xmlInvoice;
 	}
 
@@ -138,6 +152,14 @@ public class Invoice implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getConsecutive() {
+		return consecutive;
+	}
+
+	public void setConsecutive(String consecutive) {
+		this.consecutive = consecutive;
 	}
 
 	public String getKey() {
@@ -300,28 +322,36 @@ public class Invoice implements Serializable {
 		this.totalVoucher = totalVoucher;
 	}
 
-	public double getResolutionNumber() {
+	public String getResolutionNumber() {
 		return resolutionNumber;
 	}
 
-	public void setResolutionNumber(double resolutionNumber) {
+	public void setResolutionNumber(String resolutionNumber) {
 		this.resolutionNumber = resolutionNumber;
 	}
 
-	public double getResolutionDate() {
+	public String getResolutionDate() {
 		return resolutionDate;
 	}
 
-	public void setResolutionDate(double resolutionDate) {
+	public void setResolutionDate(String resolutionDate) {
 		this.resolutionDate = resolutionDate;
 	}
 
-	public double getOtherText() {
+	public String getOtherText() {
 		return otherText;
 	}
 
-	public void setOtherText(double otherText) {
+	public void setOtherText(String otherText) {
 		this.otherText = otherText;
+	}
+
+	public List<Services> getServiceList() {
+		return serviceList;
+	}
+
+	public void setServiceList(List<Services> serviceList) {
+		this.serviceList = serviceList;
 	}
 
 	public String getXmlInvoice() {

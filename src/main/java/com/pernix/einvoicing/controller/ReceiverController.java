@@ -19,40 +19,8 @@ public class ReceiverController {
 	private ReceiverService receiverService;
 	
 	@RequestMapping("/addReceiver")
-    public ResponseEntity<Boolean> addUser(@RequestParam(value="userName") String name, 
-    		@RequestParam String comercialName,
-    		@RequestParam String identificationType, 
-    		@RequestParam String identificationNumber, 
-    		@RequestParam String locationProvinceName,
-    		@RequestParam String locationCantonName, 
-    		@RequestParam String locationDistrictName, 
-    		@RequestParam String locationNeighborhoodName, 
-    		@RequestParam String locationSignals,
-    		@RequestParam String phoneCountryCode,
-    		@RequestParam String phoneNumber,
-    		@RequestParam String faxCountryCode,
-    		@RequestParam String faxNumber,
-    		@RequestParam String email,
-    		@RequestParam String userType) throws Exception
+    public ResponseEntity<Boolean> addReceiver(@RequestBody Receiver receiver) throws Exception
     {
-        
-        Receiver receiver = new Receiver();
-        receiver.setName(name);
-        receiver.setComercialName(comercialName);
-        receiver.setIdentificationType(identificationType);
-        receiver.setIdentificationNumber(identificationNumber);
-        receiver.setLocationProvinceName(locationProvinceName);
-        receiver.setLocationCantonName(locationCantonName);
-        receiver.setLocationDistrictName(locationDistrictName);
-        receiver.setLocationNeighborhoodName(locationNeighborhoodName);
-        receiver.setOtherSignals(locationSignals);
-        receiver.setPhoneCountryCode(phoneCountryCode);
-        receiver.setPhoneNumber(phoneNumber);
-        receiver.setFaxCountryCode(faxCountryCode);
-        receiver.setFaxNumber(faxNumber);
-        receiver.setEmail(email);
-        
-        
         try
         {
             receiverService.addReceiver(receiver);
@@ -63,7 +31,7 @@ public class ReceiverController {
     }
 	
 	@RequestMapping("/getReceivers")
-	public ResponseEntity<String> getEmitters() throws Exception {
+	public ResponseEntity<String> getReceivers() throws Exception {
 		Gson gson = new Gson();
 		try 
 		{
@@ -75,7 +43,7 @@ public class ReceiverController {
 	}
 	
 	@RequestMapping("/deleteReceiver")
-	public ResponseEntity<Boolean> deleteEmitter(@RequestParam Long userId) throws Exception {
+	public ResponseEntity<Boolean> deleteReceiver(@RequestParam Long userId) throws Exception {
 		Receiver receiver = new Receiver();
 		try {
 			receiver.setId(userId);
@@ -87,7 +55,7 @@ public class ReceiverController {
 	}
 	
 	@RequestMapping("/modifyReceiver")
-	public ResponseEntity<Boolean> modifyUser(@RequestBody Receiver receiver) throws Exception {
+	public ResponseEntity<Boolean> modifyReceiver(@RequestBody Receiver receiver) throws Exception {
 		Boolean result = false;
 		try {
 			result = receiverService.updateReceiver(receiver);

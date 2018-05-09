@@ -36,23 +36,22 @@ public class Tax implements Serializable {
     @JoinColumn(name = "serviceId")
     private Services service;
 
-	// Exoneration data
-	@Column(nullable = false, name = "date")
+	@Column(nullable = true, name = "date")
 	private String date;
 
 	@Column(nullable = true, name = "taxExonarated")
 	private String taxExonarated;
 
-	@Column(nullable = false, name = "institutionName")
+	@Column(nullable = true, name = "institutionName")
 	private String institutionName;
 
-	@Column(nullable = false, name = "documentNumber")
+	@Column(nullable = true, name = "documentNumber")
 	private String documentNumber;
 
-	@Column(nullable = false, name = "purchasePercentage")
+	@Column(nullable = true, name = "purchasePercentage")
 	private String purchasePercentage;
 
-	@Column(nullable = false, name = "documentType")
+	@Column(nullable = true, name = "documentType")
 	private String documentType;
 
 	public Tax() {
@@ -166,6 +165,4 @@ public class Tax implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-	
 }
