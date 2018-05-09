@@ -9,14 +9,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,7 +43,7 @@ public class InvoiceController {
 	 */
 
 	@RequestMapping("/uploadInvoice")
-	public Response uploadInvoice(
+	public ResponseEntity<Boolean> uploadInvoice(
 			@RequestParam String dateCreated, 
 			@RequestParam String sellTerm,
 			@RequestParam String paymentLapse, 
@@ -73,6 +71,7 @@ public class InvoiceController {
 			@RequestParam String others)
 			throws IllegalArgumentException, InvocationTargetException, Exception {
 
+		try {
 		String consecutiveNumber = "";
 		consecutiveNumber = generateConsecutive();
 		String key = generateInvoiceKey(dateCreated, idEmitter, consecutiveNumber);
@@ -95,9 +94,10 @@ public class InvoiceController {
 		otroTexto.setValue(others);
 		facturaElectronica.getOtros().getOtroTexto().add(otroTexto);
 		
-		
-		JsonObject jsonResponse = Json.createObjectBuilder().add("message", "Invoice under validation").build();
-		return Response.ok(jsonResponse, MediaType.APPLICATION_JSON).build();
+		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
+		}
 	}
 	
 	private FacturaElectronica constructReferenceInfo(String referenceInfo, FacturaElectronica factura) throws Exception {
