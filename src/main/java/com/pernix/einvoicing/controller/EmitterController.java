@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
-import com.pernix.einvoicing.model.UserEmitterReceiver;
-import com.pernix.einvoicing.service.UserEmitterReceiverService;
+import com.pernix.einvoicing.model.Emitter;
+import com.pernix.einvoicing.service.EmitterService;
 
 @RestController
-public class UserController {
+public class EmitterController {
 	
 	@Autowired
-	private UserEmitterReceiverService userService;
+	private EmitterService emitterService;
 	
-	@RequestMapping("/addUser")
+	@RequestMapping("/addEmitter")
     public ResponseEntity<Boolean> addUser(@RequestParam(value="userName") String name, 
     		@RequestParam String comercialName,
     		@RequestParam String identificationType, 
@@ -36,27 +36,26 @@ public class UserController {
     		@RequestParam String userType) throws Exception
     {
         
-        UserEmitterReceiver user = new UserEmitterReceiver();
-        user.setName(name);
-        user.setComercialName(comercialName);
-        user.setIdentificationType(identificationType);
-        user.setIdentificationNumber(identificationNumber);
-        user.setLocationProvinceName(locationProvinceName);
-        user.setLocationCantonName(locationCantonName);
-        user.setLocationDistrictName(locationDistrictName);
-        user.setLocationNeighborhoodName(locationNeighborhoodName);
-        user.setOtherSignals(locationSignals);
-        user.setPhoneCountryCode(phoneCountryCode);
-        user.setPhoneNumber(phoneNumber);
-        user.setFaxCountryCode(faxCountryCode);
-        user.setFaxNumber(faxNumber);
-        user.setEmail(email);
-        user.setUserType(userType);
+        Emitter emitter = new Emitter();
+        emitter.setName(name);
+        emitter.setComercialName(comercialName);
+        emitter.setIdentificationType(identificationType);
+        emitter.setIdentificationNumber(identificationNumber);
+        emitter.setLocationProvinceName(locationProvinceName);
+        emitter.setLocationCantonName(locationCantonName);
+        emitter.setLocationDistrictName(locationDistrictName);
+        emitter.setLocationNeighborhoodName(locationNeighborhoodName);
+        emitter.setOtherSignals(locationSignals);
+        emitter.setPhoneCountryCode(phoneCountryCode);
+        emitter.setPhoneNumber(phoneNumber);
+        emitter.setFaxCountryCode(faxCountryCode);
+        emitter.setFaxNumber(faxNumber);
+        emitter.setEmail(email);
         
         
         try
         {
-            userService.addUser(user);
+            emitterService.addEmitter(emitter);
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
@@ -68,42 +67,30 @@ public class UserController {
 		Gson gson= new Gson();
 		try 
 		{
-			String jsonService = gson.toJson(userService.getAllUsers());
+			String jsonService = gson.toJson(emitterService.getAllEmitters());
 			return new ResponseEntity<String>(jsonService, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(HttpStatus.CONFLICT);
 		}
 	}
 	
-	@RequestMapping("/getReceivers")
-	public ResponseEntity<String> getReceivers() throws Exception {
-		Gson gson= new Gson();
-		try 
-		{
-			String jsonService = gson.toJson(userService.getAllUsers());
-			return new ResponseEntity<String>(jsonService, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<String>(HttpStatus.CONFLICT);
-		}
-	}
-	
-	@RequestMapping("/deleteUser")
-	public ResponseEntity<Boolean> deleteUser(@RequestParam Long userId) throws Exception {
-		UserEmitterReceiver user = new UserEmitterReceiver();
+	@RequestMapping("/deleteEmitter")
+	public ResponseEntity<Boolean> deleteEmitter(@RequestParam Long userId) throws Exception {
+		Emitter emitter = new Emitter();
 		try {
-			user.setId(userId);
-			userService.deleteUser(user);
+			emitter.setId(userId);
+			emitterService.deleteEmitter(emitter);
 			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Boolean>(false, HttpStatus.CONFLICT);
 		}
 	}
 	
-	@RequestMapping("/modifyUser")
-	public ResponseEntity<Boolean> modifyUser(@RequestBody UserEmitterReceiver user) throws Exception {
+	@RequestMapping("/modifyEmitter")
+	public ResponseEntity<Boolean> modifyUser(@RequestBody Emitter emitter) throws Exception {
 		Boolean result = false;
 		try {
-			result = userService.updateUser(user);
+			result = emitterService.updateEmitter(emitter);
 			return new ResponseEntity<Boolean>(result, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Boolean>(result, HttpStatus.CONFLICT);

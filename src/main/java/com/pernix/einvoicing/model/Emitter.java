@@ -1,15 +1,19 @@
 package com.pernix.einvoicing.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
-public class UserEmitterReceiver implements Serializable {
+public class Emitter implements Serializable {
 
 	/**
 	 * 
@@ -19,48 +23,65 @@ public class UserEmitterReceiver implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
 	@Column(nullable=false, name="name")
 	private String name;
+	
 	@Column(nullable=false, name="identificationType")
 	private String identificationType;
+	
 	@Column(nullable=false, name="identificationNumber")
 	private String identificationNumber;
+	
 	@Column(nullable=false, name="comercialName")
 	private String comercialName;
+	
 	@Column(nullable=false, name="locationProvinceName")
-	private String locationProvinceName;;
+	private String locationProvinceName;
+	
 	@Column(nullable=false, name="locationCantonName")
 	private String locationCantonName;
+	
 	@Column(nullable=false, name="locationDistrictName")
 	private String locationDistrictName;
+	
 	@Column(nullable=false, name="locationNeighborhoodName")
 	private String locationNeighborhoodName;
+	
 	@Column(nullable=false, name="OtherSignals")
 	private String OtherSignals;
+	
 	@Column(nullable=false, name="phoneCountryCode")
 	private String phoneCountryCode;
+	
 	@Column(nullable=false, name="phoneNumber")
 	private String phoneNumber;
+	
 	@Column(nullable=false, name="faxCountryCode")
 	private String faxCountryCode;
+	
 	@Column(nullable=false, name="faxNumber")
 	private String faxNumber;
+	
 	@Column(nullable=false, name="email")
 	private String email;
-	@Column(nullable=false, name="userType")
-	private String userType;
 	
+	@OneToMany(
+	        mappedBy = "emitter", 
+	        cascade = CascadeType.ALL, 
+	        orphanRemoval = true
+	    )
+	List<Invoice> invoiceList = new ArrayList<Invoice>();
 	
-	public UserEmitterReceiver() {
+	public Emitter() {
 		
 	}
 
-	public UserEmitterReceiver(Long id, String name, String identificationType, String identificationNumber,
-			String comercialName, String locationProvinceType, String locationProvinceName, String locationCantonType,
-			String locationCantonName, String locationDistrictType, String locationDistrictName,
-			String locationNeighborhoodType, String locationNeighborhoodName, String otherSignals,
-			String phoneCountryCode, String phoneNumber, String faxCountryCode, String faxNumber, String email,
-			String userType) {
+	public Emitter(Long id, String name, String identificationType, String identificationNumber, String comercialName,
+			String locationProvinceName, String locationCantonName, String locationDistrictName,
+			String locationNeighborhoodName, String otherSignals, String phoneCountryCode, String phoneNumber,
+			String faxCountryCode, String faxNumber, String email, List<Invoice> invoiceList) {
+		super();
 		this.id = id;
 		this.name = name;
 		this.identificationType = identificationType;
@@ -76,10 +97,8 @@ public class UserEmitterReceiver implements Serializable {
 		this.faxCountryCode = faxCountryCode;
 		this.faxNumber = faxNumber;
 		this.email = email;
-		this.userType = userType;
+		this.invoiceList = invoiceList;
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -200,12 +219,16 @@ public class UserEmitterReceiver implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getUserType() {
-		return userType;
+
+	public List<Invoice> getInvoiceList() {
+		return invoiceList;
 	}
 
-	public void setUserType(String userType) {
-		this.userType = userType;
+	public void setInvoiceList(List<Invoice> invoiceList) {
+		this.invoiceList = invoiceList;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }
