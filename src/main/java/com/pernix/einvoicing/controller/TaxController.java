@@ -79,7 +79,7 @@ public class TaxController {
 		}
 	}
 	
-	@RequestMapping("/modifyCode")
+	@RequestMapping("/modifyTax")
 	public ResponseEntity<Boolean> modifyCode(@RequestBody Tax tax) throws Exception {
 		Boolean result = false;
 		try {
