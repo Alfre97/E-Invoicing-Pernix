@@ -128,12 +128,6 @@ public class InvoiceControllerWebIntegrationTest {
     	
         RestTemplate restTemplate = new RestTemplate();
         MultiValueMap<String,String> parameters = new LinkedMultiValueMap<String,String>();
-        parameters.add("key", invoice.getKey());
-        parameters.add("emitterId", invoice.getEmitter().getId().toString());
-        parameters.add("emitterType", invoice.getEmitter().getUserType());
-        parameters.add("recipientId", invoice.getEmitter().getId().toString());
-        parameters.add("recipientType", invoice.getEmitter().getUserType());
-        parameters.add("xmlInvoice", invoice.getXmlInvoice());
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
        

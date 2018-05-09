@@ -10,6 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -19,62 +22,59 @@ public class Services implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(nullable=false, name="lineNumber")
-	private String lineNumber;	
-	
-	@OneToMany(
-	        mappedBy = "service", 
-	        cascade = CascadeType.ALL, 
-	        orphanRemoval = true
-	    )
+
+	@Column(nullable = false, name = "lineNumber")
+	private String lineNumber;
+
+	@OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
 	List<Code> codeList = new ArrayList<Code>();
-	
-	@Column(nullable=false, name="amount")
+
+	@Column(nullable = false, name = "amount")
 	private String amount;
-	
-	@Column(nullable=false, name="unitOfMeasurementType")
+
+	@Column(nullable = false, name = "unitOfMeasurementType")
 	private String unitOfMeasurementType;
-	
-	@Column(nullable=false, name="unitOfMeasurementName")
+
+	@Column(nullable = false, name = "unitOfMeasurementName")
 	private String unitOfMeasurementName;
-	
-	@Column(nullable=false, name="comercialUnitOfMeasurement")
+
+	@Column(nullable = false, name = "comercialUnitOfMeasurement")
 	private String comercialUnitOfMeasurement;
-	
-	@Column(nullable=false, name="detail")
+
+	@Column(nullable = false, name = "detail")
 	private String detail;
-	
-	@Column(nullable=false, name="priceByUnit")
+
+	@Column(nullable = false, name = "priceByUnit")
 	private String priceByUnit;
-	
-	@Column(nullable=false, name="totalAmount")
+
+	@Column(nullable = false, name = "totalAmount")
 	private String totalAmount;
-	
-	@Column(nullable=false, name="discount")
+
+	@Column(nullable = false, name = "discount")
 	private String discount;
-	
-	@Column(nullable=false, name="discountNature")
+
+	@Column(nullable = false, name = "discountNature")
 	private String discountNature;
-	
-	@Column(nullable=false, name="subTotal")
+
+	@Column(nullable = false, name = "subTotal")
 	private String subTotal;
-	
-	@OneToMany(
-	        mappedBy = "service", 
-	        cascade = CascadeType.ALL, 
-	        orphanRemoval = true
-	    )
+
+	@OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
 	List<Tax> taxList = new ArrayList<Tax>();
-	
-	@Column(nullable=false, name="total")
+
+	@Column(nullable = false, name = "total")
 	private String total;
-	
-	public Services() {}
+
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "SERV_INV", joinColumns = @JoinColumn(name = "SERV_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "INV_ID", referencedColumnName = "ID"))
+	private List<Invoice> invoiceList;
+
+	public Services() {
+	}
 
 	public Services(Long id, String lineNumber, List<Code> codeList, String amount, String unitOfMeasurementType,
 			String unitOfMeasurementName, String comercialUnitOfMeasurement, String detail, String priceByUnit,
@@ -221,6 +221,5 @@ public class Services implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 
 }

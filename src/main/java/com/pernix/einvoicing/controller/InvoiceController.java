@@ -29,11 +29,13 @@ import com.pernix.einvoicing.hacienda.jaxb.ReceptorType;
 import com.pernix.einvoicing.hacienda.jaxb.TelefonoType;
 import com.pernix.einvoicing.hacienda.jaxb.UbicacionType;
 import com.pernix.einvoicing.model.Code;
+import com.pernix.einvoicing.model.Emitter;
 import com.pernix.einvoicing.model.Services;
 import com.pernix.einvoicing.model.Tax;
-import com.pernix.einvoicing.model.UserEmitterReceiver;
+import com.pernix.einvoicing.model.Receiver;
+import com.pernix.einvoicing.service.EmitterService;
 import com.pernix.einvoicing.service.ServiceServices;
-import com.pernix.einvoicing.service.UserEmitterReceiverService;
+import com.pernix.einvoicing.service.ReceiverService;
 
 @RestController
 public class InvoiceController {
@@ -238,10 +240,10 @@ public class InvoiceController {
 	}
 
 	private EmisorType constructEmitter(Long idEmitter) throws Exception {
-		UserEmitterReceiverService userService = new UserEmitterReceiverService();
-		UserEmitterReceiver emitter = new UserEmitterReceiver();
+		EmitterService userService = new EmitterService();
+		Emitter emitter = new Emitter();
 		emitter.setId(idEmitter);
-		emitter = userService.findOneUser(emitter);
+		emitter = userService.findOneEmitter(emitter);
 		EmisorType emitterType = new EmisorType();
 		emitterType.setNombre(emitter.getName());
 
@@ -284,10 +286,10 @@ public class InvoiceController {
 	}
 
 	private ReceptorType constructReceiver(Long idReceiver) throws Exception {
-		UserEmitterReceiverService userService = new UserEmitterReceiverService();
-		UserEmitterReceiver receiver = new UserEmitterReceiver();
+		ReceiverService userService = new ReceiverService();
+		Receiver receiver = new Receiver();
 		receiver.setId(idReceiver);
-		receiver = userService.findOneUser(receiver);
+		receiver = userService.findOneReceiver(receiver);
 		ReceptorType receiverType = new ReceptorType();
 		receiverType.setNombre(receiver.getName());
 
@@ -344,8 +346,8 @@ public class InvoiceController {
 			key += month;
 			key += year;
 
-			UserEmitterReceiver user = getUser(idEmitter);
-			key += user.getIdentificationNumber();
+			Emitter emitter = getUser(idEmitter);
+			key += emitter.getIdentificationNumber();
 
 			key += generateConsecutive();
 
@@ -370,13 +372,13 @@ public class InvoiceController {
 		return year;
 	}
 
-	private UserEmitterReceiver getUser(Long idEmitter) {
+	private Emitter getUser(Long idEmitter) {
 		try {
-			UserEmitterReceiver user = new UserEmitterReceiver();
-			UserEmitterReceiverService userService = new UserEmitterReceiverService();
-			user.setId(idEmitter);
-			user = userService.findOneUser(user);
-			return user;
+			Emitter emitter = new Emitter();
+			EmitterService emitterService = new EmitterService();
+			emitter.setId(idEmitter);
+			emitter = emitterService.findOneEmitter(emitter);
+			return emitter;
 		} catch (Exception e) {
 			return null;
 		}
