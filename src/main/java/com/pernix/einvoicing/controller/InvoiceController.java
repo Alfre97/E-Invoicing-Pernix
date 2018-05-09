@@ -13,12 +13,15 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.pernix.einvoicing.hacienda.jaxb.CodigoType;
 import com.pernix.einvoicing.hacienda.jaxb.EmisorType;
 import com.pernix.einvoicing.hacienda.jaxb.ExoneracionType;
@@ -30,10 +33,12 @@ import com.pernix.einvoicing.hacienda.jaxb.TelefonoType;
 import com.pernix.einvoicing.hacienda.jaxb.UbicacionType;
 import com.pernix.einvoicing.model.Code;
 import com.pernix.einvoicing.model.Emitter;
+import com.pernix.einvoicing.model.Invoice;
 import com.pernix.einvoicing.model.Services;
 import com.pernix.einvoicing.model.Tax;
 import com.pernix.einvoicing.model.Receiver;
 import com.pernix.einvoicing.service.EmitterService;
+import com.pernix.einvoicing.service.InvoiceService;
 import com.pernix.einvoicing.service.ServiceServices;
 import com.pernix.einvoicing.service.ReceiverService;
 
@@ -43,8 +48,11 @@ public class InvoiceController {
 	/*
 	 * @Autowired InvoicerService HaciendaInvoicer;
 	 */
+	
+	@Autowired
+	private InvoiceService invoiceService;
 
-	@RequestMapping("/uploadInvoice")
+	@RequestMapping("/addInvoice")
 	public ResponseEntity<Boolean> uploadInvoice(
 			@RequestParam String dateCreated, 
 			@RequestParam String sellTerm,
@@ -397,5 +405,39 @@ public class InvoiceController {
 
 		// This data have to be storage in our DB
 		return consecutive;
+	}
+	
+	@RequestMapping("/getInvoices")
+	public ResponseEntity<String> getInvoices() throws Exception {
+		Gson gson = new Gson();
+		try {
+			String jsonService = gson.toJson(invoiceService.getAllInvoices());
+			return new ResponseEntity<String>(jsonService, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>(HttpStatus.CONFLICT);
+		}
+	}
+	
+	@RequestMapping("/deleteInvoice")
+	public ResponseEntity<Boolean> deleteInvoice(@RequestParam Long invoiceId) throws Exception {
+		Invoice invoice = new Invoice();
+		try {
+			invoice.setId(invoiceId);
+			invoiceService.deleteInvoice(invoice);
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Boolean>(false, HttpStatus.CONFLICT);
+		}
+	}
+	
+	@RequestMapping("/modifyInvoice")
+	public ResponseEntity<Boolean> modifyInvoice(@RequestBody Invoice invoice) throws Exception {
+		Boolean result = false;
+		try {
+			result = invoiceService.updateInvoice(invoice);
+			return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Boolean>(result, HttpStatus.CONFLICT);
+		}
 	}
 }

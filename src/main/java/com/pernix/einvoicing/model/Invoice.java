@@ -3,16 +3,25 @@ package com.pernix.einvoicing.model;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+@Entity
 public class Invoice implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 	
 	@Column(nullable=false, name="key")
     private String key;
@@ -90,12 +99,13 @@ public class Invoice implements Serializable {
 	
 	public Invoice() {}
 
-	public Invoice(String key, String date, Emitter emitter, Receiver receiver, String sellCondition,
+	public Invoice(Long id, String key, String date, Emitter emitter, Receiver receiver, String sellCondition,
 			String paymentLapse, String paymentMethod, String currency, double exchangeRate, double recordedServices,
 			double exemptServices, double recordedCommodity, double exemptCommodity, double recordedTotal,
 			double exemptTotal, double totalSell, double totalDiscount, double netSell, double totalTax,
 			double totalVoucher, double resolutionNumber, double resolutionDate, double otherText, String xmlInvoice) {
 		super();
+		this.id = id;
 		this.key = key;
 		this.date = date;
 		this.emitter = emitter;
@@ -120,6 +130,14 @@ public class Invoice implements Serializable {
 		this.resolutionDate = resolutionDate;
 		this.otherText = otherText;
 		this.xmlInvoice = xmlInvoice;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getKey() {
