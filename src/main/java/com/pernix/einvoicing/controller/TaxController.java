@@ -3,6 +3,7 @@ package com.pernix.einvoicing.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,6 +64,29 @@ public class TaxController {
 			return new ResponseEntity<String>(jsonService, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(HttpStatus.CONFLICT);
+		}
+	}
+	
+	@RequestMapping("/deleteTax")
+	public ResponseEntity<Boolean> deleteCode(@RequestParam Long taxId) throws Exception {
+		Tax tax = new Tax();
+		try {
+			tax.setId(taxId);
+			taxService.deleteTax(tax);
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Boolean>(false, HttpStatus.CONFLICT);
+		}
+	}
+	
+	@RequestMapping("/modifyCode")
+	public ResponseEntity<Boolean> modifyCode(@RequestBody Tax tax) throws Exception {
+		Boolean result = false;
+		try {
+			result = taxService.updateTax(tax);
+			return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Boolean>(result, HttpStatus.CONFLICT);
 		}
 	}
 }
