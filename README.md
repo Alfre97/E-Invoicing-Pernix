@@ -9,7 +9,7 @@ Make sure you have Java and Maven installed.  Also, install the [Heroku CLI](htt
 $ git clone https://github.com/tebanhdez/e-invoicing-pernix.git
 $ cd e-invoicing-oernix
 $ mvn install
-$ heroku local:start
+$ mvn spring-boot:run
 ```
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
