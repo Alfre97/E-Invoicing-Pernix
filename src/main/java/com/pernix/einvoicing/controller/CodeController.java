@@ -19,16 +19,10 @@ public class CodeController {
 	CodeService codeService;
 
 	@RequestMapping("/addCode")
-	public ResponseEntity<Boolean> addCode(
-			@RequestParam String codeType, 
-			@RequestParam String code) throws Exception {
-		
-		Code cod = new Code();
-		cod.setCodeType(codeType);
-		cod.setCode(code);
+	public ResponseEntity<Boolean> addCode(@RequestBody Code code) throws Exception {
 
 		try {
-			codeService.addCode(cod);
+			codeService.addCode(code);
 			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
