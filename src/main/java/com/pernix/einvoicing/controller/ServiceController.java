@@ -41,10 +41,10 @@ public class ServiceController {
 	}
 	
 	@RequestMapping("/deleteService")
-	public ResponseEntity<Boolean> deleteService(@RequestParam Long serviceId) throws Exception {
+	public ResponseEntity<Boolean> deleteService(@RequestParam("id") Long id) throws Exception {
 		Services service = new Services();
 		try {
-			service.setId(serviceId);
+			service.setId(id);
 			serviceService.deleteService(service);
 			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		} catch (Exception e) {

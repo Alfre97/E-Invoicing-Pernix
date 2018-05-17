@@ -10,20 +10,27 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.Response;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 @Service
 public class HaciendaOAuth2Service implements OAuth2Service {
 
-    private static final String IDP_URI = "https://idp.comprobanteselectronicos.go.cr/auth/realms/rut-stag/protocol/openid-connect";
-    private static final String IDP_CLIENT_ID = "api-stag";
-    private static String usuario = "cpf-01-1417-0477@stag.comprobanteselectronicos.go.cr";
-    private static String password = "Rq%x3[&r+r*&8:(ov$A_";
+	@Value("${hacienda.accessTokenUri}")
+    private String IDP_URI;
+	
+	@Value("${hacienda.clientId}")
+    private String IDP_CLIENT_ID;
+	
+	@Value("${hacienda.credentials.username}")
+    private String usuario;
+    
+	@Value("${hacienda.credentials.password}")
+    private String password;
 
     private String accessToken = null;
-    private String refreshToken = null;
-    
+    //private String refreshToken = null;
 
     private void getAccessHaciendaToken(){
         Client client = ClientBuilder.newClient();
@@ -35,10 +42,11 @@ public class HaciendaOAuth2Service implements OAuth2Service {
                      .param("client_id", IDP_CLIENT_ID);
 
         Response response = target.request().post(Entity.form(form));
-        Map<String, String> responseJson = response.readEntity(HashMap.class);
+        @SuppressWarnings("unchecked")
+		Map<String, String> responseJson = response.readEntity(HashMap.class);
 
         accessToken = responseJson.get("access_token");
-        refreshToken =responseJson.get("refresh_token");
+        //refreshToken = responseJson.get("refresh_token");
     }
 
 

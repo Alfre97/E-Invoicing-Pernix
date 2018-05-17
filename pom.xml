@@ -71,7 +71,6 @@
 		</dependency>
 
 		<!-- JAVAX WS RS API -->
-
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>

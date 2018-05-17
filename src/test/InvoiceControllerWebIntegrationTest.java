@@ -21,9 +21,8 @@ import com.pernix.einvoicing.model.Invoice;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.DEFINED_PORT)
 public class InvoiceControllerWebIntegrationTest {
-
     @Test
-    public void testInvoiceControllerSaveInvoice(){
+    public void testInvoiceControllerSendInvoice(){
     	Invoice invoice = new Invoice();
     	
     	invoice.setKey("50612101700020586086000100001010000000161100000642");

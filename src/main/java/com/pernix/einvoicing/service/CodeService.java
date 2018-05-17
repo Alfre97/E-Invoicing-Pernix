@@ -45,6 +45,6 @@ public class CodeService {
 	
 	@Transactional
 	public List<Code> getNotLinkedCodes() {
-		return (List<Code>) codeJPARepository.findNoService();
+		return (List<Code>) codeJPARepository.findCodesWithNoService();
 	}
 }
