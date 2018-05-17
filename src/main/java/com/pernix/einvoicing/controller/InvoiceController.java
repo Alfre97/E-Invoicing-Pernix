@@ -54,27 +54,18 @@ public class InvoiceController {
 	@RequestMapping("/addInvoice")
 	public ResponseEntity<Boolean> addInvoice(@RequestBody Invoice invoice)
 			throws IllegalArgumentException, InvocationTargetException, Exception {
-
-		try {
-			String consecutiveNumber = "";
-			consecutiveNumber = generateConsecutive();
-			String key = generateInvoiceKey(invoice.getDate(), invoice.getEmitter().getId(), consecutiveNumber);
-
-			invoice.setConsecutive(consecutiveNumber);
-			invoice.setKey(key);
-
-			invoiceService.addInvoice(invoice);
-
-			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
-		}
+		String consecutiveNumber = "";
+		consecutiveNumber = generateConsecutive();
+		String key = generateInvoiceKey(invoice.getDate(), invoice.getEmitter().getId(), consecutiveNumber);
+		invoice.setConsecutive(consecutiveNumber);
+		invoice.setKey(key);
+		invoiceService.addInvoice(invoice);
+		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 	}
 
 	@RequestMapping("/sendInvoice")
-	public ResponseEntity<Boolean> sendInvoice(@RequestBody Invoice invoice)
+	public ResponseEntity<FacturaElectronica> sendInvoice(@RequestBody Invoice invoice)
 			throws IllegalArgumentException, InvocationTargetException, Exception {
-
 		try {
 			FacturaElectronica facturaElectronica = new FacturaElectronica();
 			facturaElectronica.setClave(invoice.getKey());
@@ -96,12 +87,9 @@ public class InvoiceController {
 			FacturaElectronica.Otros.OtroTexto otroTexto = new FacturaElectronica.Otros.OtroTexto();
 			otroTexto.setValue(invoice.getOtherText());
 			facturaElectronica.getOtros().getOtroTexto().add(otroTexto);
-			
-			System.out.println(facturaElectronica);
-
-			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+			return new ResponseEntity<FacturaElectronica>(facturaElectronica, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
+			return new ResponseEntity<FacturaElectronica>(HttpStatus.CONFLICT);
 		}
 	}
 
@@ -109,7 +97,6 @@ public class InvoiceController {
 			double recordedServices, double exemptServices, double recordedCommodity, double exemptCommodity,
 			double recordedTotal, double exemptTotal, double totalSell, double totalDiscount, double netSell,
 			double totalTax, double totalVoucher) {
-
 		FacturaElectronica.ResumenFactura invoiceResume = new FacturaElectronica.ResumenFactura();
 		invoiceResume.setCodigoMoneda(selectedCurrency);
 		invoiceResume.setTipoCambio(new BigDecimal(exchangeRate));
@@ -130,7 +117,6 @@ public class InvoiceController {
 	private FacturaElectronica.DetalleServicio constructServiceDetail(List<Services> servicesList)
 			throws IllegalArgumentException, InvocationTargetException, Exception {
 		FacturaElectronica.DetalleServicio detalleServicio = new FacturaElectronica.DetalleServicio();
-
 		for (Services serviceTemp : servicesList) {
 			detalleServicio.getLineaDetalle().add(constructDetailLine(serviceTemp));
 		}
@@ -140,7 +126,7 @@ public class InvoiceController {
 	private FacturaElectronica.DetalleServicio.LineaDetalle constructDetailLine(Services serviceTemp) throws Exception {
 		CodigoType codeType = new CodigoType();
 		FacturaElectronica.DetalleServicio.LineaDetalle lineaDetalle = new FacturaElectronica.DetalleServicio.LineaDetalle();
-		lineaDetalle.setNumeroLinea(new BigInteger(serviceTemp.getLineNumber()));
+		lineaDetalle.setNumeroLinea(new BigInteger(Integer.toString(serviceTemp.getLineNumber())));
 
 		for (Code codeTemp : serviceTemp.getCodeList()) {
 			codeType.setTipo(codeTemp.getCodeType());
@@ -182,7 +168,7 @@ public class InvoiceController {
 		exonerationType.setMontoImpuesto(new BigDecimal(tax.getTaxExonarated()));
 		exonerationType.setNombreInstitucion(tax.getInstitutionName());
 		exonerationType.setNumeroDocumento(tax.getDocumentNumber());
-		exonerationType.setPorcentajeCompra(new BigInteger(tax.getPurchasePercentage()));
+		exonerationType.setPorcentajeCompra(new BigInteger(Integer.toString(tax.getPurchasePercentage())));
 		exonerationType.setTipoDocumento(tax.getDocumentType());
 		return exonerationType;
 	}
@@ -368,7 +354,7 @@ public class InvoiceController {
 	}
 
 	@RequestMapping("/deleteInvoice")
-	public ResponseEntity<Boolean> deleteInvoice(@RequestParam Long invoiceId) throws Exception {
+	public ResponseEntity<Boolean> deleteInvoice(@RequestParam("id") Long invoiceId) throws Exception {
 		Invoice invoice = new Invoice();
 		try {
 			invoice.setId(invoiceId);

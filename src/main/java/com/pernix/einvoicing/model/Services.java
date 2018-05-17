@@ -25,13 +25,13 @@ public class Services implements Serializable {
 	private Long id;
 
 	@Column(nullable = false, name = "lineNumber")
-	private String lineNumber;
+	private int lineNumber;
 
 	@OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
 	List<Code> codeList = new ArrayList<Code>();
 
 	@Column(nullable = false, name = "amount")
-	private String amount;
+	private int amount;
 
 	@Column(nullable = false, name = "unitOfMeasurementType")
 	private String unitOfMeasurementType;
@@ -46,33 +46,33 @@ public class Services implements Serializable {
 	private String detail;
 
 	@Column(nullable = false, name = "priceByUnit")
-	private String priceByUnit;
+	private double priceByUnit;
 
 	@Column(nullable = false, name = "totalAmount")
-	private String totalAmount;
+	private double totalAmount;
 
 	@Column(nullable = false, name = "discount")
-	private String discount;
+	private double discount;
 
 	@Column(nullable = false, name = "discountNature")
 	private String discountNature;
 
 	@Column(nullable = false, name = "subTotal")
-	private String subTotal;
+	private double subTotal;
 
 	@OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
 	List<Tax> taxList = new ArrayList<Tax>();
 
 	@Column(nullable = false, name = "total")
-	private String total;
+	private double total;
 
 	public Services() {
 	}
 
-	public Services(Long id, String lineNumber, List<Code> codeList, String amount, String unitOfMeasurementType,
-			String unitOfMeasurementName, String comercialUnitOfMeasurement, String detail, String priceByUnit,
-			String totalAmount, String discount, String discountNature, String subTotal, List<Tax> taxList,
-			String total) {
+	public Services(Long id, int lineNumber, List<Code> codeList, int amount, String unitOfMeasurementType,
+			String unitOfMeasurementName, String comercialUnitOfMeasurement, String detail, double priceByUnit,
+			double totalAmount, double discount, String discountNature, double subTotal, List<Tax> taxList,
+			double total) {
 		super();
 		this.id = id;
 		this.lineNumber = lineNumber;
@@ -99,11 +99,11 @@ public class Services implements Serializable {
 		this.id = id;
 	}
 
-	public String getLineNumber() {
+	public int getLineNumber() {
 		return lineNumber;
 	}
 
-	public void setLineNumber(String lineNumber) {
+	public void setLineNumber(int lineNumber) {
 		this.lineNumber = lineNumber;
 	}
 
@@ -115,11 +115,11 @@ public class Services implements Serializable {
 		this.codeList = codeList;
 	}
 
-	public String getAmount() {
+	public int getAmount() {
 		return amount;
 	}
 
-	public void setAmount(String amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 
@@ -155,27 +155,27 @@ public class Services implements Serializable {
 		this.detail = detail;
 	}
 
-	public String getPriceByUnit() {
+	public double getPriceByUnit() {
 		return priceByUnit;
 	}
 
-	public void setPriceByUnit(String priceByUnit) {
+	public void setPriceByUnit(double priceByUnit) {
 		this.priceByUnit = priceByUnit;
 	}
 
-	public String getTotalAmount() {
+	public double getTotalAmount() {
 		return totalAmount;
 	}
 
-	public void setTotalAmount(String totalAmount) {
+	public void setTotalAmount(double totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 
-	public String getDiscount() {
+	public double getDiscount() {
 		return discount;
 	}
 
-	public void setDiscount(String discount) {
+	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
 
@@ -187,11 +187,11 @@ public class Services implements Serializable {
 		this.discountNature = discountNature;
 	}
 
-	public String getSubTotal() {
+	public double getSubTotal() {
 		return subTotal;
 	}
 
-	public void setSubTotal(String subTotal) {
+	public void setSubTotal(double subTotal) {
 		this.subTotal = subTotal;
 	}
 
@@ -203,16 +203,15 @@ public class Services implements Serializable {
 		this.taxList = taxList;
 	}
 
-	public String getTotal() {
+	public double getTotal() {
 		return total;
 	}
 
-	public void setTotal(String total) {
+	public void setTotal(double total) {
 		this.total = total;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 }

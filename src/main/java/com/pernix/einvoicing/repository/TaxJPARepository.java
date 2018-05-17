@@ -8,6 +8,6 @@ import com.pernix.einvoicing.model.Tax;
 
 public interface TaxJPARepository<P> extends BaseJPARepository<Tax, Long> {
 
-	 @Query("SELECT t FROM Tax t WHERE t.service = null")
-		List<Tax> findNoService();
+	@Query("SELECT t FROM Tax t WHERE t.service = null")
+	List<Tax> findTaxesWithNoService();
 }

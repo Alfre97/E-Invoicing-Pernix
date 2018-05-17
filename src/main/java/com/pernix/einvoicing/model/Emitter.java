@@ -49,7 +49,7 @@ public class Emitter implements Serializable {
 	private String locationNeighborhoodName;
 	
 	@Column(nullable=false, name="OtherSignals")
-	private String OtherSignals;
+	private String otherSignals;
 	
 	@Column(nullable=false, name="phoneCountryCode")
 	private String phoneCountryCode;
@@ -91,7 +91,7 @@ public class Emitter implements Serializable {
 		this.locationCantonName = locationCantonName;
 		this.locationDistrictName = locationDistrictName;
 		this.locationNeighborhoodName = locationNeighborhoodName;
-		OtherSignals = otherSignals;
+		this.otherSignals = otherSignals;
 		this.phoneCountryCode = phoneCountryCode;
 		this.phoneNumber = phoneNumber;
 		this.faxCountryCode = faxCountryCode;
@@ -173,11 +173,11 @@ public class Emitter implements Serializable {
 	}
 
 	public String getOtherSignals() {
-		return OtherSignals;
+		return this.otherSignals;
 	}
 
 	public void setOtherSignals(String otherSignals) {
-		OtherSignals = otherSignals;
+		this.otherSignals = otherSignals;
 	}
 
 	public String getPhoneCountryCode() {

@@ -27,10 +27,10 @@ public class Tax implements Serializable {
 	private String code;
 
 	@Column(nullable = true, name = "taxTotal")
-	private String taxTotal;
+	private double taxTotal;
 
 	@Column(nullable = false, name = "rate")
-	private String rate;
+	private double rate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "serviceId")
@@ -40,7 +40,7 @@ public class Tax implements Serializable {
 	private String date;
 
 	@Column(nullable = true, name = "taxExonarated")
-	private String taxExonarated;
+	private double taxExonarated;
 
 	@Column(nullable = true, name = "institutionName")
 	private String institutionName;
@@ -49,7 +49,7 @@ public class Tax implements Serializable {
 	private String documentNumber;
 
 	@Column(nullable = true, name = "purchasePercentage")
-	private String purchasePercentage;
+	private int purchasePercentage;
 
 	@Column(nullable = true, name = "documentType")
 	private String documentType;
@@ -57,9 +57,8 @@ public class Tax implements Serializable {
 	public Tax() {
 	}
 
-	public Tax(Long id, String code, String taxTotal, String rate, Services service, String date,
-			String taxExonarated, String institutionName, String documentNumber, String purchasePercentage,
-			String documentType) {
+	public Tax(Long id, String code, double taxTotal, double rate, Services service, String date, double taxExonarated,
+			String institutionName, String documentNumber, int purchasePercentage, String documentType) {
 		super();
 		this.id = id;
 		this.code = code;
@@ -90,19 +89,19 @@ public class Tax implements Serializable {
 		this.code = code;
 	}
 
-	public String getTaxTotal() {
+	public double getTaxTotal() {
 		return taxTotal;
 	}
 
-	public void setTaxTotal(String taxTotal) {
+	public void setTaxTotal(double taxTotal) {
 		this.taxTotal = taxTotal;
 	}
 
-	public String getRate() {
+	public double getRate() {
 		return rate;
 	}
 
-	public void setRate(String rate) {
+	public void setRate(double rate) {
 		this.rate = rate;
 	}
 
@@ -122,11 +121,11 @@ public class Tax implements Serializable {
 		this.date = date;
 	}
 
-	public String getTaxExonarated() {
+	public double getTaxExonarated() {
 		return taxExonarated;
 	}
 
-	public void setTaxExonarated(String taxExonarated) {
+	public void setTaxExonarated(double taxExonarated) {
 		this.taxExonarated = taxExonarated;
 	}
 
@@ -146,11 +145,11 @@ public class Tax implements Serializable {
 		this.documentNumber = documentNumber;
 	}
 
-	public String getPurchasePercentage() {
+	public int getPurchasePercentage() {
 		return purchasePercentage;
 	}
 
-	public void setPurchasePercentage(String purchasePercentage) {
+	public void setPurchasePercentage(int purchasePercentage) {
 		this.purchasePercentage = purchasePercentage;
 	}
 

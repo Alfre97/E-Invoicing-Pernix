@@ -32,6 +32,7 @@ public class Invoice implements Serializable {
 	
 	@Column(nullable=false, name="key")
     private String key;
+	
     //Fecha de la factura en formato [yyyy-MM-dd'T'HH:mm:ssZ] como se define en [http://tools.ietf.org/html/rfc3339#section-5.6
 	@Column(nullable=false, name="date")
     private String date;

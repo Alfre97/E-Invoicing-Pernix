@@ -17,7 +17,7 @@ public class HomeController {
     @RequestMapping("/")
     public String index() {
       if(StringUtils.isEmpty(HaciendaOAuth2Service.getAccessToken()))
-          return "error";
+          return "ERROR";
       return "SUCCESSFULLY TOKEN ACCESS." + " PERNIX E-INVOICE JAVA SERVER STARTED SUCCESSFULLY.";
     }
 }

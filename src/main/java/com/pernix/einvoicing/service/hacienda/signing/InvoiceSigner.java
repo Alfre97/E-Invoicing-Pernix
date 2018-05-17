@@ -13,9 +13,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
 
 import xades4j.production.DataObjectReference;
 import xades4j.production.SignedDataObjects;
@@ -42,132 +43,125 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+@SuppressWarnings("deprecation")
 public class InvoiceSigner {
-	public String sign(String certificatePath, String certificatePin, String xml)
-	  {
-	    try
-	    {
-	      XadesSigner signer = getSigner(certificatePin, certificatePath);
-	      signWithoutIDEnveloped(xml, signer);
-	    }
-	    catch (Exception e)
-	    {
-	      e.printStackTrace();
-	    }
-	    return xml;
-	  }
-	  
-	  private XadesSigner getSigner(String certificatePin, String certificatePath)
-	    throws Exception
-	  {
-	    KeyingDataProvider keyingProvider = getKeyingDataProvider(certificatePath, certificatePin);
-	    SignaturePolicyInfoProvider policyInfoProvider = new SignaturePolicyInfoProvider()
-	    {
-	      public SignaturePolicyBase getSignaturePolicy()
-	      {
-	        return new SignaturePolicyIdentifierProperty(new ObjectIdentifier("https://tribunet.hacienda.go.cr/docs/esquemas/2017/v4.2/Resolucion%20Comprobantes%20Electronicos%20%20DGT-R-48-2016.pdf", IdentifierType.URI), "".getBytes());
-	      }
-	    };
-	    BasicSignatureOptionsProvider basicSignatureOptionsProvider = new BasicSignatureOptionsProvider()
-	    {
-	      public boolean includePublicKey()
-	      {
-	        return true;
-	      }
-	      
-	      public boolean includeSigningCertificate()
-	      {
-	        return true;
-	      }
-	      
-	      public boolean signSigningCertificate()
-	      {
-	        return true;
-	      }
-	    };
-	    XadesEpesSigningProfile p = new XadesEpesSigningProfile(keyingProvider, policyInfoProvider);
-	    p.withBasicSignatureOptionsProvider(basicSignatureOptionsProvider);
-	    return p.newSigner();
-	  }
-	  
-	  private KeyingDataProvider getKeyingDataProvider(String certificatePath, String certificatePin)
-	    throws KeyStoreException, SigningCertChainException, UnexpectedJCAException
-	  {
-	    KeyingDataProvider keyingProvider = new FileSystemKeyStoreKeyingDataProvider("pkcs12", certificatePath, new FirstCertificateSelector(), new DirectPasswordProvider(certificatePin), new DirectPasswordProvider(certificatePin), true);
-	    if (keyingProvider.getSigningCertificateChain().isEmpty()) {
-	      throw new IllegalArgumentException("No se ha podido inicializar el keystore con la ruta: " + certificatePath);
-	    }
-	    return keyingProvider;
-	  }
-	  
-	  private String signWithoutIDEnveloped(String xml, XadesSigner signer)
-	    throws Exception
-	  {
-		  Document doc;
-		  XadesSignatureResult result;
-		  try {
-			  doc = stringToDocument(xml);
-			  Element signatureParent = doc.getDocumentElement();
-			  Element elementToSign = doc.getDocumentElement();
-		      String refUri;
-		      if (elementToSign.hasAttribute("Id"))
-		      {
-		        refUri = '#' + elementToSign.getAttribute("Id");
-		      }
-		      else
-		      {
-		        if (elementToSign.getParentNode().getNodeType() != 9) {
-		          throw new IllegalArgumentException("Elemento sin el ID debe ser la raiz del documento");
-		        }
-		        refUri = "";
-		      }
-		      DataObjectDesc dataObjRef = new DataObjectReference(refUri).withTransform(new DataObjectTransform("http://www.w3.org/2000/09/xmldsig#enveloped-signature"));
-		      result = signer.sign(new SignedDataObjects(new DataObjectDesc[] { dataObjRef }).withCommitmentType(AllDataObjsCommitmentTypeProperty.proofOfOrigin()), signatureParent);
-		      xml = convertDocumentToString(doc);
-		  } catch (Exception e) {
-			  System.err.println("Error: " + e.getMessage());
-			  return null;
-		  }
-		  return xml;
-	  }
-	  
-	  
-	  public static Document stringToDocument(final String xmlSource)   
-			    throws SAXException, ParserConfigurationException, IOException {  
-		  DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		  InputSource is = new InputSource();
-		  StringReader sr= new StringReader(xmlSource);
-		  is.setCharacterStream(sr);
-		  Document doc = db.parse(is);
-		  return doc;
-	  } 
-	  
-	  public static void printDocument(Document doc, OutputStream out) throws IOException, TransformerException {
-		    TransformerFactory tf = TransformerFactory.newInstance();
-		    Transformer transformer = tf.newTransformer();
-		    transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-		    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-		    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		    transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-		    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-
-		    transformer.transform(new DOMSource(doc), 
-		         new StreamResult(new OutputStreamWriter(out, "UTF-8")));
+	
+	@Value("${signaturePolicy}")
+	private String signaturePolicy;
+	
+	public String sign(String certificatePath, String certificatePin, String xml) {
+		try {
+			XadesSigner signer = getSigner(certificatePin, certificatePath);
+			signWithoutIDEnveloped(xml, signer);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-	  
-	  private static String convertDocumentToString(Document doc) {
-	       TransformerFactory tf = TransformerFactory.newInstance();
-	       Transformer transformer;
-	       String output = null;
-	       try {
-	           transformer = tf.newTransformer();
-	           StringWriter writer = new StringWriter();
-	           transformer.transform(new DOMSource(doc), new StreamResult(writer));
-	           output = writer.getBuffer().toString();
-	       } catch (TransformerException e) {
-	           e.printStackTrace();
-	       }
-	       
-	       return output;
-	   }
+		return xml;
+	}
+
+	private XadesSigner getSigner(String certificatePin, String certificatePath) throws Exception {
+		KeyingDataProvider keyingProvider = getKeyingDataProvider(certificatePath, certificatePin);
+		SignaturePolicyInfoProvider policyInfoProvider = new SignaturePolicyInfoProvider() {
+			public SignaturePolicyBase getSignaturePolicy() {
+				return new SignaturePolicyIdentifierProperty(new ObjectIdentifier(
+						signaturePolicy,
+						IdentifierType.URI), "".getBytes());
+			}
+		};
+		BasicSignatureOptionsProvider basicSignatureOptionsProvider = new BasicSignatureOptionsProvider() {
+			public boolean includePublicKey() {
+				return true;
+			}
+
+			public boolean includeSigningCertificate() {
+				return true;
+			}
+
+			public boolean signSigningCertificate() {
+				return true;
+			}
+		};
+		XadesEpesSigningProfile p = new XadesEpesSigningProfile(keyingProvider, policyInfoProvider);
+		p.withBasicSignatureOptionsProvider(basicSignatureOptionsProvider);
+		return p.newSigner();
+	}
+
+	private KeyingDataProvider getKeyingDataProvider(String certificatePath, String certificatePin)
+			throws KeyStoreException, SigningCertChainException, UnexpectedJCAException {
+		KeyingDataProvider keyingProvider = new FileSystemKeyStoreKeyingDataProvider("pkcs12", certificatePath,
+				new FirstCertificateSelector(), new DirectPasswordProvider(certificatePin),
+				new DirectPasswordProvider(certificatePin), true);
+		if (keyingProvider.getSigningCertificateChain().isEmpty()) {
+			throw new IllegalArgumentException(
+					"No se ha podido inicializar el keystore con la ruta: " + certificatePath);
+		}
+		return keyingProvider;
+	}
+
+	private String signWithoutIDEnveloped(String xml, XadesSigner signer) throws Exception {
+		Document doc;
+		XadesSignatureResult result;
+		try {
+			doc = stringToDocument(xml);
+			Element signatureParent = doc.getDocumentElement();
+			Element elementToSign = doc.getDocumentElement();
+			String refUri;
+			if (elementToSign.hasAttribute("Id")) {
+				refUri = '#' + elementToSign.getAttribute("Id");
+			} else {
+				if (elementToSign.getParentNode().getNodeType() != 9) {
+					throw new IllegalArgumentException("Elemento sin el ID debe ser la raiz del documento");
+				}
+				refUri = "";
+			}
+			DataObjectDesc dataObjRef = new DataObjectReference(refUri)
+					.withTransform(new DataObjectTransform("http://www.w3.org/2000/09/xmldsig#enveloped-signature"));
+			result = signer.sign(new SignedDataObjects(new DataObjectDesc[] { dataObjRef })
+					.withCommitmentType(AllDataObjsCommitmentTypeProperty.proofOfOrigin()), signatureParent);
+			xml = convertDocumentToString(doc);
+			System.out.println(result);
+		} catch (Exception e) {
+			System.err.println("Error: " + e.getMessage());
+			return null;
+		}
+		return xml;
+	}
+
+	public static Document stringToDocument(final String xmlSource)
+			throws SAXException, ParserConfigurationException, IOException {
+		DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		InputSource is = new InputSource();
+		StringReader sr = new StringReader(xmlSource);
+		is.setCharacterStream(sr);
+		Document doc = db.parse(is);
+		return doc;
+	}
+
+	public static void printDocument(Document doc, OutputStream out) throws IOException, TransformerException {
+		TransformerFactory tf = TransformerFactory.newInstance();
+		Transformer transformer = tf.newTransformer();
+		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+		transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+		transformer.transform(new DOMSource(doc), new StreamResult(new OutputStreamWriter(out, "UTF-8")));
+	}
+
+	private static String convertDocumentToString(Document doc) {
+		TransformerFactory tf = TransformerFactory.newInstance();
+		Transformer transformer;
+		String output = null;
+		try {
+			transformer = tf.newTransformer();
+			StringWriter writer = new StringWriter();
+			transformer.transform(new DOMSource(doc), new StreamResult(writer));
+			output = writer.getBuffer().toString();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+
+		return output;
+	}
 }

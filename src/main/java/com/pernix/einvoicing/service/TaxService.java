@@ -45,6 +45,6 @@ public class TaxService {
 	
 	@Transactional
 	public List<Tax> getNotLinkedTaxes() {
-		return (List<Tax>) taxJPARepository.findNoService();
+		return (List<Tax>) taxJPARepository.findTaxesWithNoService();
 	}
 }
