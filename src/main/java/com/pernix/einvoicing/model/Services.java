@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ public class Services implements Serializable {
 	@Column(nullable = false, name = "lineNumber")
 	private int lineNumber;
 
-	@OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "service", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	List<Code> codeList = new ArrayList<Code>();
 
 	@Column(nullable = false, name = "amount")
@@ -54,13 +55,13 @@ public class Services implements Serializable {
 	@Column(nullable = false, name = "discount")
 	private double discount;
 
-	@Column(nullable = false, name = "discountNature")
+	@Column(nullable = true, name = "discountNature")
 	private String discountNature;
 
 	@Column(nullable = false, name = "subTotal")
 	private double subTotal;
 
-	@OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "service", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	List<Tax> taxList = new ArrayList<Tax>();
 
 	@Column(nullable = false, name = "total")

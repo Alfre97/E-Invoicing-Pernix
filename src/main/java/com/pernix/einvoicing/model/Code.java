@@ -30,7 +30,7 @@ public class Code implements Serializable {
 	private String code;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "serviceId")
+    @JoinColumn(name = "serviceId", nullable = true)
     private Services service;
 	
 	public Code() {

@@ -7,12 +7,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pernix.einvoicing.model.Services;
+import com.pernix.einvoicing.repository.ServiceJPARepository;
 import com.pernix.einvoicing.repository.ServiceRepository;
 
 @Service
 public class ServiceServices {
 	@Autowired
 	ServiceRepository<Services> serviceRepository;
+	
+	@Autowired
+	ServiceJPARepository<Services> serviceJPARepository;
 
 	@Transactional
 	public List<Services> getAllServices() 	{
@@ -27,6 +31,12 @@ public class ServiceServices {
 	@Transactional
 	public boolean addService(Services service) {
 		return serviceRepository.save(service) != null;
+	}
+	
+	@Transactional
+	public Services addServiceAndUpdate(Services service) {
+		service = serviceJPARepository.saveAndFlush(service);
+		return service;
 	}
 
 	@Transactional
