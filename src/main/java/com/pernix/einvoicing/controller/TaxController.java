@@ -21,6 +21,7 @@ public class TaxController {
 	@RequestMapping("/addTax")
 	public ResponseEntity<Boolean> addTax(@RequestBody Tax tax) throws Exception {
 		try {
+			System.out.println(tax.toString());
 			taxService.addTax(tax);
 			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		} catch (Exception e) {

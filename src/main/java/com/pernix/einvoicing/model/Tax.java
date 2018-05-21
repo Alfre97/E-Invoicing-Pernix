@@ -33,7 +33,7 @@ public class Tax implements Serializable {
 	private double rate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "serviceId")
+    @JoinColumn(name = "serviceId", nullable = true)
     private Services service;
 
 	@Column(nullable = true, name = "date")
@@ -48,7 +48,7 @@ public class Tax implements Serializable {
 	@Column(nullable = true, name = "documentNumber")
 	private String documentNumber;
 
-	@Column(nullable = true, name = "purchasePercentage")
+	@Column(nullable = false, name = "purchasePercentage")
 	private int purchasePercentage;
 
 	@Column(nullable = true, name = "documentType")
