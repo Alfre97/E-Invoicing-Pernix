@@ -7,9 +7,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -66,11 +68,8 @@ public class Emitter implements Serializable {
 	@Column(nullable=false, name="email")
 	private String email;
 	
-	@OneToMany(
-	        mappedBy = "emitter", 
-	        cascade = CascadeType.ALL, 
-	        orphanRemoval = true
-	    )
+	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "emitterId")
 	List<Invoice> invoiceList = new ArrayList<Invoice>();
 	
 	public Emitter() {

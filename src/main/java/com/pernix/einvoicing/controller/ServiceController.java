@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
-import com.pernix.einvoicing.model.Code;
 import com.pernix.einvoicing.model.Services;
 import com.pernix.einvoicing.model.Tax;
-import com.pernix.einvoicing.service.CodeService;
 import com.pernix.einvoicing.service.ServiceServices;
 import com.pernix.einvoicing.service.TaxService;
 
@@ -21,9 +19,6 @@ public class ServiceController {
 
 	@Autowired
 	private ServiceServices serviceService;
-
-	@Autowired
-	private CodeService codeService;
 	
 	@Autowired
 	private TaxService taxService;
@@ -32,25 +27,18 @@ public class ServiceController {
 	public ResponseEntity<Boolean> addService(@RequestBody Services service) throws Exception {
 
 		try {
+			fillTaxes(service);
 			service = serviceService.addServiceAndUpdate(service);
-			linkCodes(service);
-			linkTaxes(service);
+
 			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		} catch (Exception e) {
+			System.out.println(e);
 			return new ResponseEntity<Boolean>(false, HttpStatus.CONFLICT);
 		}
 	}
 	
-	private void linkCodes(Services service) {
-		for (Code code : service.getCodeList()) {
-			code.setService(service);
-			codeService.updateCode(code);
-		}
-	}
-	
-	private void linkTaxes(Services service) {
+	private void fillTaxes(Services service) {
 		for (Tax tax : service.getTaxList()) {
-			tax.setService(service);
 			tax.setTaxTotal(service.getSubTotal() * tax.getRate());
 			taxService.updateTax(tax);
 		}
