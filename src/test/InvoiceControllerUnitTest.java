@@ -61,8 +61,8 @@ public class InvoiceControllerUnitTest {
 			List<Tax> taxList = new ArrayList<>();
 			List<Services> serviceList = new ArrayList<>();
 			
-			codeList.add(new Code(new Long("1"), "01", "12345", service));
-			taxList.add(new Tax(new Long("1"), "01", 650, 0.13, new Services(), "16/05/2018", 0, "", "", 13, ""));
+			codeList.add(new Code(new Long("1"), "01", "12345"));
+			taxList.add(new Tax(new Long("1"), "01", 650, 0.13, "16/05/2018", 0, "", "", 13, ""));
 			service = new Services(new Long("1"), 1, codeList, 1, "m", "Metro", "Metro", "Un metro de tela roja", 5000.00, 1, 0.0, "Sin descuento", 5000.00, taxList ,5000.00);
 			serviceList.add(service);
 			invoice = new Invoice(new Long("1"), "", "", "2018/01/01 00:02:00", emitter, receiver, "Contado", "", "Efectivo", "CRC",

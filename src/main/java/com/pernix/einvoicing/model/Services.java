@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -28,7 +29,8 @@ public class Services implements Serializable {
 	@Column(nullable = false, name = "lineNumber")
 	private int lineNumber;
 
-	@OneToMany(mappedBy = "service", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@OneToMany(cascade = {CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	@JoinColumn(name = "serviceId", nullable = true)
 	List<Code> codeList = new ArrayList<Code>();
 
 	@Column(nullable = false, name = "amount")
@@ -61,7 +63,8 @@ public class Services implements Serializable {
 	@Column(nullable = false, name = "subTotal")
 	private double subTotal;
 
-	@OneToMany(mappedBy = "service", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@OneToMany(cascade = {CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	@JoinColumn(name = "serviceId", nullable = true)
 	List<Tax> taxList = new ArrayList<Tax>();
 
 	@Column(nullable = false, name = "total")

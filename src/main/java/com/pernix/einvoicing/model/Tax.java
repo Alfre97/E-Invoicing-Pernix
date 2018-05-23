@@ -4,12 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Tax implements Serializable {
@@ -31,10 +28,6 @@ public class Tax implements Serializable {
 
 	@Column(nullable = false, name = "rate")
 	private double rate;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "serviceId", nullable = true)
-    private Services service;
 
 	@Column(nullable = true, name = "date")
 	private String date;
@@ -57,14 +50,13 @@ public class Tax implements Serializable {
 	public Tax() {
 	}
 
-	public Tax(Long id, String code, double taxTotal, double rate, Services service, String date, double taxExonarated,
+	public Tax(Long id, String code, double taxTotal, double rate, String date, double taxExonarated,
 			String institutionName, String documentNumber, int purchasePercentage, String documentType) {
 		super();
 		this.id = id;
 		this.code = code;
 		this.taxTotal = taxTotal;
 		this.rate = rate;
-		this.service = service;
 		this.date = date;
 		this.taxExonarated = taxExonarated;
 		this.institutionName = institutionName;
@@ -103,14 +95,6 @@ public class Tax implements Serializable {
 
 	public void setRate(double rate) {
 		this.rate = rate;
-	}
-
-	public Services getService() {
-		return service;
-	}
-
-	public void setService(Services service) {
-		this.service = service;
 	}
 
 	public String getDate() {
