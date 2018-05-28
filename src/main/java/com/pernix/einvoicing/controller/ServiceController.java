@@ -32,7 +32,6 @@ public class ServiceController {
 
 			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.println(e);
 			return new ResponseEntity<Boolean>(false, HttpStatus.CONFLICT);
 		}
 	}

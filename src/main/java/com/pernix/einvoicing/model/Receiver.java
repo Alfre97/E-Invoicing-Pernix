@@ -38,17 +38,17 @@ public class Receiver implements Serializable {
 	@Column(nullable=false, name="comercialName")
 	private String comercialName;
 	
-	@Column(nullable=false, name="locationProvinceName")
-	private String locationProvinceName;
+	@Column(nullable=false, name="locationProvinceCode")
+	private String locationProvinceCode;
 	
-	@Column(nullable=false, name="locationCantonName")
-	private String locationCantonName;
+	@Column(nullable=false, name="locationCantonCode")
+	private String locationCantonCode;
 	
-	@Column(nullable=false, name="locationDistrictName")
-	private String locationDistrictName;
+	@Column(nullable=false, name="locationDistrictCode")
+	private String locationDistrictCode;
 	
-	@Column(nullable=false, name="locationNeighborhoodName")
-	private String locationNeighborhoodName;
+	@Column(nullable=false, name="locationNeighborhoodCode")
+	private String locationNeighborhoodCode;
 	
 	@Column(nullable=false, name="OtherSignals")
 	private String OtherSignals;
@@ -75,8 +75,8 @@ public class Receiver implements Serializable {
 	public Receiver() {}
 
 	public Receiver(Long id, String name, String identificationType, String identificationNumber, String comercialName,
-			String locationProvinceName, String locationCantonName, String locationDistrictName,
-			String locationNeighborhoodName, String otherSignals, String phoneCountryCode, String phoneNumber,
+			String locationProvinceCode, String locationCantonCode, String locationDistrictCode,
+			String locationNeighborhoodCode, String otherSignals, String phoneCountryCode, String phoneNumber,
 			String faxCountryCode, String faxNumber, String email, List<Invoice> invoiceList) {
 		super();
 		this.id = id;
@@ -84,10 +84,10 @@ public class Receiver implements Serializable {
 		this.identificationType = identificationType;
 		this.identificationNumber = identificationNumber;
 		this.comercialName = comercialName;
-		this.locationProvinceName = locationProvinceName;
-		this.locationCantonName = locationCantonName;
-		this.locationDistrictName = locationDistrictName;
-		this.locationNeighborhoodName = locationNeighborhoodName;
+		this.locationProvinceCode = locationProvinceCode;
+		this.locationCantonCode = locationCantonCode;
+		this.locationDistrictCode = locationDistrictCode;
+		this.locationNeighborhoodCode = locationNeighborhoodCode;
 		OtherSignals = otherSignals;
 		this.phoneCountryCode = phoneCountryCode;
 		this.phoneNumber = phoneNumber;
@@ -137,36 +137,36 @@ public class Receiver implements Serializable {
 		this.comercialName = comercialName;
 	}
 
-	public String getLocationProvinceName() {
-		return locationProvinceName;
+	public String getLocationProvinceCode() {
+		return locationProvinceCode;
 	}
 
-	public void setLocationProvinceName(String locationProvinceName) {
-		this.locationProvinceName = locationProvinceName;
+	public void setLocationProvinceCode(String locationProvinceCode) {
+		this.locationProvinceCode = locationProvinceCode;
 	}
 
-	public String getLocationCantonName() {
-		return locationCantonName;
+	public String getLocationCantonCode() {
+		return locationCantonCode;
 	}
 
-	public void setLocationCantonName(String locationCantonName) {
-		this.locationCantonName = locationCantonName;
+	public void setLocationCantonCode(String locationCantonCode) {
+		this.locationCantonCode = locationCantonCode;
 	}
 
-	public String getLocationDistrictName() {
-		return locationDistrictName;
+	public String getLocationDistrictCode() {
+		return locationDistrictCode;
 	}
 
-	public void setLocationDistrictName(String locationDistrictName) {
-		this.locationDistrictName = locationDistrictName;
+	public void setLocationDistrictCode(String locationDistrictCode) {
+		this.locationDistrictCode = locationDistrictCode;
 	}
 
-	public String getLocationNeighborhoodName() {
-		return locationNeighborhoodName;
+	public String getLocationNeighborhoodCode() {
+		return locationNeighborhoodCode;
 	}
 
-	public void setLocationNeighborhoodName(String locationNeighborhoodName) {
-		this.locationNeighborhoodName = locationNeighborhoodName;
+	public void setLocationNeighborhoodCode(String locationNeighborhoodCode) {
+		this.locationNeighborhoodCode = locationNeighborhoodCode;
 	}
 
 	public String getOtherSignals() {
@@ -228,4 +228,6 @@ public class Receiver implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	
 }

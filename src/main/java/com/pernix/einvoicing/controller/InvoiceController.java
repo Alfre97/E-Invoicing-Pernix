@@ -198,10 +198,10 @@ public class InvoiceController {
 		emitterType.setNombreComercial(emitter.getComercialName());
 
 		UbicacionType ubication = new UbicacionType();
-		ubication.setProvincia(emitter.getLocationProvinceName());
-		ubication.setCanton(emitter.getLocationCantonName());
-		ubication.setDistrito(emitter.getLocationDistrictName());
-		ubication.setBarrio(emitter.getLocationNeighborhoodName());
+		ubication.setProvincia(emitter.getLocationProvinceCode());
+		ubication.setCanton(emitter.getLocationCantonCode());
+		ubication.setDistrito(emitter.getLocationDistrictCode());
+		ubication.setBarrio(emitter.getLocationNeighborhoodCode());
 		ubication.setOtrasSenas(emitter.getOtherSignals());
 
 		emitterType.setUbicacion(ubication);
@@ -244,10 +244,10 @@ public class InvoiceController {
 		receiverType.setNombreComercial(receiver.getComercialName());
 
 		UbicacionType ubication = new UbicacionType();
-		ubication.setProvincia(receiver.getLocationProvinceName());
-		ubication.setCanton(receiver.getLocationCantonName());
-		ubication.setDistrito(receiver.getLocationDistrictName());
-		ubication.setBarrio(receiver.getLocationNeighborhoodName());
+		ubication.setProvincia(receiver.getLocationProvinceCode());
+		ubication.setCanton(receiver.getLocationCantonCode());
+		ubication.setDistrito(receiver.getLocationDistrictCode());
+		ubication.setBarrio(receiver.getLocationNeighborhoodCode());
 		ubication.setOtrasSenas(receiver.getOtherSignals());
 
 		receiverType.setUbicacion(ubication);
