@@ -30,23 +30,22 @@ public class HaciendaOAuth2Service implements OAuth2Service {
     private String password;
 
     private String accessToken = null;
-    //private String refreshToken = null;
+    private String refreshToken = null;
 
     private void getAccessHaciendaToken(){
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(IDP_URI + "/token");
         Form form = new Form();
-        form.param("grant_type", "password")
+        form.param("grant_type", "password")		
                      .param("username", usuario)
                      .param("password", password)
                      .param("client_id", IDP_CLIENT_ID);
 
         Response response = target.request().post(Entity.form(form));
-        @SuppressWarnings("unchecked")
 		Map<String, String> responseJson = response.readEntity(HashMap.class);
 
         accessToken = responseJson.get("access_token");
-        //refreshToken = responseJson.get("refresh_token");
+        refreshToken = responseJson.get("refresh_token");
     }
 
 
